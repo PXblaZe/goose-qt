@@ -2,7 +2,7 @@
 
 goose-qt binds [qtc](../qtc), the C library for Qt 6, to the Goose language:
 widgets, Qt Quick and QML, painting, models, networking, multimedia and the rest
-of what qtc binds — about 9,100 functions and 1,400 constructors, generated from
+of what qtc binds — about 9,500 functions and 1,500 constructors, generated from
 qtc's manifest — with the same guarantee: misusing an object returns an error
 instead of crashing the program, within the limits qtc's
 [LIMITS.md](../qtc/docs/LIMITS.md) spells out.
@@ -227,6 +227,11 @@ tests natively only), on Qt's offscreen platform:
 ```sh
 python3 gen/generate_goose.py --manifest /path/to/qtc/manifest/qtc_api.json --out .
 ```
+
+A function keeps the return type the `api.goose` it replaces gave it, so programs
+keep compiling when a newly bound class has a method of the same name returning
+something else; that class's result comes from the typed variant (`name_int`,
+`width_val`). Pass `--baseline` to compare against another file.
 
 `qt.goose` (the hand-written part: the event loop, values, drawing, the generic
 call), `extra.goose` (overrides, runtime classes, futures, graphics),

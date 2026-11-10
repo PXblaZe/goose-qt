@@ -321,9 +321,8 @@ fn hasYearZero(o: Val) -> bool { qtc_call(o.h, "hasYearZero()"); return qtc_ret_
 fn maximumDaysInMonth(o: Val) -> i64 { qtc_call(o.h, "maximumDaysInMonth()"); return qtc_ret_int(); }
 fn minimumDaysInMonth(o: Val) -> i64 { qtc_call(o.h, "minimumDaysInMonth()"); return qtc_ret_int(); }
 fn maximumMonthsInYear(o: Val) -> i64 { qtc_call(o.h, "maximumMonthsInYear()"); return qtc_ret_int(); }
-fn name(o: Val) -> Val { qtc_call(o.h, "name()"); return Val { h: qtc_ret_val() }; }
+fn name(o: Val) -> u8[>..] { qtc_call(o.h, "name()"); return view(qtc_ret_str()); }
 fn name_int(o: Val) -> i64 { qtc_call(o.h, "name()"); return qtc_ret_int(); }
-fn name_str(o: Val) -> u8[>..] { qtc_call(o.h, "name()"); return view(qtc_ret_str()); }
 fn dateFromParts(o: Val, a0: i64, a1: i64, a2: i64) -> Val { qtc_arg_int(a0); qtc_arg_int(a1); qtc_arg_int(a2); qtc_call(o.h, "dateFromParts(int,int,int)"); return Val { h: qtc_ret_val() }; }
 fn dateFromParts(o: Val, a0: Val) -> Val { qtc_arg_val(a0.h); qtc_call(o.h, "dateFromParts(QCalendar::YearMonthDay)"); return Val { h: qtc_ret_val() }; }
 fn matchCenturyToWeekday(o: Val, a0: Val, a1: i64) -> Val { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_call(o.h, "matchCenturyToWeekday(QCalendar::YearMonthDay,int)"); return Val { h: qtc_ret_val() }; }
@@ -730,8 +729,7 @@ fn cd(o: Val, a0: const u8[:]) -> bool { qtc_arg_str(a0); qtc_call(o.h, "cd(QStr
 fn cdUp(o: Val) -> bool { qtc_call(o.h, "cdUp()"); return qtc_ret_bool(); }
 fn nameFilters(o: Val) -> Val { qtc_call(o.h, "nameFilters()"); return Val { h: qtc_ret_val() }; }
 fn setNameFilters(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setNameFilters(QStringList)"); }
-fn filter(o: Val) -> Val { qtc_call(o.h, "filter()"); return Val { h: qtc_ret_val() }; }
-fn filter_int(o: Val) -> i64 { qtc_call(o.h, "filter()"); return qtc_ret_int(); }
+fn filter(o: Val) -> i64 { qtc_call(o.h, "filter()"); return qtc_ret_int(); }
 fn filter_str(o: Val) -> u8[>..] { qtc_call(o.h, "filter()"); return view(qtc_ret_str()); }
 fn setFilter(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setFilter(QDir::Filters)"); }
 fn sorting(o: Val) -> i64 { qtc_call(o.h, "sorting()"); return qtc_ret_int(); }
@@ -1559,8 +1557,7 @@ fn fallbacksEnabled(o: Obj) -> bool { qtc_call(o.h, "fallbacksEnabled()"); retur
 fn format_(o: Obj) -> Val { qtc_call(o.h, "format()"); return Val { h: qtc_ret_val() }; }
 fn format__int(o: Obj) -> i64 { qtc_call(o.h, "format()"); return qtc_ret_int(); }
 fn format__str(o: Obj) -> u8[>..] { qtc_call(o.h, "format()"); return view(qtc_ret_str()); }
-fn scope(o: Obj) -> Val { qtc_call(o.h, "scope()"); return Val { h: qtc_ret_val() }; }
-fn scope_int(o: Obj) -> i64 { qtc_call(o.h, "scope()"); return qtc_ret_int(); }
+fn scope(o: Obj) -> i64 { qtc_call(o.h, "scope()"); return qtc_ret_int(); }
 fn scope_str(o: Obj) -> u8[>..] { qtc_call(o.h, "scope()"); return view(qtc_ret_str()); }
 fn organizationName(o: Obj) -> u8[>..] { qtc_call(o.h, "organizationName()"); return view(qtc_ret_str()); }
 fn applicationName(o: Obj) -> u8[>..] { qtc_call(o.h, "applicationName()"); return view(qtc_ret_str()); }
@@ -1921,8 +1918,8 @@ fn password(o: Val) -> u8[>..] { qtc_call(o.h, "password()"); return view(qtc_re
 fn password(o: Val, a0: i64) -> u8[>..] { qtc_arg_int(a0); qtc_call(o.h, "password(QUrl::ComponentFormattingOptions)"); return view(qtc_ret_str()); }
 fn setHost(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setHost(QString)"); }
 fn setHost(o: Val, a0: const u8[:], a1: i64) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_call(o.h, "setHost(QString,QUrl::ParsingMode)"); }
-fn host(o: Val) -> Val { qtc_call(o.h, "host()"); return Val { h: qtc_ret_val() }; }
-fn host_str(o: Val) -> u8[>..] { qtc_call(o.h, "host()"); return view(qtc_ret_str()); }
+fn host(o: Val) -> u8[>..] { qtc_call(o.h, "host()"); return view(qtc_ret_str()); }
+fn host_val(o: Val) -> Val { qtc_call(o.h, "host()"); return Val { h: qtc_ret_val() }; }
 fn host(o: Val, a0: i64) -> u8[>..] { qtc_arg_int(a0); qtc_call(o.h, "host(QUrl::ComponentFormattingOptions)"); return view(qtc_ret_str()); }
 fn setPort(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setPort"); }
 fn port(o: Val) -> i64 { qtc_call(o.h, "port()"); return qtc_ret_int(); }
@@ -1934,8 +1931,8 @@ fn hasQuery(o: Val) -> bool { qtc_call(o.h, "hasQuery()"); return qtc_ret_bool()
 fn setQuery(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setQuery(QString)"); }
 fn setQuery(o: Val, a0: const u8[:], a1: i64) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_call(o.h, "setQuery(QString,QUrl::ParsingMode)"); }
 fn setQuery(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setQuery(QUrlQuery)"); }
-fn query(o: Val) -> Val { qtc_call(o.h, "query()"); return Val { h: qtc_ret_val() }; }
-fn query_str(o: Val) -> u8[>..] { qtc_call(o.h, "query()"); return view(qtc_ret_str()); }
+fn query(o: Val) -> u8[>..] { qtc_call(o.h, "query()"); return view(qtc_ret_str()); }
+fn query_val(o: Val) -> Val { qtc_call(o.h, "query()"); return Val { h: qtc_ret_val() }; }
 fn query(o: Val, a0: i64) -> u8[>..] { qtc_arg_int(a0); qtc_call(o.h, "query(QUrl::ComponentFormattingOptions)"); return view(qtc_ret_str()); }
 fn hasFragment(o: Val) -> bool { qtc_call(o.h, "hasFragment()"); return qtc_ret_bool(); }
 fn fragment(o: Val) -> u8[>..] { qtc_call(o.h, "fragment()"); return view(qtc_ret_str()); }
@@ -5699,8 +5696,8 @@ fn displayIntegerBase(o: Obj) -> i64 { qtc_call(o.h, "displayIntegerBase()"); re
 fn setDisplayIntegerBase(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setDisplayIntegerBase(int)"); }
 fn finish(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "finish(QWidget*)"); }
 fn repaint(o: Obj) { qtc_call(o.h, "repaint()"); }
-fn message(o: Obj) -> Val { qtc_call(o.h, "message()"); return Val { h: qtc_ret_val() }; }
-fn message_str(o: Obj) -> u8[>..] { qtc_call(o.h, "message()"); return view(qtc_ret_str()); }
+fn message(o: Obj) -> u8[>..] { qtc_call(o.h, "message()"); return view(qtc_ret_str()); }
+fn message_val(o: Obj) -> Val { qtc_call(o.h, "message()"); return Val { h: qtc_ret_val() }; }
 fn showMessage(o: Obj, a0: const u8[:], a1: i64) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_call(o.h, "showMessage(QString,int)"); }
 fn showMessage(o: Obj, a0: const u8[:], a1: i64, a2: Val) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_arg_val(a2.h); qtc_call(o.h, "showMessage(QString,int,QColor)"); }
 fn clearMessage(o: Obj) { qtc_call(o.h, "clearMessage()"); }

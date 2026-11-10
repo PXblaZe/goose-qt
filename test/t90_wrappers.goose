@@ -311,7 +311,6 @@ fn part0(n: i64&, bad: i64&) {
     qt::maximumMonthsInYear(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumMonthsInYear: ", qt::last_error_message()); } }
     qt::name(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper name: ", qt::last_error_message()); } }
     qt::name_int(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper name_int: ", qt::last_error_message()); } }
-    qt::name_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper name_str: ", qt::last_error_message()); } }
     qt::dateFromParts(qt::Val { h: 0 }, 0, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper dateFromParts: ", qt::last_error_message()); } }
     qt::dateFromParts(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper dateFromParts: ", qt::last_error_message()); } }
     qt::matchCenturyToWeekday(qt::Val { h: 0 }, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper matchCenturyToWeekday: ", qt::last_error_message()); } }
@@ -502,9 +501,9 @@ fn part0(n: i64&, bad: i64&) {
     qt::day(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper day: ", qt::last_error_message()); } }
     qt::dayOfYear(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper dayOfYear: ", qt::last_error_message()); } }
     qt::daysInMonth(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper daysInMonth: ", qt::last_error_message()); } }
+    qt::daysInYear(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper daysInYear: ", qt::last_error_message()); } }
 }
 fn part1(n: i64&, bad: i64&) {
-    qt::daysInYear(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper daysInYear: ", qt::last_error_message()); } }
     qt::startOfDay(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper startOfDay: ", qt::last_error_message()); } }
     qt::startOfDay(qt::Val { h: 0 }, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper startOfDay: ", qt::last_error_message()); } }
     qt::endOfDay(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper endOfDay: ", qt::last_error_message()); } }
@@ -586,7 +585,6 @@ fn part1(n: i64&, bad: i64&) {
     qt::nameFilters(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nameFilters: ", qt::last_error_message()); } }
     qt::setNameFilters(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setNameFilters: ", qt::last_error_message()); } }
     qt::filter(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filter: ", qt::last_error_message()); } }
-    qt::filter_int(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filter_int: ", qt::last_error_message()); } }
     qt::filter_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filter_str: ", qt::last_error_message()); } }
     qt::setFilter(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFilter: ", qt::last_error_message()); } }
     qt::sorting(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sorting: ", qt::last_error_message()); } }
@@ -1004,10 +1002,10 @@ fn part1(n: i64&, bad: i64&) {
     qt::setText(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setText: ", qt::last_error_message()); } }
     qt::hasText(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasText: ", qt::last_error_message()); } }
     qt::html(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper html: ", qt::last_error_message()); } }
-}
-fn part2(n: i64&, bad: i64&) {
     qt::setHtml(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHtml: ", qt::last_error_message()); } }
     qt::hasHtml(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasHtml: ", qt::last_error_message()); } }
+}
+fn part2(n: i64&, bad: i64&) {
     qt::imageData(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper imageData: ", qt::last_error_message()); } }
     qt::setImageData(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setImageData: ", qt::last_error_message()); } }
     qt::hasImage(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasImage: ", qt::last_error_message()); } }
@@ -1304,7 +1302,6 @@ fn part2(n: i64&, bad: i64&) {
     qt::format__int(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper format__int: ", qt::last_error_message()); } }
     qt::format__str(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper format__str: ", qt::last_error_message()); } }
     qt::scope(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scope: ", qt::last_error_message()); } }
-    qt::scope_int(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scope_int: ", qt::last_error_message()); } }
     qt::scope_str(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scope_str: ", qt::last_error_message()); } }
     qt::organizationName(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper organizationName: ", qt::last_error_message()); } }
     qt::applicationName(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper applicationName: ", qt::last_error_message()); } }
@@ -1506,11 +1503,11 @@ fn part2(n: i64&, bad: i64&) {
     qt::frameForTime(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper frameForTime: ", qt::last_error_message()); } }
     qt::valueForTime(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper valueForTime: ", qt::last_error_message()); } }
     qt::toggleDirection(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper toggleDirection: ", qt::last_error_message()); } }
-}
-fn part3(n: i64&, bad: i64&) {
     qt::fixedSecondsAheadOfUtc(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fixedSecondsAheadOfUtc: ", qt::last_error_message()); } }
     qt::isUtcOrFixedOffset(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isUtcOrFixedOffset: ", qt::last_error_message()); } }
     qt::asBackendZone(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper asBackendZone: ", qt::last_error_message()); } }
+}
+fn part3(n: i64&, bad: i64&) {
     qt::hasAlternativeName(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasAlternativeName: ", qt::last_error_message()); } }
     qt::id(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper id: ", qt::last_error_message()); } }
     qt::id_int(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper id_int: ", qt::last_error_message()); } }
@@ -1581,7 +1578,7 @@ fn part3(n: i64&, bad: i64&) {
     qt::setHost(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHost: ", qt::last_error_message()); } }
     qt::setHost(qt::Val { h: 0 }, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHost: ", qt::last_error_message()); } }
     qt::host(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper host: ", qt::last_error_message()); } }
-    qt::host_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper host_str: ", qt::last_error_message()); } }
+    qt::host_val(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper host_val: ", qt::last_error_message()); } }
     qt::host(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper host: ", qt::last_error_message()); } }
     qt::setPort(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPort: ", qt::last_error_message()); } }
     qt::port(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper port: ", qt::last_error_message()); } }
@@ -1594,7 +1591,7 @@ fn part3(n: i64&, bad: i64&) {
     qt::setQuery(qt::Val { h: 0 }, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setQuery: ", qt::last_error_message()); } }
     qt::setQuery(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setQuery: ", qt::last_error_message()); } }
     qt::query(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper query: ", qt::last_error_message()); } }
-    qt::query_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper query_str: ", qt::last_error_message()); } }
+    qt::query_val(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper query_val: ", qt::last_error_message()); } }
     qt::query(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper query: ", qt::last_error_message()); } }
     qt::hasFragment(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasFragment: ", qt::last_error_message()); } }
     qt::fragment(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fragment: ", qt::last_error_message()); } }
@@ -2008,11 +2005,11 @@ fn part3(n: i64&, bad: i64&) {
     qt::setLetterSpacing(qt::Val { h: 0 }, 0, 0.0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setLetterSpacing: ", qt::last_error_message()); } }
     qt::wordSpacing(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper wordSpacing: ", qt::last_error_message()); } }
     qt::setWordSpacing(qt::Val { h: 0 }, 0.0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWordSpacing: ", qt::last_error_message()); } }
-}
-fn part4(n: i64&, bad: i64&) {
     qt::setCapitalization(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCapitalization: ", qt::last_error_message()); } }
     qt::capitalization(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper capitalization: ", qt::last_error_message()); } }
     qt::setHintingPreference(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHintingPreference: ", qt::last_error_message()); } }
+}
+fn part4(n: i64&, bad: i64&) {
     qt::hintingPreference(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hintingPreference: ", qt::last_error_message()); } }
     qt::setFeature(qt::Val { h: 0 }, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFeature: ", qt::last_error_message()); } }
     qt::unsetFeature(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper unsetFeature: ", qt::last_error_message()); } }
@@ -2510,11 +2507,11 @@ fn part4(n: i64&, bad: i64&) {
     qt::setBrush(qt::Val { h: 0 }, 0, 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setBrush: ", qt::last_error_message()); } }
     qt::setColorGroup(qt::Val { h: 0 }, 0, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setColorGroup: ", qt::last_error_message()); } }
     qt::isEqual(qt::Val { h: 0 }, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isEqual: ", qt::last_error_message()); } }
-}
-fn part5(n: i64&, bad: i64&) {
     qt::brush(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper brush: ", qt::last_error_message()); } }
     qt::windowText(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper windowText: ", qt::last_error_message()); } }
     qt::button(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper button: ", qt::last_error_message()); } }
+}
+fn part5(n: i64&, bad: i64&) {
     qt::light(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper light: ", qt::last_error_message()); } }
     qt::dark(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper dark: ", qt::last_error_message()); } }
     qt::mid(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper mid: ", qt::last_error_message()); } }
@@ -3012,11 +3009,11 @@ fn part5(n: i64&, bad: i64&) {
     qt::isUndoRedoEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isUndoRedoEnabled: ", qt::last_error_message()); } }
     qt::isUndoAvailable(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isUndoAvailable: ", qt::last_error_message()); } }
     qt::isRedoAvailable(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isRedoAvailable: ", qt::last_error_message()); } }
-}
-fn part6(n: i64&, bad: i64&) {
     qt::availableUndoSteps(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper availableUndoSteps: ", qt::last_error_message()); } }
     qt::availableRedoSteps(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper availableRedoSteps: ", qt::last_error_message()); } }
     qt::revision(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper revision: ", qt::last_error_message()); } }
+}
+fn part6(n: i64&, bad: i64&) {
     qt::setDocumentLayout(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setDocumentLayout: ", qt::last_error_message()); } }
     qt::documentLayout(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper documentLayout: ", qt::last_error_message()); } }
     qt::setMetaInformation(qt::NONE, 0, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMetaInformation: ", qt::last_error_message()); } }
@@ -3514,11 +3511,11 @@ fn part6(n: i64&, bad: i64&) {
     qt::defaultDropAction(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper defaultDropAction: ", qt::last_error_message()); } }
     qt::setAlternatingRowColors(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAlternatingRowColors: ", qt::last_error_message()); } }
     qt::alternatingRowColors(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper alternatingRowColors: ", qt::last_error_message()); } }
-}
-fn part7(n: i64&, bad: i64&) {
     qt::setTextElideMode(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTextElideMode: ", qt::last_error_message()); } }
     qt::textElideMode(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper textElideMode: ", qt::last_error_message()); } }
     qt::keyboardSearch(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper keyboardSearch: ", qt::last_error_message()); } }
+}
+fn part7(n: i64&, bad: i64&) {
     qt::visualRect(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper visualRect: ", qt::last_error_message()); } }
     qt::scrollTo(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scrollTo: ", qt::last_error_message()); } }
     qt::scrollTo(qt::NONE, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scrollTo: ", qt::last_error_message()); } }
@@ -4016,11 +4013,11 @@ fn part7(n: i64&, bad: i64&) {
     qt::urlSelected(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper urlSelected: ", qt::last_error_message()); } }
     qt::urlsSelected(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper urlsSelected: ", qt::last_error_message()); } }
     qt::currentUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper currentUrlChanged: ", qt::last_error_message()); } }
-}
-fn part8(n: i64&, bad: i64&) {
     qt::directoryUrlEntered(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper directoryUrlEntered: ", qt::last_error_message()); } }
     qt::filterSelected(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filterSelected: ", qt::last_error_message()); } }
     qt::setWritingSystem(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWritingSystem: ", qt::last_error_message()); } }
+}
+fn part8(n: i64&, bad: i64&) {
     qt::writingSystem(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper writingSystem: ", qt::last_error_message()); } }
     qt::setFontFilters(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFontFilters: ", qt::last_error_message()); } }
     qt::fontFilters(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fontFilters: ", qt::last_error_message()); } }
@@ -4518,11 +4515,11 @@ fn part8(n: i64&, bad: i64&) {
     qt::cursorPositionAt(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorPositionAt: ", qt::last_error_message()); } }
     qt::cursorForward(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorForward: ", qt::last_error_message()); } }
     qt::cursorForward(qt::NONE, false, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorForward: ", qt::last_error_message()); } }
-}
-fn part9(n: i64&, bad: i64&) {
     qt::cursorBackward(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorBackward: ", qt::last_error_message()); } }
     qt::cursorBackward(qt::NONE, false, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorBackward: ", qt::last_error_message()); } }
     qt::cursorWordForward(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorWordForward: ", qt::last_error_message()); } }
+}
+fn part9(n: i64&, bad: i64&) {
     qt::cursorWordBackward(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorWordBackward: ", qt::last_error_message()); } }
     qt::backspace(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper backspace: ", qt::last_error_message()); } }
     qt::del(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper del: ", qt::last_error_message()); } }
@@ -4909,7 +4906,7 @@ fn part9(n: i64&, bad: i64&) {
     qt::finish(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper finish: ", qt::last_error_message()); } }
     qt::repaint(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper repaint: ", qt::last_error_message()); } }
     qt::message(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper message: ", qt::last_error_message()); } }
-    qt::message_str(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper message_str: ", qt::last_error_message()); } }
+    qt::message_val(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper message_val: ", qt::last_error_message()); } }
     qt::showMessage(qt::NONE, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper showMessage: ", qt::last_error_message()); } }
     qt::showMessage(qt::NONE, "", 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper showMessage: ", qt::last_error_message()); } }
     qt::clearMessage(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearMessage: ", qt::last_error_message()); } }
@@ -5020,11 +5017,11 @@ fn part9(n: i64&, bad: i64&) {
     qt::verticalHeader(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper verticalHeader: ", qt::last_error_message()); } }
     qt::setHorizontalHeader(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHorizontalHeader: ", qt::last_error_message()); } }
     qt::setVerticalHeader(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setVerticalHeader: ", qt::last_error_message()); } }
-}
-fn part10(n: i64&, bad: i64&) {
     qt::rowViewportPosition(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rowViewportPosition: ", qt::last_error_message()); } }
     qt::rowAt(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rowAt: ", qt::last_error_message()); } }
     qt::setRowHeight(qt::NONE, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRowHeight: ", qt::last_error_message()); } }
+}
+fn part10(n: i64&, bad: i64&) {
     qt::rowHeight(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rowHeight: ", qt::last_error_message()); } }
     qt::columnViewportPosition(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper columnViewportPosition: ", qt::last_error_message()); } }
     qt::columnAt(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper columnAt: ", qt::last_error_message()); } }
@@ -5522,11 +5519,11 @@ fn part10(n: i64&, bad: i64&) {
     qt::values(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper values: ", qt::last_error_message()); } }
     qt::values(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper values: ", qt::last_error_message()); } }
     qt::valueAt(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper valueAt: ", qt::last_error_message()); } }
-}
-fn part11(n: i64&, bad: i64&) {
     qt::nameAt(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nameAt: ", qt::last_error_message()); } }
     qt::combinedValue(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper combinedValue: ", qt::last_error_message()); } }
     qt::combinedValue(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper combinedValue: ", qt::last_error_message()); } }
+}
+fn part11(n: i64&, bad: i64&) {
     qt::setDateTimeValue(qt::Val { h: 0 }, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setDateTimeValue: ", qt::last_error_message()); } }
     qt::setDateTimeValue(qt::Val { h: 0 }, 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setDateTimeValue: ", qt::last_error_message()); } }
     qt::setRangeValues(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRangeValues: ", qt::last_error_message()); } }
@@ -6024,11 +6021,11 @@ fn part11(n: i64&, bad: i64&) {
     qt::execBatch(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper execBatch: ", qt::last_error_message()); } }
     qt::prepare(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper prepare: ", qt::last_error_message()); } }
     qt::bindValue(qt::Val { h: 0 }, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
-}
-fn part12(n: i64&, bad: i64&) {
     qt::bindValue(qt::Val { h: 0 }, "", qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
     qt::bindValue(qt::Val { h: 0 }, 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
     qt::bindValue(qt::Val { h: 0 }, 0, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
+}
+fn part12(n: i64&, bad: i64&) {
     qt::addBindValue(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addBindValue: ", qt::last_error_message()); } }
     qt::addBindValue(qt::Val { h: 0 }, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addBindValue: ", qt::last_error_message()); } }
     qt::boundValue(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper boundValue: ", qt::last_error_message()); } }
@@ -6526,11 +6523,11 @@ fn part12(n: i64&, bad: i64&) {
     qt::trimComponentCache(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper trimComponentCache: ", qt::last_error_message()); } }
     qt::clearSingletons(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearSingletons: ", qt::last_error_message()); } }
     qt::importPathList(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper importPathList: ", qt::last_error_message()); } }
-}
-fn part13(n: i64&, bad: i64&) {
     qt::setImportPathList(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setImportPathList: ", qt::last_error_message()); } }
     qt::addImportPath(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addImportPath: ", qt::last_error_message()); } }
     qt::pluginPathList(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper pluginPathList: ", qt::last_error_message()); } }
+}
+fn part13(n: i64&, bad: i64&) {
     qt::setPluginPathList(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPluginPathList: ", qt::last_error_message()); } }
     qt::addPluginPath(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addPluginPath: ", qt::last_error_message()); } }
     qt::addNamedBundle(qt::NONE, "", ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addNamedBundle: ", qt::last_error_message()); } }
@@ -7028,11 +7025,11 @@ fn part13(n: i64&, bad: i64&) {
     qt::activeSubtitleTrack(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper activeSubtitleTrack: ", qt::last_error_message()); } }
     qt::setActiveAudioTrack(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setActiveAudioTrack: ", qt::last_error_message()); } }
     qt::setActiveVideoTrack(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setActiveVideoTrack: ", qt::last_error_message()); } }
-}
-fn part14(n: i64&, bad: i64&) {
     qt::setActiveSubtitleTrack(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setActiveSubtitleTrack: ", qt::last_error_message()); } }
     qt::setAudioBufferOutput(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAudioBufferOutput: ", qt::last_error_message()); } }
     qt::audioBufferOutput(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper audioBufferOutput: ", qt::last_error_message()); } }
+}
+fn part14(n: i64&, bad: i64&) {
     qt::playbackState(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper playbackState: ", qt::last_error_message()); } }
     qt::mediaStatus(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper mediaStatus: ", qt::last_error_message()); } }
     qt::hasAudio(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasAudio: ", qt::last_error_message()); } }
@@ -7530,11 +7527,11 @@ fn part14(n: i64&, bad: i64&) {
     qt::minimumColumnWidthChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper minimumColumnWidthChanged: ", qt::last_error_message()); } }
     qt::bodyWidthChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bodyWidthChanged: ", qt::last_error_message()); } }
     qt::bodyOutlineVisibilityChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bodyOutlineVisibilityChanged: ", qt::last_error_message()); } }
-}
-fn part15(n: i64&, bad: i64&) {
     qt::capsWidthChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper capsWidthChanged: ", qt::last_error_message()); } }
     qt::capsVisibilityChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper capsVisibilityChanged: ", qt::last_error_message()); } }
     qt::increasingColorChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper increasingColorChanged: ", qt::last_error_message()); } }
+}
+fn part15(n: i64&, bad: i64&) {
     qt::decreasingColorChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper decreasingColorChanged: ", qt::last_error_message()); } }
     qt::setTimestamp(qt::NONE, 0.0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTimestamp: ", qt::last_error_message()); } }
     qt::timestamp(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper timestamp: ", qt::last_error_message()); } }
@@ -8032,11 +8029,11 @@ fn part15(n: i64&, bad: i64&) {
     qt::closeReason(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper closeReason: ", qt::last_error_message()); } }
     qt::sendTextMessage(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sendTextMessage: ", qt::last_error_message()); } }
     qt::sendBinaryMessage(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sendBinaryMessage: ", qt::last_error_message()); } }
-}
-fn part16(n: i64&, bad: i64&) {
     qt::setMaxAllowedIncomingFrameSize(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaxAllowedIncomingFrameSize: ", qt::last_error_message()); } }
     qt::maxAllowedIncomingFrameSize(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maxAllowedIncomingFrameSize: ", qt::last_error_message()); } }
     qt::setMaxAllowedIncomingMessageSize(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaxAllowedIncomingMessageSize: ", qt::last_error_message()); } }
+}
+fn part16(n: i64&, bad: i64&) {
     qt::maxAllowedIncomingMessageSize(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maxAllowedIncomingMessageSize: ", qt::last_error_message()); } }
     qt::setOutgoingFrameSize(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setOutgoingFrameSize: ", qt::last_error_message()); } }
     qt::outgoingFrameSize(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper outgoingFrameSize: ", qt::last_error_message()); } }

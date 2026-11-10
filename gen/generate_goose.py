@@ -8,6 +8,11 @@ signature; otherwise it passes the name and qtc picks the overload for the
 receiver's class at run time. Static methods become Class_method(...),
 constructors are named after the class, and each enum scope becomes a value
 whose fields are the keys: qt::Qt.AlignLeft, qt::QImage.Format_ARGB32.
+
+Return types are stable: when a function's Qt methods come to return different types (a newly
+bound class whose name() is an int, next to the many whose name() is a string), the type the
+function returned before is kept, read from the api.goose being replaced (--baseline), and the
+other classes' results are reached through the typed variants (name_int).
 """
 import argparse
 import collections
@@ -54,6 +59,25 @@ def merge_ret(types):
     return "Val"
 
 
+def baseline_returns(path):
+    """(fn name, receiver, parameter types) -> return type of every function in an earlier api.goose."""
+    rets = {}
+    if not path or not os.path.exists(path):
+        return rets
+    rx = re.compile(r"^fn (\w+)\((.*?)\)(?: -> (.+?))? \{")
+    for line in open(path):
+        m = rx.match(line)
+        if not m:
+            continue
+        parts = [x.split(": ", 1)[1] for x in re.split(r", (?=(?:o|a\d+): )", m.group(2)) if ": " in x]
+        if m.group(2).startswith("o: "):
+            key = (m.group(1), parts[0], tuple(parts[1:]))
+        else:
+            key = (m.group(1), "static", tuple(parts))
+        rets[key] = m.group(3)
+    return rets
+
+
 def core_signatures(core_path):
     """(name, parameter types) of every hand-written function in qt.goose."""
     sigs = set()
@@ -73,7 +97,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", required=True)
     ap.add_argument("--out", required=True, help="the goose-qt directory")
+    ap.add_argument("--baseline", help="the api.goose whose return types stay (default: the one in --out)")
     args = ap.parse_args()
+    before = baseline_returns(args.baseline or os.path.join(args.out, "api.goose"))
+    kept = 0
     man = json.load(open(args.manifest))
     reserved = KEYWORDS | BUILTINS
     core = core_signatures(os.path.join(args.out, "qt.goose"))
@@ -127,6 +154,10 @@ def main():
     for (fname, recv, gparams), entries in groups.items():
         sigs = sorted({e[1] for e in entries})
         rt = merge_ret([e[2] for e in entries])
+        prev = before.get((fname, "static" if recv.startswith("static:") else recv, tuple(gparams)))
+        if prev and prev != rt and prev in {e[2] for e in entries}:
+            rt = prev   # keep the published return type; the other classes' results have typed variants
+            kept += 1
         pushes = entries[0][3]
         if any("qtc_arg_null();" in e[3] for e in entries):
             # optional T* out-parameters are left out; qtc fills them with null for the overload it picks
@@ -236,6 +267,7 @@ def main():
     with open(os.path.join(args.out, "api.goose"), "w") as f:
         f.write("\n".join(out) + "\n")
     write_wrapper_test(args.out, out)
+    print("api.goose: %d return types kept from the baseline" % kept)
     print("api.goose: %d method functions (%d typed variants, from %d overload entries), %d constructors, "
           "%d enum values in %d scopes" % (nfun, nvar, stats["entries"], ncto, nenum, len(scopes)))
 

@@ -107,24 +107,42 @@ fn main() {
     qt::release(a);
     qt::release(b);
 
-    // a call queued to an object, and one to a worker object on its own thread
-    let timer = qt::QTimer();
-    timer.setInterval(123);
-    let fi = qt::invoke_future(timer, "interval");
+    // calls queued to a meta-object method (here a QML function), with a future for the result
+    let engine = qt::QQmlEngine();
+    let comp = qt::QQmlComponent(engine);
+    comp.setData("import QtQml\nQtObject { property int hits: 0\n function add(a, b) { return a + b }\n function hit() { hits++ } }", qt::QUrl("file:///t08.qml"));
+    let qo = comp.create_obj();
+    check(qt::alive(qo), "QML object");
+    qt::arg(2);
+    qt::arg(40);
+    let fi = qt::invoke_future(qo, "add");
     check(qt::wait(fi, 5000) == qt::WAIT_FINISHED, "a queued call's future");
-    check(qt::result_int(fi, 0) == 123, "with the call's result");
+    check(qt::result_int(fi, 0) == 42, "with the call's result");
     qt::release(fi);
+    check(qt::invoke_queued(qo, "hit"), "a call queued");
+    for i in 20 { if qt::get_int(qo, "hits") == 1 { break; } qt::wait(5); }
+    check(qt::get_int(qo, "hits") == 1, "ran later on the GUI thread");
+    check(!qt::invoke_queued(qo, "nosuch"), "an unknown method is refused");
+    qt::destroy(qo);
+    // a worker object: a timer started here and moved to a thread, whose timeouts come from there
     let thread = qt::QThread();
     thread.start();
     let worker = qt::QTimer();
-    worker.setObjectName("worker");
+    worker.start(5);
+    let conn = qt::connect(worker, "timeout", 77);
+    check(conn != 0, "connected");
     check(qt::move_to_thread(worker, thread), "moved to the thread");
-    let fw = qt::invoke_future(worker, "objectName");
-    check(qt::wait(fw, 5000) == qt::WAIT_FINISHED, "called on its thread");
-    check(qt::result_str(fw, 0) == "worker", "there");
-    qt::release(fw);
-    qt::arg(55);
-    check(qt::invoke_queued(worker, "setInterval"), "a call queued there");
+    worker.isActive();
+    check(qt::last_error() == qt::ERR_WRONG_THREAD, "called directly: refused (wrong thread)");
+    var ticks = 0;
+    var ev = default<qt::Event>();
+    for i in 300 {
+        qt::wait(5);
+        while qt::poll(ev) { if ev.kind == qt::EV_SIGNAL && ev.tag == 77 { ticks++; } }
+        if ticks >= 2 { break; }
+    }
+    check(ticks >= 2, "timeouts from the worker thread");
+    check(qt::destroy(worker), "destroyed in its thread");
     thread.quit();
     thread.wait();
     check(qt::live_futures() == futures0, "every future released");
