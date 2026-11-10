@@ -310,6 +310,8 @@ fn part0(n: i64&, bad: i64&) {
     qt::minimumDaysInMonth(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper minimumDaysInMonth: ", qt::last_error_message()); } }
     qt::maximumMonthsInYear(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumMonthsInYear: ", qt::last_error_message()); } }
     qt::name(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper name: ", qt::last_error_message()); } }
+    qt::name_int(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper name_int: ", qt::last_error_message()); } }
+    qt::name_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper name_str: ", qt::last_error_message()); } }
     qt::dateFromParts(qt::Val { h: 0 }, 0, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper dateFromParts: ", qt::last_error_message()); } }
     qt::dateFromParts(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper dateFromParts: ", qt::last_error_message()); } }
     qt::matchCenturyToWeekday(qt::Val { h: 0 }, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper matchCenturyToWeekday: ", qt::last_error_message()); } }
@@ -500,10 +502,10 @@ fn part0(n: i64&, bad: i64&) {
     qt::day(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper day: ", qt::last_error_message()); } }
     qt::dayOfYear(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper dayOfYear: ", qt::last_error_message()); } }
     qt::daysInMonth(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper daysInMonth: ", qt::last_error_message()); } }
-    qt::daysInYear(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper daysInYear: ", qt::last_error_message()); } }
-    qt::startOfDay(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper startOfDay: ", qt::last_error_message()); } }
 }
 fn part1(n: i64&, bad: i64&) {
+    qt::daysInYear(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper daysInYear: ", qt::last_error_message()); } }
+    qt::startOfDay(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper startOfDay: ", qt::last_error_message()); } }
     qt::startOfDay(qt::Val { h: 0 }, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper startOfDay: ", qt::last_error_message()); } }
     qt::endOfDay(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper endOfDay: ", qt::last_error_message()); } }
     qt::endOfDay(qt::Val { h: 0 }, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper endOfDay: ", qt::last_error_message()); } }
@@ -584,6 +586,8 @@ fn part1(n: i64&, bad: i64&) {
     qt::nameFilters(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nameFilters: ", qt::last_error_message()); } }
     qt::setNameFilters(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setNameFilters: ", qt::last_error_message()); } }
     qt::filter(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filter: ", qt::last_error_message()); } }
+    qt::filter_int(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filter_int: ", qt::last_error_message()); } }
+    qt::filter_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filter_str: ", qt::last_error_message()); } }
     qt::setFilter(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFilter: ", qt::last_error_message()); } }
     qt::sorting(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sorting: ", qt::last_error_message()); } }
     qt::setSorting(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSorting: ", qt::last_error_message()); } }
@@ -1000,12 +1004,12 @@ fn part1(n: i64&, bad: i64&) {
     qt::setText(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setText: ", qt::last_error_message()); } }
     qt::hasText(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasText: ", qt::last_error_message()); } }
     qt::html(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper html: ", qt::last_error_message()); } }
+}
+fn part2(n: i64&, bad: i64&) {
     qt::setHtml(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHtml: ", qt::last_error_message()); } }
     qt::hasHtml(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasHtml: ", qt::last_error_message()); } }
     qt::imageData(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper imageData: ", qt::last_error_message()); } }
     qt::setImageData(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setImageData: ", qt::last_error_message()); } }
-}
-fn part2(n: i64&, bad: i64&) {
     qt::hasImage(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasImage: ", qt::last_error_message()); } }
     qt::colorData(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper colorData: ", qt::last_error_message()); } }
     qt::setColorData(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setColorData: ", qt::last_error_message()); } }
@@ -1300,6 +1304,8 @@ fn part2(n: i64&, bad: i64&) {
     qt::format__int(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper format__int: ", qt::last_error_message()); } }
     qt::format__str(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper format__str: ", qt::last_error_message()); } }
     qt::scope(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scope: ", qt::last_error_message()); } }
+    qt::scope_int(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scope_int: ", qt::last_error_message()); } }
+    qt::scope_str(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scope_str: ", qt::last_error_message()); } }
     qt::organizationName(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper organizationName: ", qt::last_error_message()); } }
     qt::applicationName(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper applicationName: ", qt::last_error_message()); } }
     qt::setKey(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setKey: ", qt::last_error_message()); } }
@@ -1467,6 +1473,17 @@ fn part2(n: i64&, bad: i64&) {
     qt::wait(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper wait: ", qt::last_error_message()); } }
     qt::wait(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper wait: ", qt::last_error_message()); } }
     qt::wait(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper wait: ", qt::last_error_message()); } }
+    qt::expiryTimeout(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper expiryTimeout: ", qt::last_error_message()); } }
+    qt::setExpiryTimeout(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setExpiryTimeout: ", qt::last_error_message()); } }
+    qt::maxThreadCount(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maxThreadCount: ", qt::last_error_message()); } }
+    qt::setMaxThreadCount(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaxThreadCount: ", qt::last_error_message()); } }
+    qt::activeThreadCount(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper activeThreadCount: ", qt::last_error_message()); } }
+    qt::setThreadPriority(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setThreadPriority: ", qt::last_error_message()); } }
+    qt::threadPriority(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper threadPriority: ", qt::last_error_message()); } }
+    qt::waitForDone(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper waitForDone: ", qt::last_error_message()); } }
+    qt::waitForDone(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper waitForDone: ", qt::last_error_message()); } }
+    qt::waitForDone(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper waitForDone: ", qt::last_error_message()); } }
+    qt::contains(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper contains: ", qt::last_error_message()); } }
     qt::hour(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hour: ", qt::last_error_message()); } }
     qt::minute(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper minute: ", qt::last_error_message()); } }
     qt::second(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper second: ", qt::last_error_message()); } }
@@ -1489,6 +1506,8 @@ fn part2(n: i64&, bad: i64&) {
     qt::frameForTime(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper frameForTime: ", qt::last_error_message()); } }
     qt::valueForTime(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper valueForTime: ", qt::last_error_message()); } }
     qt::toggleDirection(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper toggleDirection: ", qt::last_error_message()); } }
+}
+fn part3(n: i64&, bad: i64&) {
     qt::fixedSecondsAheadOfUtc(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fixedSecondsAheadOfUtc: ", qt::last_error_message()); } }
     qt::isUtcOrFixedOffset(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isUtcOrFixedOffset: ", qt::last_error_message()); } }
     qt::asBackendZone(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper asBackendZone: ", qt::last_error_message()); } }
@@ -1506,8 +1525,6 @@ fn part2(n: i64&, bad: i64&) {
     qt::offsetFromUtc(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper offsetFromUtc: ", qt::last_error_message()); } }
     qt::standardTimeOffset(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper standardTimeOffset: ", qt::last_error_message()); } }
     qt::daylightTimeOffset(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper daylightTimeOffset: ", qt::last_error_message()); } }
-}
-fn part3(n: i64&, bad: i64&) {
     qt::hasDaylightTime(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasDaylightTime: ", qt::last_error_message()); } }
     qt::isDaylightTime(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isDaylightTime: ", qt::last_error_message()); } }
     qt::offsetData(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper offsetData: ", qt::last_error_message()); } }
@@ -1564,6 +1581,7 @@ fn part3(n: i64&, bad: i64&) {
     qt::setHost(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHost: ", qt::last_error_message()); } }
     qt::setHost(qt::Val { h: 0 }, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHost: ", qt::last_error_message()); } }
     qt::host(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper host: ", qt::last_error_message()); } }
+    qt::host_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper host_str: ", qt::last_error_message()); } }
     qt::host(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper host: ", qt::last_error_message()); } }
     qt::setPort(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPort: ", qt::last_error_message()); } }
     qt::port(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper port: ", qt::last_error_message()); } }
@@ -1576,6 +1594,7 @@ fn part3(n: i64&, bad: i64&) {
     qt::setQuery(qt::Val { h: 0 }, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setQuery: ", qt::last_error_message()); } }
     qt::setQuery(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setQuery: ", qt::last_error_message()); } }
     qt::query(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper query: ", qt::last_error_message()); } }
+    qt::query_str(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper query_str: ", qt::last_error_message()); } }
     qt::query(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper query: ", qt::last_error_message()); } }
     qt::hasFragment(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasFragment: ", qt::last_error_message()); } }
     qt::fragment(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fragment: ", qt::last_error_message()); } }
@@ -1989,6 +2008,8 @@ fn part3(n: i64&, bad: i64&) {
     qt::setLetterSpacing(qt::Val { h: 0 }, 0, 0.0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setLetterSpacing: ", qt::last_error_message()); } }
     qt::wordSpacing(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper wordSpacing: ", qt::last_error_message()); } }
     qt::setWordSpacing(qt::Val { h: 0 }, 0.0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWordSpacing: ", qt::last_error_message()); } }
+}
+fn part4(n: i64&, bad: i64&) {
     qt::setCapitalization(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCapitalization: ", qt::last_error_message()); } }
     qt::capitalization(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper capitalization: ", qt::last_error_message()); } }
     qt::setHintingPreference(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHintingPreference: ", qt::last_error_message()); } }
@@ -2008,8 +2029,6 @@ fn part3(n: i64&, bad: i64&) {
     qt::exactMatch(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper exactMatch: ", qt::last_error_message()); } }
     qt::isCopyOf(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isCopyOf: ", qt::last_error_message()); } }
     qt::fromString(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fromString: ", qt::last_error_message()); } }
-}
-fn part4(n: i64&, bad: i64&) {
     qt::defaultFamily(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper defaultFamily: ", qt::last_error_message()); } }
     qt::resolve(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper resolve: ", qt::last_error_message()); } }
     qt::resolveMask(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper resolveMask: ", qt::last_error_message()); } }
@@ -2491,6 +2510,8 @@ fn part4(n: i64&, bad: i64&) {
     qt::setBrush(qt::Val { h: 0 }, 0, 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setBrush: ", qt::last_error_message()); } }
     qt::setColorGroup(qt::Val { h: 0 }, 0, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setColorGroup: ", qt::last_error_message()); } }
     qt::isEqual(qt::Val { h: 0 }, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isEqual: ", qt::last_error_message()); } }
+}
+fn part5(n: i64&, bad: i64&) {
     qt::brush(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper brush: ", qt::last_error_message()); } }
     qt::windowText(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper windowText: ", qt::last_error_message()); } }
     qt::button(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper button: ", qt::last_error_message()); } }
@@ -2510,8 +2531,6 @@ fn part4(n: i64&, bad: i64&) {
     qt::highlightedText(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper highlightedText: ", qt::last_error_message()); } }
     qt::link(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper link: ", qt::last_error_message()); } }
     qt::linkVisited(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper linkVisited: ", qt::last_error_message()); } }
-}
-fn part5(n: i64&, bad: i64&) {
     qt::placeholderText(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper placeholderText: ", qt::last_error_message()); } }
     qt::accent(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper accent: ", qt::last_error_message()); } }
     qt::outputConditionIdentifier(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper outputConditionIdentifier: ", qt::last_error_message()); } }
@@ -2993,6 +3012,8 @@ fn part5(n: i64&, bad: i64&) {
     qt::isUndoRedoEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isUndoRedoEnabled: ", qt::last_error_message()); } }
     qt::isUndoAvailable(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isUndoAvailable: ", qt::last_error_message()); } }
     qt::isRedoAvailable(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isRedoAvailable: ", qt::last_error_message()); } }
+}
+fn part6(n: i64&, bad: i64&) {
     qt::availableUndoSteps(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper availableUndoSteps: ", qt::last_error_message()); } }
     qt::availableRedoSteps(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper availableRedoSteps: ", qt::last_error_message()); } }
     qt::revision(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper revision: ", qt::last_error_message()); } }
@@ -3012,8 +3033,6 @@ fn part5(n: i64&, bad: i64&) {
     qt::find(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper find: ", qt::last_error_message()); } }
     qt::find_bool(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper find_bool: ", qt::last_error_message()); } }
     qt::find(qt::NONE, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper find: ", qt::last_error_message()); } }
-}
-fn part6(n: i64&, bad: i64&) {
     qt::find_bool(qt::NONE, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper find_bool: ", qt::last_error_message()); } }
     qt::find(qt::NONE, "", 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper find: ", qt::last_error_message()); } }
     qt::find(qt::NONE, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper find: ", qt::last_error_message()); } }
@@ -3495,6 +3514,8 @@ fn part6(n: i64&, bad: i64&) {
     qt::defaultDropAction(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper defaultDropAction: ", qt::last_error_message()); } }
     qt::setAlternatingRowColors(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAlternatingRowColors: ", qt::last_error_message()); } }
     qt::alternatingRowColors(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper alternatingRowColors: ", qt::last_error_message()); } }
+}
+fn part7(n: i64&, bad: i64&) {
     qt::setTextElideMode(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTextElideMode: ", qt::last_error_message()); } }
     qt::textElideMode(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper textElideMode: ", qt::last_error_message()); } }
     qt::keyboardSearch(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper keyboardSearch: ", qt::last_error_message()); } }
@@ -3514,8 +3535,6 @@ fn part6(n: i64&, bad: i64&) {
     qt::isPersistentEditorOpen(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isPersistentEditorOpen: ", qt::last_error_message()); } }
     qt::setIndexWidget(qt::NONE, qt::Val { h: 0 }, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setIndexWidget: ", qt::last_error_message()); } }
     qt::indexWidget(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper indexWidget: ", qt::last_error_message()); } }
-}
-fn part7(n: i64&, bad: i64&) {
     qt::setItemDelegateForRow(qt::NONE, 0, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setItemDelegateForRow: ", qt::last_error_message()); } }
     qt::itemDelegateForRow(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper itemDelegateForRow: ", qt::last_error_message()); } }
     qt::setItemDelegateForColumn(qt::NONE, 0, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setItemDelegateForColumn: ", qt::last_error_message()); } }
@@ -3997,6 +4016,8 @@ fn part7(n: i64&, bad: i64&) {
     qt::urlSelected(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper urlSelected: ", qt::last_error_message()); } }
     qt::urlsSelected(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper urlsSelected: ", qt::last_error_message()); } }
     qt::currentUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper currentUrlChanged: ", qt::last_error_message()); } }
+}
+fn part8(n: i64&, bad: i64&) {
     qt::directoryUrlEntered(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper directoryUrlEntered: ", qt::last_error_message()); } }
     qt::filterSelected(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper filterSelected: ", qt::last_error_message()); } }
     qt::setWritingSystem(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWritingSystem: ", qt::last_error_message()); } }
@@ -4016,8 +4037,6 @@ fn part7(n: i64&, bad: i64&) {
     qt::setFieldGrowthPolicy(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFieldGrowthPolicy: ", qt::last_error_message()); } }
     qt::fieldGrowthPolicy(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fieldGrowthPolicy: ", qt::last_error_message()); } }
     qt::setRowWrapPolicy(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRowWrapPolicy: ", qt::last_error_message()); } }
-}
-fn part8(n: i64&, bad: i64&) {
     qt::rowWrapPolicy(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rowWrapPolicy: ", qt::last_error_message()); } }
     qt::setLabelAlignment(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setLabelAlignment: ", qt::last_error_message()); } }
     qt::labelAlignment(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper labelAlignment: ", qt::last_error_message()); } }
@@ -4499,6 +4518,8 @@ fn part8(n: i64&, bad: i64&) {
     qt::cursorPositionAt(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorPositionAt: ", qt::last_error_message()); } }
     qt::cursorForward(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorForward: ", qt::last_error_message()); } }
     qt::cursorForward(qt::NONE, false, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorForward: ", qt::last_error_message()); } }
+}
+fn part9(n: i64&, bad: i64&) {
     qt::cursorBackward(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorBackward: ", qt::last_error_message()); } }
     qt::cursorBackward(qt::NONE, false, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorBackward: ", qt::last_error_message()); } }
     qt::cursorWordForward(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cursorWordForward: ", qt::last_error_message()); } }
@@ -4518,8 +4539,6 @@ fn part8(n: i64&, bad: i64&) {
     qt::textMargins(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper textMargins: ", qt::last_error_message()); } }
     qt::addAction(qt::NONE, qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addAction: ", qt::last_error_message()); } }
     qt::addAction(qt::NONE, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addAction: ", qt::last_error_message()); } }
-}
-fn part9(n: i64&, bad: i64&) {
     qt::cut(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cut: ", qt::last_error_message()); } }
     qt::copy_(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper copy_: ", qt::last_error_message()); } }
     qt::paste(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper paste: ", qt::last_error_message()); } }
@@ -4814,6 +4833,26 @@ fn part9(n: i64&, bad: i64&) {
     qt::setMenu(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMenu: ", qt::last_error_message()); } }
     qt::menu(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper menu: ", qt::last_error_message()); } }
     qt::showMenu(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper showMenu: ", qt::last_error_message()); } }
+    qt::api(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper api: ", qt::last_error_message()); } }
+    qt::setApi(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setApi: ", qt::last_error_message()); } }
+    qt::isDebugLayerEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isDebugLayerEnabled: ", qt::last_error_message()); } }
+    qt::setDebugLayerEnabled(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setDebugLayerEnabled: ", qt::last_error_message()); } }
+    qt::sampleCount(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sampleCount: ", qt::last_error_message()); } }
+    qt::setSampleCount(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSampleCount: ", qt::last_error_message()); } }
+    qt::colorBufferFormat(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper colorBufferFormat: ", qt::last_error_message()); } }
+    qt::setColorBufferFormat(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setColorBufferFormat: ", qt::last_error_message()); } }
+    qt::fixedColorBufferSize(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fixedColorBufferSize: ", qt::last_error_message()); } }
+    qt::setFixedColorBufferSize(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFixedColorBufferSize: ", qt::last_error_message()); } }
+    qt::setFixedColorBufferSize(qt::NONE, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFixedColorBufferSize: ", qt::last_error_message()); } }
+    qt::isMirrorVerticallyEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isMirrorVerticallyEnabled: ", qt::last_error_message()); } }
+    qt::setMirrorVertically(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMirrorVertically: ", qt::last_error_message()); } }
+    qt::grabFramebuffer(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper grabFramebuffer: ", qt::last_error_message()); } }
+    qt::frameSubmitted(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper frameSubmitted: ", qt::last_error_message()); } }
+    qt::renderFailed(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper renderFailed: ", qt::last_error_message()); } }
+    qt::sampleCountChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sampleCountChanged: ", qt::last_error_message()); } }
+    qt::colorBufferFormatChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper colorBufferFormatChanged: ", qt::last_error_message()); } }
+    qt::fixedColorBufferSizeChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fixedColorBufferSizeChanged: ", qt::last_error_message()); } }
+    qt::mirrorVerticallyChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper mirrorVerticallyChanged: ", qt::last_error_message()); } }
     qt::move(qt::NONE, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper move: ", qt::last_error_message()); } }
     qt::move(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper move: ", qt::last_error_message()); } }
     qt::takeWidget(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper takeWidget: ", qt::last_error_message()); } }
@@ -4870,6 +4909,7 @@ fn part9(n: i64&, bad: i64&) {
     qt::finish(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper finish: ", qt::last_error_message()); } }
     qt::repaint(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper repaint: ", qt::last_error_message()); } }
     qt::message(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper message: ", qt::last_error_message()); } }
+    qt::message_str(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper message_str: ", qt::last_error_message()); } }
     qt::showMessage(qt::NONE, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper showMessage: ", qt::last_error_message()); } }
     qt::showMessage(qt::NONE, "", 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper showMessage: ", qt::last_error_message()); } }
     qt::clearMessage(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearMessage: ", qt::last_error_message()); } }
@@ -4980,6 +5020,8 @@ fn part9(n: i64&, bad: i64&) {
     qt::verticalHeader(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper verticalHeader: ", qt::last_error_message()); } }
     qt::setHorizontalHeader(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHorizontalHeader: ", qt::last_error_message()); } }
     qt::setVerticalHeader(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setVerticalHeader: ", qt::last_error_message()); } }
+}
+fn part10(n: i64&, bad: i64&) {
     qt::rowViewportPosition(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rowViewportPosition: ", qt::last_error_message()); } }
     qt::rowAt(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rowAt: ", qt::last_error_message()); } }
     qt::setRowHeight(qt::NONE, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRowHeight: ", qt::last_error_message()); } }
@@ -5020,8 +5062,6 @@ fn part9(n: i64&, bad: i64&) {
     qt::removeCellWidget(qt::NONE, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper removeCellWidget: ", qt::last_error_message()); } }
     qt::setRangeSelected(qt::NONE, qt::Val { h: 0 }, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRangeSelected: ", qt::last_error_message()); } }
     qt::selectedRanges(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper selectedRanges: ", qt::last_error_message()); } }
-}
-fn part10(n: i64&, bad: i64&) {
     qt::visualRow(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper visualRow: ", qt::last_error_message()); } }
     qt::visualColumn(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper visualColumn: ", qt::last_error_message()); } }
     qt::clearContents(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearContents: ", qt::last_error_message()); } }
@@ -5482,6 +5522,8 @@ fn part10(n: i64&, bad: i64&) {
     qt::values(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper values: ", qt::last_error_message()); } }
     qt::values(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper values: ", qt::last_error_message()); } }
     qt::valueAt(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper valueAt: ", qt::last_error_message()); } }
+}
+fn part11(n: i64&, bad: i64&) {
     qt::nameAt(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nameAt: ", qt::last_error_message()); } }
     qt::combinedValue(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper combinedValue: ", qt::last_error_message()); } }
     qt::combinedValue(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper combinedValue: ", qt::last_error_message()); } }
@@ -5522,8 +5564,6 @@ fn part10(n: i64&, bad: i64&) {
     qt::setCache(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCache: ", qt::last_error_message()); } }
     qt::cookieJar(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cookieJar: ", qt::last_error_message()); } }
     qt::setCookieJar(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCookieJar: ", qt::last_error_message()); } }
-}
-fn part11(n: i64&, bad: i64&) {
     qt::setStrictTransportSecurityEnabled(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setStrictTransportSecurityEnabled: ", qt::last_error_message()); } }
     qt::isStrictTransportSecurityEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isStrictTransportSecurityEnabled: ", qt::last_error_message()); } }
     qt::enableStrictTransportSecurityStore(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper enableStrictTransportSecurityStore: ", qt::last_error_message()); } }
@@ -5984,6 +6024,8 @@ fn part11(n: i64&, bad: i64&) {
     qt::execBatch(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper execBatch: ", qt::last_error_message()); } }
     qt::prepare(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper prepare: ", qt::last_error_message()); } }
     qt::bindValue(qt::Val { h: 0 }, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
+}
+fn part12(n: i64&, bad: i64&) {
     qt::bindValue(qt::Val { h: 0 }, "", qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
     qt::bindValue(qt::Val { h: 0 }, 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
     qt::bindValue(qt::Val { h: 0 }, 0, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindValue: ", qt::last_error_message()); } }
@@ -6024,8 +6066,6 @@ fn part11(n: i64&, bad: i64&) {
     qt::select(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper select: ", qt::last_error_message()); } }
     qt::setTable(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTable: ", qt::last_error_message()); } }
     qt::setRelation(qt::NONE, 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRelation: ", qt::last_error_message()); } }
-}
-fn part12(n: i64&, bad: i64&) {
     qt::relation(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper relation: ", qt::last_error_message()); } }
     qt::relationModel(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper relationModel: ", qt::last_error_message()); } }
     qt::setJoinMode(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setJoinMode: ", qt::last_error_message()); } }
@@ -6345,7 +6385,6 @@ fn part12(n: i64&, bad: i64&) {
     qt::isLegacyVersion(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isLegacyVersion: ", qt::last_error_message()); } }
     qt::updateBehavior(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper updateBehavior: ", qt::last_error_message()); } }
     qt::makeCurrent(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper makeCurrent: ", qt::last_error_message()); } }
-    qt::grabFramebuffer(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper grabFramebuffer: ", qt::last_error_message()); } }
     qt::frameSwapped(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper frameSwapped: ", qt::last_error_message()); } }
     qt::setUpdateBehavior(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setUpdateBehavior: ", qt::last_error_message()); } }
     qt::textureFormat(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper textureFormat: ", qt::last_error_message()); } }
@@ -6487,6 +6526,8 @@ fn part12(n: i64&, bad: i64&) {
     qt::trimComponentCache(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper trimComponentCache: ", qt::last_error_message()); } }
     qt::clearSingletons(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearSingletons: ", qt::last_error_message()); } }
     qt::importPathList(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper importPathList: ", qt::last_error_message()); } }
+}
+fn part13(n: i64&, bad: i64&) {
     qt::setImportPathList(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setImportPathList: ", qt::last_error_message()); } }
     qt::addImportPath(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addImportPath: ", qt::last_error_message()); } }
     qt::pluginPathList(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper pluginPathList: ", qt::last_error_message()); } }
@@ -6526,8 +6567,6 @@ fn part12(n: i64&, bad: i64&) {
     qt::evaluate(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper evaluate: ", qt::last_error_message()); } }
     qt::valueChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper valueChanged: ", qt::last_error_message()); } }
     qt::selector(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper selector: ", qt::last_error_message()); } }
-}
-fn part13(n: i64&, bad: i64&) {
     qt::setSelector(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSelector: ", qt::last_error_message()); } }
     qt::isProperty(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isProperty: ", qt::last_error_message()); } }
     qt::isSignalProperty(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isSignalProperty: ", qt::last_error_message()); } }
@@ -6556,12 +6595,10 @@ fn part13(n: i64&, bad: i64&) {
     qt::textureFollowsItemSize(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper textureFollowsItemSize: ", qt::last_error_message()); } }
     qt::setTextureFollowsItemSize(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTextureFollowsItemSize: ", qt::last_error_message()); } }
     qt::mirrorVertically(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper mirrorVertically: ", qt::last_error_message()); } }
-    qt::setMirrorVertically(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMirrorVertically: ", qt::last_error_message()); } }
     qt::isTextureProvider(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isTextureProvider: ", qt::last_error_message()); } }
     qt::textureProvider(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper textureProvider: ", qt::last_error_message()); } }
     qt::releaseResources(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper releaseResources: ", qt::last_error_message()); } }
     qt::textureFollowsItemSizeChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper textureFollowsItemSizeChanged: ", qt::last_error_message()); } }
-    qt::mirrorVerticallyChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper mirrorVerticallyChanged: ", qt::last_error_message()); } }
     qt::parentItem(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper parentItem: ", qt::last_error_message()); } }
     qt::setParentItem(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setParentItem: ", qt::last_error_message()); } }
     qt::stackBefore(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper stackBefore: ", qt::last_error_message()); } }
@@ -6706,11 +6743,6 @@ fn part13(n: i64&, bad: i64&) {
     qt::render(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper render: ", qt::last_error_message()); } }
     qt::renderRequested(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper renderRequested: ", qt::last_error_message()); } }
     qt::sceneChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sceneChanged: ", qt::last_error_message()); } }
-    qt::sampleCount(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sampleCount: ", qt::last_error_message()); } }
-    qt::setSampleCount(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSampleCount: ", qt::last_error_message()); } }
-    qt::colorBufferFormat(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper colorBufferFormat: ", qt::last_error_message()); } }
-    qt::setColorBufferFormat(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setColorBufferFormat: ", qt::last_error_message()); } }
-    qt::isMirrorVerticallyEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isMirrorVerticallyEnabled: ", qt::last_error_message()); } }
     qt::alphaBlending(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper alphaBlending: ", qt::last_error_message()); } }
     qt::setAlphaBlending(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAlphaBlending: ", qt::last_error_message()); } }
     qt::fixedColorBufferWidth(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper fixedColorBufferWidth: ", qt::last_error_message()); } }
@@ -6996,6 +7028,8 @@ fn part13(n: i64&, bad: i64&) {
     qt::activeSubtitleTrack(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper activeSubtitleTrack: ", qt::last_error_message()); } }
     qt::setActiveAudioTrack(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setActiveAudioTrack: ", qt::last_error_message()); } }
     qt::setActiveVideoTrack(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setActiveVideoTrack: ", qt::last_error_message()); } }
+}
+fn part14(n: i64&, bad: i64&) {
     qt::setActiveSubtitleTrack(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setActiveSubtitleTrack: ", qt::last_error_message()); } }
     qt::setAudioBufferOutput(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAudioBufferOutput: ", qt::last_error_message()); } }
     qt::audioBufferOutput(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper audioBufferOutput: ", qt::last_error_message()); } }
@@ -7028,8 +7062,6 @@ fn part13(n: i64&, bad: i64&) {
     qt::playingChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper playingChanged: ", qt::last_error_message()); } }
     qt::playbackRateChanged(qt::NONE, 0.0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper playbackRateChanged: ", qt::last_error_message()); } }
     qt::loopsChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper loopsChanged: ", qt::last_error_message()); } }
-}
-fn part14(n: i64&, bad: i64&) {
     qt::audioBufferOutputChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper audioBufferOutputChanged: ", qt::last_error_message()); } }
     qt::tracksChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tracksChanged: ", qt::last_error_message()); } }
     qt::activeTracksChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper activeTracksChanged: ", qt::last_error_message()); } }
@@ -7498,6 +7530,8 @@ fn part14(n: i64&, bad: i64&) {
     qt::minimumColumnWidthChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper minimumColumnWidthChanged: ", qt::last_error_message()); } }
     qt::bodyWidthChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bodyWidthChanged: ", qt::last_error_message()); } }
     qt::bodyOutlineVisibilityChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bodyOutlineVisibilityChanged: ", qt::last_error_message()); } }
+}
+fn part15(n: i64&, bad: i64&) {
     qt::capsWidthChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper capsWidthChanged: ", qt::last_error_message()); } }
     qt::capsVisibilityChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper capsVisibilityChanged: ", qt::last_error_message()); } }
     qt::increasingColorChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper increasingColorChanged: ", qt::last_error_message()); } }
@@ -7530,8 +7564,6 @@ fn part14(n: i64&, bad: i64&) {
     qt::setAxisY(qt::NONE, qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAxisY: ", qt::last_error_message()); } }
     qt::axisX(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper axisX: ", qt::last_error_message()); } }
     qt::axisX(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper axisX: ", qt::last_error_message()); } }
-}
-fn part15(n: i64&, bad: i64&) {
     qt::axisY(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper axisY: ", qt::last_error_message()); } }
     qt::axisY(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper axisY: ", qt::last_error_message()); } }
     qt::addAxis(qt::NONE, qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addAxis: ", qt::last_error_message()); } }
@@ -8000,6 +8032,8 @@ fn part15(n: i64&, bad: i64&) {
     qt::closeReason(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper closeReason: ", qt::last_error_message()); } }
     qt::sendTextMessage(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sendTextMessage: ", qt::last_error_message()); } }
     qt::sendBinaryMessage(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sendBinaryMessage: ", qt::last_error_message()); } }
+}
+fn part16(n: i64&, bad: i64&) {
     qt::setMaxAllowedIncomingFrameSize(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaxAllowedIncomingFrameSize: ", qt::last_error_message()); } }
     qt::maxAllowedIncomingFrameSize(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maxAllowedIncomingFrameSize: ", qt::last_error_message()); } }
     qt::setMaxAllowedIncomingMessageSize(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaxAllowedIncomingMessageSize: ", qt::last_error_message()); } }
@@ -8032,8 +8066,6 @@ fn part15(n: i64&, bad: i64&) {
     qt::supportedVersions(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper supportedVersions: ", qt::last_error_message()); } }
     qt::handleConnection(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper handleConnection: ", qt::last_error_message()); } }
     qt::serverError(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper serverError: ", qt::last_error_message()); } }
-}
-fn part16(n: i64&, bad: i64&) {
     qt::sslErrorsOccurred(qt::NONE, qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sslErrorsOccurred: ", qt::last_error_message()); } }
     qt::closed(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper closed: ", qt::last_error_message()); } }
     qt::registerObject(qt::NONE, "", qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper registerObject: ", qt::last_error_message()); } }
@@ -8070,6 +8102,402 @@ fn part16(n: i64&, bad: i64&) {
     qt::isLanguageChangeEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isLanguageChangeEnabled: ", qt::last_error_message()); } }
     qt::setTranslationEnabled(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTranslationEnabled: ", qt::last_error_message()); } }
     qt::isTranslationEnabled(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isTranslationEnabled: ", qt::last_error_message()); } }
+    qt::clientIdentifier(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientIdentifier: ", qt::last_error_message()); } }
+    qt::setClientIdentifier(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setClientIdentifier: ", qt::last_error_message()); } }
+    qt::token(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper token: ", qt::last_error_message()); } }
+    qt::setToken(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setToken: ", qt::last_error_message()); } }
+    qt::setNetworkAccessManager(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setNetworkAccessManager: ", qt::last_error_message()); } }
+    qt::authorizationUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authorizationUrl: ", qt::last_error_message()); } }
+    qt::setAuthorizationUrl(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAuthorizationUrl: ", qt::last_error_message()); } }
+    qt::extraTokens(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper extraTokens: ", qt::last_error_message()); } }
+    qt::replyHandler(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper replyHandler: ", qt::last_error_message()); } }
+    qt::setReplyHandler(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setReplyHandler: ", qt::last_error_message()); } }
+    qt::head(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper head: ", qt::last_error_message()); } }
+    qt::deleteResource(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper deleteResource: ", qt::last_error_message()); } }
+    qt::contentType(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper contentType: ", qt::last_error_message()); } }
+    qt::grant(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper grant: ", qt::last_error_message()); } }
+    qt::clientIdentifierChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientIdentifierChanged: ", qt::last_error_message()); } }
+    qt::tokenChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenChanged: ", qt::last_error_message()); } }
+    qt::authorizationUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authorizationUrlChanged: ", qt::last_error_message()); } }
+    qt::extraTokensChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper extraTokensChanged: ", qt::last_error_message()); } }
+    qt::contentTypeChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper contentTypeChanged: ", qt::last_error_message()); } }
+    qt::requestFailed(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper requestFailed: ", qt::last_error_message()); } }
+    qt::authorizeWithBrowser(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authorizeWithBrowser: ", qt::last_error_message()); } }
+    qt::granted(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper granted: ", qt::last_error_message()); } }
+    qt::replyDataReceived(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper replyDataReceived: ", qt::last_error_message()); } }
+    qt::createAuthenticatedUrl(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper createAuthenticatedUrl: ", qt::last_error_message()); } }
+    qt::createAuthenticatedUrl(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper createAuthenticatedUrl: ", qt::last_error_message()); } }
+    qt::setScope(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setScope: ", qt::last_error_message()); } }
+    qt::grantedScopeTokens(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper grantedScopeTokens: ", qt::last_error_message()); } }
+    qt::requestedScopeTokens(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper requestedScopeTokens: ", qt::last_error_message()); } }
+    qt::setRequestedScopeTokens(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRequestedScopeTokens: ", qt::last_error_message()); } }
+    qt::userAgent(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userAgent: ", qt::last_error_message()); } }
+    qt::setUserAgent(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setUserAgent: ", qt::last_error_message()); } }
+    qt::responseType(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper responseType: ", qt::last_error_message()); } }
+    qt::clientIdentifierSharedKey(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientIdentifierSharedKey: ", qt::last_error_message()); } }
+    qt::setClientIdentifierSharedKey(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setClientIdentifierSharedKey: ", qt::last_error_message()); } }
+    qt::expirationAt(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper expirationAt: ", qt::last_error_message()); } }
+    qt::refreshToken(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper refreshToken: ", qt::last_error_message()); } }
+    qt::setRefreshToken(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRefreshToken: ", qt::last_error_message()); } }
+    qt::autoRefresh(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper autoRefresh: ", qt::last_error_message()); } }
+    qt::setAutoRefresh(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAutoRefresh: ", qt::last_error_message()); } }
+    qt::nonceMode(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nonceMode: ", qt::last_error_message()); } }
+    qt::setNonceMode(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setNonceMode: ", qt::last_error_message()); } }
+    qt::nonce(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nonce: ", qt::last_error_message()); } }
+    qt::setNonce(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setNonce: ", qt::last_error_message()); } }
+    qt::idToken(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper idToken: ", qt::last_error_message()); } }
+    qt::tokenUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenUrl: ", qt::last_error_message()); } }
+    qt::setTokenUrl(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTokenUrl: ", qt::last_error_message()); } }
+    qt::clearNetworkRequestModifier(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearNetworkRequestModifier: ", qt::last_error_message()); } }
+    qt::refreshTokens(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper refreshTokens: ", qt::last_error_message()); } }
+    qt::scopeChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper scopeChanged: ", qt::last_error_message()); } }
+    qt::grantedScopeTokensChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper grantedScopeTokensChanged: ", qt::last_error_message()); } }
+    qt::requestedScopeTokensChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper requestedScopeTokensChanged: ", qt::last_error_message()); } }
+    qt::userAgentChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userAgentChanged: ", qt::last_error_message()); } }
+    qt::responseTypeChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper responseTypeChanged: ", qt::last_error_message()); } }
+    qt::clientIdentifierSharedKeyChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientIdentifierSharedKeyChanged: ", qt::last_error_message()); } }
+    qt::expirationAtChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper expirationAtChanged: ", qt::last_error_message()); } }
+    qt::refreshTokenChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper refreshTokenChanged: ", qt::last_error_message()); } }
+    qt::accessTokenAboutToExpire(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper accessTokenAboutToExpire: ", qt::last_error_message()); } }
+    qt::autoRefreshChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper autoRefreshChanged: ", qt::last_error_message()); } }
+    qt::nonceModeChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nonceModeChanged: ", qt::last_error_message()); } }
+    qt::nonceChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper nonceChanged: ", qt::last_error_message()); } }
+    qt::idTokenChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper idTokenChanged: ", qt::last_error_message()); } }
+    qt::tokenUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenUrlChanged: ", qt::last_error_message()); } }
+    qt::sslConfigurationChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sslConfigurationChanged: ", qt::last_error_message()); } }
+    qt::error(qt::NONE, "", "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper error: ", qt::last_error_message()); } }
+    qt::serverReportedErrorOccurred(qt::NONE, "", "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper serverReportedErrorOccurred: ", qt::last_error_message()); } }
+    qt::authorizationCallbackReceived(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authorizationCallbackReceived: ", qt::last_error_message()); } }
+    qt::callback(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper callback: ", qt::last_error_message()); } }
+    qt::networkReplyFinished(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper networkReplyFinished: ", qt::last_error_message()); } }
+    qt::callbackReceived(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper callbackReceived: ", qt::last_error_message()); } }
+    qt::tokensReceived(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokensReceived: ", qt::last_error_message()); } }
+    qt::tokenRequestErrorOccurred(qt::NONE, 0, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenRequestErrorOccurred: ", qt::last_error_message()); } }
+    qt::callbackDataReceived(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper callbackDataReceived: ", qt::last_error_message()); } }
+    qt::clientSharedSecret(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientSharedSecret: ", qt::last_error_message()); } }
+    qt::setClientSharedSecret(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setClientSharedSecret: ", qt::last_error_message()); } }
+    qt::setClientCredentials(qt::NONE, "", ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setClientCredentials: ", qt::last_error_message()); } }
+    qt::tokenSecret(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenSecret: ", qt::last_error_message()); } }
+    qt::setTokenSecret(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTokenSecret: ", qt::last_error_message()); } }
+    qt::setTokenCredentials(qt::NONE, "", ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTokenCredentials: ", qt::last_error_message()); } }
+    qt::temporaryCredentialsUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper temporaryCredentialsUrl: ", qt::last_error_message()); } }
+    qt::setTemporaryCredentialsUrl(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTemporaryCredentialsUrl: ", qt::last_error_message()); } }
+    qt::tokenCredentialsUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenCredentialsUrl: ", qt::last_error_message()); } }
+    qt::setTokenCredentialsUrl(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTokenCredentialsUrl: ", qt::last_error_message()); } }
+    qt::signatureMethod(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper signatureMethod: ", qt::last_error_message()); } }
+    qt::setSignatureMethod(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSignatureMethod: ", qt::last_error_message()); } }
+    qt::continueGrantWithVerifier(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper continueGrantWithVerifier: ", qt::last_error_message()); } }
+    qt::signatureMethodChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper signatureMethodChanged: ", qt::last_error_message()); } }
+    qt::clientSharedSecretChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientSharedSecretChanged: ", qt::last_error_message()); } }
+    qt::tokenSecretChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenSecretChanged: ", qt::last_error_message()); } }
+    qt::temporaryCredentialsUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper temporaryCredentialsUrlChanged: ", qt::last_error_message()); } }
+    qt::tokenCredentialsUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenCredentialsUrlChanged: ", qt::last_error_message()); } }
+    qt::httpRequestMethod(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper httpRequestMethod: ", qt::last_error_message()); } }
+    qt::setHttpRequestMethod(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHttpRequestMethod: ", qt::last_error_message()); } }
+    qt::customMethodString(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper customMethodString: ", qt::last_error_message()); } }
+    qt::setCustomMethodString(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCustomMethodString: ", qt::last_error_message()); } }
+    qt::parameters(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper parameters: ", qt::last_error_message()); } }
+    qt::setParameters(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setParameters: ", qt::last_error_message()); } }
+    qt::addRequestBody(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addRequestBody: ", qt::last_error_message()); } }
+    qt::insert(qt::Val { h: 0 }, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper insert: ", qt::last_error_message()); } }
+    qt::value(qt::Val { h: 0 }, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper value: ", qt::last_error_message()); } }
+    qt::clientSharedKey(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientSharedKey: ", qt::last_error_message()); } }
+    qt::setClientSharedKey(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setClientSharedKey: ", qt::last_error_message()); } }
+    qt::tokenSecret(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenSecret: ", qt::last_error_message()); } }
+    qt::setTokenSecret(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTokenSecret: ", qt::last_error_message()); } }
+    qt::hmacSha1(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hmacSha1: ", qt::last_error_message()); } }
+    qt::rsaSha1(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rsaSha1: ", qt::last_error_message()); } }
+    qt::plainText(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper plainText: ", qt::last_error_message()); } }
+    qt::accessTokenUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper accessTokenUrl: ", qt::last_error_message()); } }
+    qt::setAccessTokenUrl(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAccessTokenUrl: ", qt::last_error_message()); } }
+    qt::setPkceMethod(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPkceMethod: ", qt::last_error_message()); } }
+    qt::setPkceMethod(qt::NONE, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPkceMethod: ", qt::last_error_message()); } }
+    qt::pkceMethod(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper pkceMethod: ", qt::last_error_message()); } }
+    qt::refreshAccessToken(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper refreshAccessToken: ", qt::last_error_message()); } }
+    qt::accessTokenUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper accessTokenUrlChanged: ", qt::last_error_message()); } }
+    qt::userCode(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userCode: ", qt::last_error_message()); } }
+    qt::verificationUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper verificationUrl: ", qt::last_error_message()); } }
+    qt::completeVerificationUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper completeVerificationUrl: ", qt::last_error_message()); } }
+    qt::isPolling(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isPolling: ", qt::last_error_message()); } }
+    qt::userCodeExpirationAt(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userCodeExpirationAt: ", qt::last_error_message()); } }
+    qt::startTokenPolling(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper startTokenPolling: ", qt::last_error_message()); } }
+    qt::stopTokenPolling(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper stopTokenPolling: ", qt::last_error_message()); } }
+    qt::authorizeWithUserCode(qt::NONE, qt::Val { h: 0 }, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authorizeWithUserCode: ", qt::last_error_message()); } }
+    qt::userCodeChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userCodeChanged: ", qt::last_error_message()); } }
+    qt::verificationUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper verificationUrlChanged: ", qt::last_error_message()); } }
+    qt::completeVerificationUrlChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper completeVerificationUrlChanged: ", qt::last_error_message()); } }
+    qt::pollingChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper pollingChanged: ", qt::last_error_message()); } }
+    qt::userCodeExpirationAtChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userCodeExpirationAtChanged: ", qt::last_error_message()); } }
+    qt::callbackPath(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper callbackPath: ", qt::last_error_message()); } }
+    qt::setCallbackPath(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCallbackPath: ", qt::last_error_message()); } }
+    qt::callbackHost(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper callbackHost: ", qt::last_error_message()); } }
+    qt::setCallbackHost(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCallbackHost: ", qt::last_error_message()); } }
+    qt::callbackText(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper callbackText: ", qt::last_error_message()); } }
+    qt::setCallbackText(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCallbackText: ", qt::last_error_message()); } }
+    qt::port(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper port: ", qt::last_error_message()); } }
+    qt::listen(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper listen: ", qt::last_error_message()); } }
+    qt::listen(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper listen: ", qt::last_error_message()); } }
+    qt::setRedirectUrl(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRedirectUrl: ", qt::last_error_message()); } }
+    qt::redirectUrl(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper redirectUrl: ", qt::last_error_message()); } }
+    qt::handleAuthorizationRedirect(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper handleAuthorizationRedirect: ", qt::last_error_message()); } }
+    qt::redirectUrlChanged(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper redirectUrlChanged: ", qt::last_error_message()); } }
+    qt::serverPorts(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper serverPorts: ", qt::last_error_message()); } }
+    qt::bind(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bind: ", qt::last_error_message()); } }
+    qt::servers(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper servers: ", qt::last_error_message()); } }
+    qt::localServers(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper localServers: ", qt::last_error_message()); } }
+    qt::http2Configuration(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper http2Configuration: ", qt::last_error_message()); } }
+    qt::setHttp2Configuration(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHttp2Configuration: ", qt::last_error_message()); } }
+    qt::setConfiguration(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setConfiguration: ", qt::last_error_message()); } }
+    qt::configuration(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper configuration: ", qt::last_error_message()); } }
+    qt::clearMissingHandler(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearMissingHandler: ", qt::last_error_message()); } }
+    qt::setRateLimitPerSecond(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRateLimitPerSecond: ", qt::last_error_message()); } }
+    qt::rateLimitPerSecond(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper rateLimitPerSecond: ", qt::last_error_message()); } }
+    qt::setMaximumConnectionsPerHost(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumConnectionsPerHost: ", qt::last_error_message()); } }
+    qt::maximumConnectionsPerHost(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumConnectionsPerHost: ", qt::last_error_message()); } }
+    qt::setMaximumConnections(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumConnections: ", qt::last_error_message()); } }
+    qt::maximumConnections(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumConnections: ", qt::last_error_message()); } }
+    qt::setMaximumUrlSize(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumUrlSize: ", qt::last_error_message()); } }
+    qt::maximumUrlSize(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumUrlSize: ", qt::last_error_message()); } }
+    qt::setMaximumTotalHeaderSize(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumTotalHeaderSize: ", qt::last_error_message()); } }
+    qt::maximumTotalHeaderSize(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumTotalHeaderSize: ", qt::last_error_message()); } }
+    qt::setMaximumHeaderFieldSize(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumHeaderFieldSize: ", qt::last_error_message()); } }
+    qt::maximumHeaderFieldSize(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumHeaderFieldSize: ", qt::last_error_message()); } }
+    qt::setMaximumHeaderFieldCount(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumHeaderFieldCount: ", qt::last_error_message()); } }
+    qt::maximumHeaderFieldCount(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumHeaderFieldCount: ", qt::last_error_message()); } }
+    qt::setMaximumBodySize(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumBodySize: ", qt::last_error_message()); } }
+    qt::maximumBodySize(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumBodySize: ", qt::last_error_message()); } }
+    qt::method(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper method: ", qt::last_error_message()); } }
+    qt::body(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper body: ", qt::last_error_message()); } }
+    qt::remoteAddress(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper remoteAddress: ", qt::last_error_message()); } }
+    qt::remotePort(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper remotePort: ", qt::last_error_message()); } }
+    qt::localAddress(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper localAddress: ", qt::last_error_message()); } }
+    qt::denyStatus(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper denyStatus: ", qt::last_error_message()); } }
+    qt::denyMessage(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper denyMessage: ", qt::last_error_message()); } }
+    qt::setAuthenticationMethod(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAuthenticationMethod: ", qt::last_error_message()); } }
+    qt::authenticationData(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authenticationData: ", qt::last_error_message()); } }
+    qt::setAuthenticationData(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAuthenticationData: ", qt::last_error_message()); } }
+    qt::reason(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper reason: ", qt::last_error_message()); } }
+    qt::setReason(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setReason: ", qt::last_error_message()); } }
+    qt::userProperties(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userProperties: ", qt::last_error_message()); } }
+    qt::setUserProperties(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setUserProperties: ", qt::last_error_message()); } }
+    qt::setTransport(qt::NONE, qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTransport: ", qt::last_error_message()); } }
+    qt::transport(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper transport: ", qt::last_error_message()); } }
+    qt::subscribe(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper subscribe: ", qt::last_error_message()); } }
+    qt::subscribe(qt::NONE, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper subscribe: ", qt::last_error_message()); } }
+    qt::subscribe(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper subscribe: ", qt::last_error_message()); } }
+    qt::subscribe(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper subscribe: ", qt::last_error_message()); } }
+    qt::unsubscribe(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper unsubscribe: ", qt::last_error_message()); } }
+    qt::unsubscribe(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper unsubscribe: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }, "", 0, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }, "", 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::publish(qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }, "", 0, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publish: ", qt::last_error_message()); } }
+    qt::requestPing(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper requestPing: ", qt::last_error_message()); } }
+    qt::hostname(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hostname: ", qt::last_error_message()); } }
+    qt::clientId(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientId: ", qt::last_error_message()); } }
+    qt::keepAlive(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper keepAlive: ", qt::last_error_message()); } }
+    qt::protocolVersion(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper protocolVersion: ", qt::last_error_message()); } }
+    qt::connectToHost(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper connectToHost: ", qt::last_error_message()); } }
+    qt::connectToHostEncrypted(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper connectToHostEncrypted: ", qt::last_error_message()); } }
+    qt::connectToHostWebSocket(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper connectToHostWebSocket: ", qt::last_error_message()); } }
+    qt::connectToHostWebSocket(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper connectToHostWebSocket: ", qt::last_error_message()); } }
+    qt::connectToHostWebSocketEncrypted(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper connectToHostWebSocketEncrypted: ", qt::last_error_message()); } }
+    qt::connectToHostWebSocketEncrypted(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper connectToHostWebSocketEncrypted: ", qt::last_error_message()); } }
+    qt::username(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper username: ", qt::last_error_message()); } }
+    qt::password(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper password: ", qt::last_error_message()); } }
+    qt::cleanSession(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cleanSession: ", qt::last_error_message()); } }
+    qt::willTopic(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willTopic: ", qt::last_error_message()); } }
+    qt::willQoS(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willQoS: ", qt::last_error_message()); } }
+    qt::willMessage(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willMessage: ", qt::last_error_message()); } }
+    qt::willRetain(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willRetain: ", qt::last_error_message()); } }
+    qt::autoKeepAlive(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper autoKeepAlive: ", qt::last_error_message()); } }
+    qt::setConnectionProperties(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setConnectionProperties: ", qt::last_error_message()); } }
+    qt::connectionProperties(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper connectionProperties: ", qt::last_error_message()); } }
+    qt::setLastWillProperties(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setLastWillProperties: ", qt::last_error_message()); } }
+    qt::lastWillProperties(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper lastWillProperties: ", qt::last_error_message()); } }
+    qt::serverConnectionProperties(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper serverConnectionProperties: ", qt::last_error_message()); } }
+    qt::authenticate(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authenticate: ", qt::last_error_message()); } }
+    qt::messageReceived(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper messageReceived: ", qt::last_error_message()); } }
+    qt::messageReceived(qt::NONE, "", qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper messageReceived: ", qt::last_error_message()); } }
+    qt::messageStatusChanged(qt::NONE, 0, 0, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper messageStatusChanged: ", qt::last_error_message()); } }
+    qt::messageSent(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper messageSent: ", qt::last_error_message()); } }
+    qt::pingResponseReceived(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper pingResponseReceived: ", qt::last_error_message()); } }
+    qt::brokerSessionRestored(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper brokerSessionRestored: ", qt::last_error_message()); } }
+    qt::hostnameChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hostnameChanged: ", qt::last_error_message()); } }
+    qt::portChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper portChanged: ", qt::last_error_message()); } }
+    qt::clientIdChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientIdChanged: ", qt::last_error_message()); } }
+    qt::keepAliveChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper keepAliveChanged: ", qt::last_error_message()); } }
+    qt::protocolVersionChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper protocolVersionChanged: ", qt::last_error_message()); } }
+    qt::errorChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper errorChanged: ", qt::last_error_message()); } }
+    qt::usernameChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper usernameChanged: ", qt::last_error_message()); } }
+    qt::passwordChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper passwordChanged: ", qt::last_error_message()); } }
+    qt::cleanSessionChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cleanSessionChanged: ", qt::last_error_message()); } }
+    qt::willTopicChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willTopicChanged: ", qt::last_error_message()); } }
+    qt::willQoSChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willQoSChanged: ", qt::last_error_message()); } }
+    qt::willMessageChanged(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willMessageChanged: ", qt::last_error_message()); } }
+    qt::willRetainChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willRetainChanged: ", qt::last_error_message()); } }
+    qt::autoKeepAliveChanged(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper autoKeepAliveChanged: ", qt::last_error_message()); } }
+    qt::authenticationRequested(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authenticationRequested: ", qt::last_error_message()); } }
+    qt::authenticationFinished(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper authenticationFinished: ", qt::last_error_message()); } }
+    qt::setHostname(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHostname: ", qt::last_error_message()); } }
+    qt::setPort(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPort: ", qt::last_error_message()); } }
+    qt::setClientId(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setClientId: ", qt::last_error_message()); } }
+    qt::setKeepAlive(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setKeepAlive: ", qt::last_error_message()); } }
+    qt::setProtocolVersion(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setProtocolVersion: ", qt::last_error_message()); } }
+    qt::setState(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setState: ", qt::last_error_message()); } }
+    qt::setError(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setError: ", qt::last_error_message()); } }
+    qt::setUsername(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setUsername: ", qt::last_error_message()); } }
+    qt::setPassword(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPassword: ", qt::last_error_message()); } }
+    qt::setCleanSession(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCleanSession: ", qt::last_error_message()); } }
+    qt::setWillTopic(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWillTopic: ", qt::last_error_message()); } }
+    qt::setWillQoS(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWillQoS: ", qt::last_error_message()); } }
+    qt::setWillMessage(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWillMessage: ", qt::last_error_message()); } }
+    qt::setWillRetain(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWillRetain: ", qt::last_error_message()); } }
+    qt::setAutoKeepAlive(qt::NONE, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAutoKeepAlive: ", qt::last_error_message()); } }
+    qt::sessionExpiryInterval(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sessionExpiryInterval: ", qt::last_error_message()); } }
+    qt::maximumReceive(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumReceive: ", qt::last_error_message()); } }
+    qt::maximumPacketSize(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumPacketSize: ", qt::last_error_message()); } }
+    qt::maximumTopicAlias(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumTopicAlias: ", qt::last_error_message()); } }
+    qt::requestResponseInformation(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper requestResponseInformation: ", qt::last_error_message()); } }
+    qt::requestProblemInformation(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper requestProblemInformation: ", qt::last_error_message()); } }
+    qt::setSessionExpiryInterval(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSessionExpiryInterval: ", qt::last_error_message()); } }
+    qt::setMaximumReceive(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumReceive: ", qt::last_error_message()); } }
+    qt::setMaximumPacketSize(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumPacketSize: ", qt::last_error_message()); } }
+    qt::setMaximumTopicAlias(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumTopicAlias: ", qt::last_error_message()); } }
+    qt::setRequestResponseInformation(qt::Val { h: 0 }, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRequestResponseInformation: ", qt::last_error_message()); } }
+    qt::setRequestProblemInformation(qt::Val { h: 0 }, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setRequestProblemInformation: ", qt::last_error_message()); } }
+    qt::willDelayInterval(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper willDelayInterval: ", qt::last_error_message()); } }
+    qt::payloadFormatIndicator(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper payloadFormatIndicator: ", qt::last_error_message()); } }
+    qt::messageExpiryInterval(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper messageExpiryInterval: ", qt::last_error_message()); } }
+    qt::contentType(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper contentType: ", qt::last_error_message()); } }
+    qt::responseTopic(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper responseTopic: ", qt::last_error_message()); } }
+    qt::correlationData(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper correlationData: ", qt::last_error_message()); } }
+    qt::setWillDelayInterval(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setWillDelayInterval: ", qt::last_error_message()); } }
+    qt::setPayloadFormatIndicator(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPayloadFormatIndicator: ", qt::last_error_message()); } }
+    qt::setMessageExpiryInterval(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMessageExpiryInterval: ", qt::last_error_message()); } }
+    qt::setContentType(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setContentType: ", qt::last_error_message()); } }
+    qt::setResponseTopic(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setResponseTopic: ", qt::last_error_message()); } }
+    qt::setCorrelationData(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setCorrelationData: ", qt::last_error_message()); } }
+    qt::payload(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper payload: ", qt::last_error_message()); } }
+    qt::qos(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper qos: ", qt::last_error_message()); } }
+    qt::topic(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper topic: ", qt::last_error_message()); } }
+    qt::duplicate(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper duplicate: ", qt::last_error_message()); } }
+    qt::retain(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper retain: ", qt::last_error_message()); } }
+    qt::publishProperties(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper publishProperties: ", qt::last_error_message()); } }
+    qt::reasonCode(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper reasonCode: ", qt::last_error_message()); } }
+    qt::availableProperties(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper availableProperties: ", qt::last_error_message()); } }
+    qt::topicAlias(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper topicAlias: ", qt::last_error_message()); } }
+    qt::setTopicAlias(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setTopicAlias: ", qt::last_error_message()); } }
+    qt::subscriptionIdentifiers(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper subscriptionIdentifiers: ", qt::last_error_message()); } }
+    qt::setSubscriptionIdentifiers(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSubscriptionIdentifiers: ", qt::last_error_message()); } }
+    qt::maximumQoS(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumQoS: ", qt::last_error_message()); } }
+    qt::retainAvailable(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper retainAvailable: ", qt::last_error_message()); } }
+    qt::clientIdAssigned(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clientIdAssigned: ", qt::last_error_message()); } }
+    qt::wildcardSupported(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper wildcardSupported: ", qt::last_error_message()); } }
+    qt::subscriptionIdentifierSupported(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper subscriptionIdentifierSupported: ", qt::last_error_message()); } }
+    qt::sharedSubscriptionSupported(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sharedSubscriptionSupported: ", qt::last_error_message()); } }
+    qt::serverKeepAlive(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper serverKeepAlive: ", qt::last_error_message()); } }
+    qt::responseInformation(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper responseInformation: ", qt::last_error_message()); } }
+    qt::serverReference(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper serverReference: ", qt::last_error_message()); } }
+    qt::topic(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper topic: ", qt::last_error_message()); } }
+    qt::qos(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper qos: ", qt::last_error_message()); } }
+    qt::reason(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper reason: ", qt::last_error_message()); } }
+    qt::reasonCode(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper reasonCode: ", qt::last_error_message()); } }
+    qt::userProperties(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper userProperties: ", qt::last_error_message()); } }
+    qt::isSharedSubscription(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isSharedSubscription: ", qt::last_error_message()); } }
+    qt::sharedSubscriptionName(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sharedSubscriptionName: ", qt::last_error_message()); } }
+    qt::qosChanged(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper qosChanged: ", qt::last_error_message()); } }
+    qt::messageReceived(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper messageReceived: ", qt::last_error_message()); } }
+    qt::unsubscribe(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper unsubscribe: ", qt::last_error_message()); } }
+    qt::subscriptionIdentifier(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper subscriptionIdentifier: ", qt::last_error_message()); } }
+    qt::setSubscriptionIdentifier(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSubscriptionIdentifier: ", qt::last_error_message()); } }
+    qt::noLocal(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper noLocal: ", qt::last_error_message()); } }
+    qt::setNoLocal(qt::Val { h: 0 }, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setNoLocal: ", qt::last_error_message()); } }
+    qt::setFilter(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setFilter: ", qt::last_error_message()); } }
+    qt::sharedSubscriptionName(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper sharedSubscriptionName: ", qt::last_error_message()); } }
+    qt::match_(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper match_: ", qt::last_error_message()); } }
+    qt::match_(qt::Val { h: 0 }, qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper match_: ", qt::last_error_message()); } }
+    qt::levelCount(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper levelCount: ", qt::last_error_message()); } }
+    qt::levels(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper levels: ", qt::last_error_message()); } }
+    qt::observe(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper observe: ", qt::last_error_message()); } }
+    qt::cancelObserve(qt::NONE, qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cancelObserve: ", qt::last_error_message()); } }
+    qt::cancelObserve(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper cancelObserve: ", qt::last_error_message()); } }
+    qt::discover(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper discover: ", qt::last_error_message()); } }
+    qt::discover(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper discover: ", qt::last_error_message()); } }
+    qt::discover(qt::NONE, 0, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper discover: ", qt::last_error_message()); } }
+    qt::discover(qt::NONE, 0, 0, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper discover: ", qt::last_error_message()); } }
+    qt::discover(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper discover: ", qt::last_error_message()); } }
+    qt::discover(qt::NONE, qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper discover: ", qt::last_error_message()); } }
+    qt::setSecurityConfiguration(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setSecurityConfiguration: ", qt::last_error_message()); } }
+    qt::setBlockSize(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setBlockSize: ", qt::last_error_message()); } }
+    qt::setMaximumServerResponseDelay(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumServerResponseDelay: ", qt::last_error_message()); } }
+    qt::setAckTimeout(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAckTimeout: ", qt::last_error_message()); } }
+    qt::setAckRandomFactor(qt::NONE, 0.0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setAckRandomFactor: ", qt::last_error_message()); } }
+    qt::setMaximumRetransmitCount(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumRetransmitCount: ", qt::last_error_message()); } }
+    qt::setMinimumTokenSize(qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMinimumTokenSize: ", qt::last_error_message()); } }
+    qt::setBindInterface(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setBindInterface: ", qt::last_error_message()); } }
+    qt::bindInterface(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindInterface: ", qt::last_error_message()); } }
+    qt::responseToMulticastReceived(qt::NONE, qt::NONE, qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper responseToMulticastReceived: ", qt::last_error_message()); } }
+    qt::error(qt::NONE, qt::NONE, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper error: ", qt::last_error_message()); } }
+    qt::bindInterfaceChanged(qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper bindInterfaceChanged: ", qt::last_error_message()); } }
+    qt::token(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper token: ", qt::last_error_message()); } }
+    qt::tokenLength(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper tokenLength: ", qt::last_error_message()); } }
+    qt::messageId(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper messageId: ", qt::last_error_message()); } }
+    qt::setVersion(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setVersion: ", qt::last_error_message()); } }
+    qt::setToken(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setToken: ", qt::last_error_message()); } }
+    qt::setMessageId(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMessageId: ", qt::last_error_message()); } }
+    qt::setPayload(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPayload: ", qt::last_error_message()); } }
+    qt::setOptions(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setOptions: ", qt::last_error_message()); } }
+    qt::optionAt(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper optionAt: ", qt::last_error_message()); } }
+    qt::option(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper option: ", qt::last_error_message()); } }
+    qt::hasOption(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper hasOption: ", qt::last_error_message()); } }
+    qt::options(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper options: ", qt::last_error_message()); } }
+    qt::optionCount(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper optionCount: ", qt::last_error_message()); } }
+    qt::addOption(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addOption: ", qt::last_error_message()); } }
+    qt::addOption(qt::Val { h: 0 }, 0, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addOption: ", qt::last_error_message()); } }
+    qt::addOption(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper addOption: ", qt::last_error_message()); } }
+    qt::removeOption(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper removeOption: ", qt::last_error_message()); } }
+    qt::removeOption(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper removeOption: ", qt::last_error_message()); } }
+    qt::clearOptions(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper clearOptions: ", qt::last_error_message()); } }
+    qt::opaqueValue(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper opaqueValue: ", qt::last_error_message()); } }
+    qt::uintValue(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper uintValue: ", qt::last_error_message()); } }
+    qt::stringValue(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper stringValue: ", qt::last_error_message()); } }
+    qt::encodingFormat(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper encodingFormat: ", qt::last_error_message()); } }
+    qt::passPhrase(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper passPhrase: ", qt::last_error_message()); } }
+    qt::responseCode(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper responseCode: ", qt::last_error_message()); } }
+    qt::method(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper method: ", qt::last_error_message()); } }
+    qt::errorReceived(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper errorReceived: ", qt::last_error_message()); } }
+    qt::isAborted(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isAborted: ", qt::last_error_message()); } }
+    qt::isSuccessful(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isSuccessful: ", qt::last_error_message()); } }
+    qt::abortRequest(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper abortRequest: ", qt::last_error_message()); } }
+    qt::notified(qt::NONE, qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper notified: ", qt::last_error_message()); } }
+    qt::aborted(qt::NONE, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper aborted: ", qt::last_error_message()); } }
+    qt::proxyUrl(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper proxyUrl: ", qt::last_error_message()); } }
+    qt::isObserve(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper isObserve: ", qt::last_error_message()); } }
+    qt::setProxyUrl(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setProxyUrl: ", qt::last_error_message()); } }
+    qt::enableObserve(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper enableObserve: ", qt::last_error_message()); } }
+    qt::observable(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper observable: ", qt::last_error_message()); } }
+    qt::resourceType(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper resourceType: ", qt::last_error_message()); } }
+    qt::maximumSize(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper maximumSize: ", qt::last_error_message()); } }
+    qt::contentFormat(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper contentFormat: ", qt::last_error_message()); } }
+    qt::setHost(qt::Val { h: 0 }, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setHost: ", qt::last_error_message()); } }
+    qt::setObservable(qt::Val { h: 0 }, false); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setObservable: ", qt::last_error_message()); } }
+    qt::setResourceType(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setResourceType: ", qt::last_error_message()); } }
+    qt::setInterface(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setInterface: ", qt::last_error_message()); } }
+    qt::setMaximumSize(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setMaximumSize: ", qt::last_error_message()); } }
+    qt::setContentFormat(qt::Val { h: 0 }, 0); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setContentFormat: ", qt::last_error_message()); } }
+    qt::resources(qt::NONE); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper resources: ", qt::last_error_message()); } }
+    qt::discovered(qt::NONE, qt::NONE, qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper discovered: ", qt::last_error_message()); } }
+    qt::setPreSharedKeyIdentity(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPreSharedKeyIdentity: ", qt::last_error_message()); } }
+    qt::preSharedKeyIdentity(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper preSharedKeyIdentity: ", qt::last_error_message()); } }
+    qt::setPreSharedKey(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setPreSharedKey: ", qt::last_error_message()); } }
+    qt::preSharedKey(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper preSharedKey: ", qt::last_error_message()); } }
+    qt::setDefaultCipherString(qt::Val { h: 0 }, ""); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper setDefaultCipherString: ", qt::last_error_message()); } }
+    qt::defaultCipherString(qt::Val { h: 0 }); n++; if qt::last_error() != qt::ERR_NULL_HANDLE { bad++; if bad < 20 { print("wrapper defaultCipherString: ", qt::last_error_message()); } }
 }
 fn main() {
     qt::init(qt::APP_WIDGETS, "t90\0-platform\0offscreen");

@@ -8,7 +8,7 @@
 # QTC_LIB is the directory with libqtc.so.1 and libqtc_test.so.1 (the qtc build
 # directory, or the install prefix's lib directory); it goes first on the library path.
 # Tests run on Qt's offscreen platform, so no display is needed. t06_threads uses
-# threads, which only native builds have: it runs native only.
+# threads, which only native builds have: it runs native only (as does t08_futures).
 set -u
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GOOSE="${GOOSE:-goose}"
@@ -52,7 +52,7 @@ run() {   # name mode command...
     fi
 }
 for t in "${tests[@]}"; do
-    if [ "$t" != "t06_threads" ]; then
+    if [ "$t" != "t06_threads" ] && [ "$t" != "t08_futures" ]; then
         run "$t" jit "$GOOSE" "$here/$t.goose"
     fi
     if "$GOOSE" build "$here/$t.goose" -o "$work/$t" > "$work/$t.build.out" 2>&1; then

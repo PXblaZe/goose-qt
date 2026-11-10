@@ -118,10 +118,74 @@ context property carries structured messages both ways: QML's
 `qt::call(bridge, "post")` with a name and a value emits `message` in QML. QML
 properties and functions are reached with `qt::get_*`, `qt::set` and `qt::call`.
 
+### Subclassing Qt classes
+
+Make an overridable object, name the methods to override with a tag each, and
+export the one handler they all come to:
+
+```goose
+let ROWS: u64 = 1;
+
+export "goose_qt_override" fn on_override(obj: u64, tag: u64, nargs: i64, depth: i64) -> i32 {
+    if tag == ROWS { qt::ov_ret(42); return qt::OV_DONE; }
+    return qt::OV_BASE;                      // the class's own implementation
+}
+
+fn main() {
+    qt::init();
+    qt::use_overrides();                     // points qtc at goose_qt_override
+    let model = qt::new_overridable("QAbstractListModel");
+    qt::override(model, "rowCount", ROWS);
+    ...
+}
+```
+
+The handler reads the call with `qt::ov_arg_*` and sets its result with
+`qt::ov_ret`. It runs on the GUI thread; methods Qt calls on other threads run
+Qt's own implementation. Runtime classes (`qt::class_begin`, `class_property`,
+`class_invokable`, `class_end`, `class_new`) send their slots to the same handler.
+
+### Futures
+
+`qt::promise()` makes a future that Goose worker threads (`thread_fn`, native
+builds) fill with `qt::add`, `qt::progress`, `qt::finish` or `qt::fail`, checking
+`qt::canceled`; the GUI thread waits with `qt::wait(f, ms)`, watches it as
+`EV_FUTURE_*` events, and reads `qt::result_int(f, i)` and friends. Calls queued
+to objects (`qt::invoke_future`) and worker objects on a `QThread`
+(`qt::move_to_thread`) work as in C.
+
+### Graphics
+
+```goose
+let r = qt::rhi_create(qt::RHI_VULKAN);     // or RHI_OPENGL, RHI_D3D11, RHI_METAL, RHI_NULL
+let tex = qt::texture(r, qt::RGBA8, 256, 256, qt::RENDER_TARGET | qt::READABLE);
+let rt = qt::render_target(tex, false);
+let vb = qt::buffer(r, qt::IMMUTABLE, qt::VERTEX_BUFFER, 3 * 20);
+qt::upload_f32(vb, 0, [0.0, 0.8, 1.0, 0.0, 0.0,  -0.7, -0.6, 0.0, 1.0, 0.0,  0.7, -0.6, 0.0, 0.0, 1.0]);
+let p = qt::pipeline(r);
+qt::shaders(p, qt::shader_bake(qt::VERTEX, vertex_glsl), qt::shader_bake(qt::FRAGMENT, fragment_glsl));
+...
+qt::begin_frame(r);
+qt::begin_pass(r, rt, 0xff000000);
+qt::set_pipeline(r, p);
+...
+qt::draw(r, 3);
+qt::end_pass(r);
+let rb = qt::read_texture(tex);
+qt::end_frame(r);
+let image = qt::image(rb);                    // a QImage value
+```
+
+Every RHI handle is a `qt::Gpu`; `test/t09_graphics.goose` is a complete
+program. Swapchains on windows, `QRhiWidget` rendering, compute and the native
+interop (`qt::native`, `qt::vk_*`, `qt::gl_proc_address`) are there too.
+
 ## Examples
 
 `examples/` has the same programs as qtc's C examples: `hello`, `form`,
-`canvas`, `qml` and `threads` (native only). Each runs interactively, or checks
+`canvas`, `qml`, `threads` (native only) and `rhi` (a triangle drawn with
+whichever of Vulkan, Metal, Direct3D, OpenGL or the Null backend the machine
+has). Each runs interactively, or checks
 itself:
 
 ```sh
@@ -135,8 +199,8 @@ examples/run.sh                       # all of them, JIT and native
 GOOSE=/path/to/goose QTC_LIB=/path/to/qtc/build test/run.sh
 ```
 
-runs the test programs with the JIT and as native builds (the threads test natively
-only), on Qt's offscreen platform:
+runs the test programs with the JIT and as native builds (the threads and futures
+tests natively only), on Qt's offscreen platform:
 
 | test | covers |
 |---|---|
@@ -146,7 +210,10 @@ only), on Qt's offscreen platform:
 | `t04_drawing` | the canvas and image drawing calls |
 | `t05_qml` | QML loading, the bridge both ways, QML properties and functions |
 | `t06_threads` | workers posting from native threads |
-| `t90_wrappers` | every one of the 8,036 generated instance-method wrappers, called on a null receiver |
+| `t07_overrides` | a list model, a painted widget, a validator and key events written in Goose; a runtime class |
+| `t08_futures` | futures filled by Goose worker threads: results, progress events, failure, cancel, any/all, queued calls and a worker object (native only) |
+| `t09_graphics` | the RHI: a pipeline checked against its shaders, a frame read back, compute, destruction order (Null, and OpenGL or Vulkan where present) |
+| `t90_wrappers` | every one of the 8,464 generated instance-method wrappers, called on a null receiver |
 
 `test/bench.goose` measures what a call costs. On the development machine
 (x86-64, Qt 6.12, native build), a generated wrapper call such as
@@ -162,7 +229,9 @@ python3 gen/generate_goose.py --manifest /path/to/qtc/manifest/qtc_api.json --ou
 ```
 
 `qt.goose` (the hand-written part: the event loop, values, drawing, the generic
-call) and `qt.build` (which shared libraries to load) are not generated.
+call), `extra.goose` (overrides, runtime classes, futures, graphics),
+`include/goose_qt.h` (the C trampoline for override handlers) and `qt.build`
+(which shared libraries to load) are not generated.
 
 ## Limits
 
@@ -172,6 +241,17 @@ Everything in [qtc's LIMITS.md](../qtc/docs/LIMITS.md) applies. In addition:
   untested opt-in), a value that release does not have is refused when it is
   passed.
 - The JIT runs no threads; threaded programs need a native build.
+- Goose has no function pointers, and its exported functions run on the main
+  thread only: override handlers are the one exported `goose_qt_override`, which
+  handles calls on the GUI thread (others run Qt's own implementation), and qtc's
+  thread-pool tasks (`qtc_task_*`, which take C functions) are not bound — Goose
+  workers fill promises instead. The trampoline (`include/goose_qt.h`) declares
+  the handler as a weak symbol, which GCC, Clang and TinyCC support; it was
+  tested on Linux only.
+- The wrappers of the GPL-3.0-only modules (Charts and the network add-ons) are
+  in `api.goose` like the rest: they are calls by name, and with a default
+  (LGPL-only) libqtc they fail with `ERR_NOT_FOUND`. Whether a program is bound
+  by the GPL depends on the libqtc it runs with, not on goose-qt.
 - Overloads that differ only in Goose types that map to the same C kind (two
   integer types, say) are one Goose function; qtc chooses between them by the
   receiver's class and the argument values. Pass a signature through `qt::call`

@@ -26,6 +26,7 @@ namespace qt;
 
 import ffi;
 import api;
+import extra;
 
 struct Obj { h: u64 }
 struct Val { h: u64 }

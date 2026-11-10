@@ -321,7 +321,9 @@ fn hasYearZero(o: Val) -> bool { qtc_call(o.h, "hasYearZero()"); return qtc_ret_
 fn maximumDaysInMonth(o: Val) -> i64 { qtc_call(o.h, "maximumDaysInMonth()"); return qtc_ret_int(); }
 fn minimumDaysInMonth(o: Val) -> i64 { qtc_call(o.h, "minimumDaysInMonth()"); return qtc_ret_int(); }
 fn maximumMonthsInYear(o: Val) -> i64 { qtc_call(o.h, "maximumMonthsInYear()"); return qtc_ret_int(); }
-fn name(o: Val) -> u8[>..] { qtc_call(o.h, "name()"); return view(qtc_ret_str()); }
+fn name(o: Val) -> Val { qtc_call(o.h, "name()"); return Val { h: qtc_ret_val() }; }
+fn name_int(o: Val) -> i64 { qtc_call(o.h, "name()"); return qtc_ret_int(); }
+fn name_str(o: Val) -> u8[>..] { qtc_call(o.h, "name()"); return view(qtc_ret_str()); }
 fn dateFromParts(o: Val, a0: i64, a1: i64, a2: i64) -> Val { qtc_arg_int(a0); qtc_arg_int(a1); qtc_arg_int(a2); qtc_call(o.h, "dateFromParts(int,int,int)"); return Val { h: qtc_ret_val() }; }
 fn dateFromParts(o: Val, a0: Val) -> Val { qtc_arg_val(a0.h); qtc_call(o.h, "dateFromParts(QCalendar::YearMonthDay)"); return Val { h: qtc_ret_val() }; }
 fn matchCenturyToWeekday(o: Val, a0: Val, a1: i64) -> Val { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_call(o.h, "matchCenturyToWeekday(QCalendar::YearMonthDay,int)"); return Val { h: qtc_ret_val() }; }
@@ -728,7 +730,9 @@ fn cd(o: Val, a0: const u8[:]) -> bool { qtc_arg_str(a0); qtc_call(o.h, "cd(QStr
 fn cdUp(o: Val) -> bool { qtc_call(o.h, "cdUp()"); return qtc_ret_bool(); }
 fn nameFilters(o: Val) -> Val { qtc_call(o.h, "nameFilters()"); return Val { h: qtc_ret_val() }; }
 fn setNameFilters(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setNameFilters(QStringList)"); }
-fn filter(o: Val) -> i64 { qtc_call(o.h, "filter()"); return qtc_ret_int(); }
+fn filter(o: Val) -> Val { qtc_call(o.h, "filter()"); return Val { h: qtc_ret_val() }; }
+fn filter_int(o: Val) -> i64 { qtc_call(o.h, "filter()"); return qtc_ret_int(); }
+fn filter_str(o: Val) -> u8[>..] { qtc_call(o.h, "filter()"); return view(qtc_ret_str()); }
 fn setFilter(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setFilter(QDir::Filters)"); }
 fn sorting(o: Val) -> i64 { qtc_call(o.h, "sorting()"); return qtc_ret_int(); }
 fn setSorting(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setSorting(QDir::SortFlags)"); }
@@ -1555,7 +1559,9 @@ fn fallbacksEnabled(o: Obj) -> bool { qtc_call(o.h, "fallbacksEnabled()"); retur
 fn format_(o: Obj) -> Val { qtc_call(o.h, "format()"); return Val { h: qtc_ret_val() }; }
 fn format__int(o: Obj) -> i64 { qtc_call(o.h, "format()"); return qtc_ret_int(); }
 fn format__str(o: Obj) -> u8[>..] { qtc_call(o.h, "format()"); return view(qtc_ret_str()); }
-fn scope(o: Obj) -> i64 { qtc_call(o.h, "scope()"); return qtc_ret_int(); }
+fn scope(o: Obj) -> Val { qtc_call(o.h, "scope()"); return Val { h: qtc_ret_val() }; }
+fn scope_int(o: Obj) -> i64 { qtc_call(o.h, "scope()"); return qtc_ret_int(); }
+fn scope_str(o: Obj) -> u8[>..] { qtc_call(o.h, "scope()"); return view(qtc_ret_str()); }
 fn organizationName(o: Obj) -> u8[>..] { qtc_call(o.h, "organizationName()"); return view(qtc_ret_str()); }
 fn applicationName(o: Obj) -> u8[>..] { qtc_call(o.h, "applicationName()"); return view(qtc_ret_str()); }
 fn QSettings_setDefaultFormat(a0: i64) { qtc_arg_int(a0); qtc_call_static("QSettings", "setDefaultFormat(QSettings::Format)"); }
@@ -1783,6 +1789,18 @@ fn wait(o: Obj, a0: i64) -> bool { qtc_arg_int(a0); qtc_call(o.h, "wait(ulong)")
 fn QThread_sleep(a0: i64) { qtc_arg_int(a0); qtc_call_static("QThread", "sleep(ulong)"); }
 fn QThread_msleep(a0: i64) { qtc_arg_int(a0); qtc_call_static("QThread", "msleep(ulong)"); }
 fn QThread_usleep(a0: i64) { qtc_arg_int(a0); qtc_call_static("QThread", "usleep(ulong)"); }
+fn QThreadPool_globalInstance() -> Obj { qtc_call_static("QThreadPool", "globalInstance()"); return Obj { h: qtc_ret_obj() }; }
+fn expiryTimeout(o: Obj) -> i64 { qtc_call(o.h, "expiryTimeout()"); return qtc_ret_int(); }
+fn setExpiryTimeout(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setExpiryTimeout(int)"); }
+fn maxThreadCount(o: Obj) -> i64 { qtc_call(o.h, "maxThreadCount()"); return qtc_ret_int(); }
+fn setMaxThreadCount(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaxThreadCount(int)"); }
+fn activeThreadCount(o: Obj) -> i64 { qtc_call(o.h, "activeThreadCount()"); return qtc_ret_int(); }
+fn setThreadPriority(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setThreadPriority(QThread::Priority)"); }
+fn threadPriority(o: Obj) -> i64 { qtc_call(o.h, "threadPriority()"); return qtc_ret_int(); }
+fn waitForDone(o: Obj, a0: i64) -> bool { qtc_arg_int(a0); qtc_call(o.h, "waitForDone(int)"); return qtc_ret_bool(); }
+fn waitForDone(o: Obj) -> bool { qtc_call(o.h, "waitForDone()"); return qtc_ret_bool(); }
+fn waitForDone(o: Obj, a0: Val) -> bool { qtc_arg_val(a0.h); qtc_call(o.h, "waitForDone(QDeadlineTimer)"); return qtc_ret_bool(); }
+fn contains(o: Obj, a0: Obj) -> bool { qtc_arg_obj(a0.h); qtc_call(o.h, "contains(const QThread*)"); return qtc_ret_bool(); }
 fn hour(o: Val) -> i64 { qtc_call(o.h, "hour()"); return qtc_ret_int(); }
 fn minute(o: Val) -> i64 { qtc_call(o.h, "minute()"); return qtc_ret_int(); }
 fn second(o: Val) -> i64 { qtc_call(o.h, "second()"); return qtc_ret_int(); }
@@ -1903,7 +1921,8 @@ fn password(o: Val) -> u8[>..] { qtc_call(o.h, "password()"); return view(qtc_re
 fn password(o: Val, a0: i64) -> u8[>..] { qtc_arg_int(a0); qtc_call(o.h, "password(QUrl::ComponentFormattingOptions)"); return view(qtc_ret_str()); }
 fn setHost(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setHost(QString)"); }
 fn setHost(o: Val, a0: const u8[:], a1: i64) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_call(o.h, "setHost(QString,QUrl::ParsingMode)"); }
-fn host(o: Val) -> u8[>..] { qtc_call(o.h, "host()"); return view(qtc_ret_str()); }
+fn host(o: Val) -> Val { qtc_call(o.h, "host()"); return Val { h: qtc_ret_val() }; }
+fn host_str(o: Val) -> u8[>..] { qtc_call(o.h, "host()"); return view(qtc_ret_str()); }
 fn host(o: Val, a0: i64) -> u8[>..] { qtc_arg_int(a0); qtc_call(o.h, "host(QUrl::ComponentFormattingOptions)"); return view(qtc_ret_str()); }
 fn setPort(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setPort"); }
 fn port(o: Val) -> i64 { qtc_call(o.h, "port()"); return qtc_ret_int(); }
@@ -1915,7 +1934,8 @@ fn hasQuery(o: Val) -> bool { qtc_call(o.h, "hasQuery()"); return qtc_ret_bool()
 fn setQuery(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setQuery(QString)"); }
 fn setQuery(o: Val, a0: const u8[:], a1: i64) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_call(o.h, "setQuery(QString,QUrl::ParsingMode)"); }
 fn setQuery(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setQuery(QUrlQuery)"); }
-fn query(o: Val) -> u8[>..] { qtc_call(o.h, "query()"); return view(qtc_ret_str()); }
+fn query(o: Val) -> Val { qtc_call(o.h, "query()"); return Val { h: qtc_ret_val() }; }
+fn query_str(o: Val) -> u8[>..] { qtc_call(o.h, "query()"); return view(qtc_ret_str()); }
 fn query(o: Val, a0: i64) -> u8[>..] { qtc_arg_int(a0); qtc_call(o.h, "query(QUrl::ComponentFormattingOptions)"); return view(qtc_ret_str()); }
 fn hasFragment(o: Val) -> bool { qtc_call(o.h, "hasFragment()"); return qtc_ret_bool(); }
 fn fragment(o: Val) -> u8[>..] { qtc_call(o.h, "fragment()"); return view(qtc_ret_str()); }
@@ -5595,6 +5615,26 @@ fn setDefault(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setDefault(bo
 fn setMenu(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "setMenu(QMenu*)"); }
 fn menu(o: Obj) -> Obj { qtc_call(o.h, "menu()"); return Obj { h: qtc_ret_obj() }; }
 fn showMenu(o: Obj) { qtc_call(o.h, "showMenu()"); }
+fn api(o: Obj) -> i64 { qtc_call(o.h, "api()"); return qtc_ret_int(); }
+fn setApi(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setApi(QRhiWidget::Api)"); }
+fn isDebugLayerEnabled(o: Obj) -> bool { qtc_call(o.h, "isDebugLayerEnabled()"); return qtc_ret_bool(); }
+fn setDebugLayerEnabled(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setDebugLayerEnabled(bool)"); }
+fn sampleCount(o: Obj) -> i64 { qtc_call(o.h, "sampleCount()"); return qtc_ret_int(); }
+fn setSampleCount(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setSampleCount(int)"); }
+fn colorBufferFormat(o: Obj) -> i64 { qtc_call(o.h, "colorBufferFormat()"); return qtc_ret_int(); }
+fn setColorBufferFormat(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setColorBufferFormat"); }
+fn fixedColorBufferSize(o: Obj) -> Val { qtc_call(o.h, "fixedColorBufferSize()"); return Val { h: qtc_ret_val() }; }
+fn setFixedColorBufferSize(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setFixedColorBufferSize(QSize)"); }
+fn setFixedColorBufferSize(o: Obj, a0: i64, a1: i64) { qtc_arg_int(a0); qtc_arg_int(a1); qtc_call(o.h, "setFixedColorBufferSize(int,int)"); }
+fn isMirrorVerticallyEnabled(o: Obj) -> bool { qtc_call(o.h, "isMirrorVerticallyEnabled()"); return qtc_ret_bool(); }
+fn setMirrorVertically(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setMirrorVertically(bool)"); }
+fn grabFramebuffer(o: Obj) -> Val { qtc_call(o.h, "grabFramebuffer()"); return Val { h: qtc_ret_val() }; }
+fn frameSubmitted(o: Obj) { qtc_call(o.h, "frameSubmitted()"); }
+fn renderFailed(o: Obj) { qtc_call(o.h, "renderFailed()"); }
+fn sampleCountChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "sampleCountChanged(int)"); }
+fn colorBufferFormatChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "colorBufferFormatChanged(QRhiWidget::TextureFormat)"); }
+fn fixedColorBufferSizeChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "fixedColorBufferSizeChanged(QSize)"); }
+fn mirrorVerticallyChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "mirrorVerticallyChanged(bool)"); }
 fn move(o: Obj, a0: i64, a1: i64) { qtc_arg_int(a0); qtc_arg_int(a1); qtc_call(o.h, "move(int,int)"); }
 fn move(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "move(QPoint)"); }
 fn takeWidget(o: Obj) -> Obj { qtc_call(o.h, "takeWidget()"); return Obj { h: qtc_ret_obj() }; }
@@ -5659,7 +5699,8 @@ fn displayIntegerBase(o: Obj) -> i64 { qtc_call(o.h, "displayIntegerBase()"); re
 fn setDisplayIntegerBase(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setDisplayIntegerBase(int)"); }
 fn finish(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "finish(QWidget*)"); }
 fn repaint(o: Obj) { qtc_call(o.h, "repaint()"); }
-fn message(o: Obj) -> u8[>..] { qtc_call(o.h, "message()"); return view(qtc_ret_str()); }
+fn message(o: Obj) -> Val { qtc_call(o.h, "message()"); return Val { h: qtc_ret_val() }; }
+fn message_str(o: Obj) -> u8[>..] { qtc_call(o.h, "message()"); return view(qtc_ret_str()); }
 fn showMessage(o: Obj, a0: const u8[:], a1: i64) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_call(o.h, "showMessage(QString,int)"); }
 fn showMessage(o: Obj, a0: const u8[:], a1: i64, a2: Val) { qtc_arg_str(a0); qtc_arg_int(a1); qtc_arg_val(a2.h); qtc_call(o.h, "showMessage(QString,int,QColor)"); }
 fn clearMessage(o: Obj) { qtc_call(o.h, "clearMessage()"); }
@@ -6321,7 +6362,7 @@ fn QHttpHeaders_fromMultiMap(a0: Val) -> Val { qtc_arg_val(a0.h); qtc_call_stati
 fn QHttpHeaders_fromMultiHash(a0: Val) -> Val { qtc_arg_val(a0.h); qtc_call_static("QHttpHeaders", "fromMultiHash(QMultiHash<QByteArray,QByteArray>)"); return Val { h: qtc_ret_val() }; }
 fn toMultiMap(o: Val) -> Val { qtc_call(o.h, "toMultiMap()"); return Val { h: qtc_ret_val() }; }
 fn toMultiHash(o: Val) -> Val { qtc_call(o.h, "toMultiHash()"); return Val { h: qtc_ret_val() }; }
-fn setContentType(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setContentType(QHttpMultiPart::ContentType)"); }
+fn setContentType(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setContentType"); }
 fn boundary(o: Obj) -> u8[>..] { qtc_call(o.h, "boundary()"); return view(qtc_ret_str()); }
 fn setBoundary(o: Obj, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setBoundary(QByteArray)"); }
 fn newConnection(o: Obj) { qtc_call(o.h, "newConnection()"); }
@@ -6361,15 +6402,15 @@ fn enableStrictTransportSecurityStore(o: Obj, a0: bool, a1: const u8[:]) { qtc_a
 fn isStrictTransportSecurityStoreEnabled(o: Obj) -> bool { qtc_call(o.h, "isStrictTransportSecurityStoreEnabled()"); return qtc_ret_bool(); }
 fn addStrictTransportSecurityHosts(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "addStrictTransportSecurityHosts(QList<QHstsPolicy>)"); }
 fn strictTransportSecurityHosts(o: Obj) -> Val { qtc_call(o.h, "strictTransportSecurityHosts()"); return Val { h: qtc_ret_val() }; }
-fn head(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "head(QNetworkRequest)"); return Obj { h: qtc_ret_obj() }; }
-fn get(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "get(QNetworkRequest)"); return Obj { h: qtc_ret_obj() }; }
+fn head(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "head"); return Obj { h: qtc_ret_obj() }; }
+fn get(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "get"); return Obj { h: qtc_ret_obj() }; }
 fn get(o: Obj, a0: Val, a1: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_obj(a1.h); qtc_call(o.h, "get(QNetworkRequest,QIODevice*)"); return Obj { h: qtc_ret_obj() }; }
 fn get(o: Obj, a0: Val, a1: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_call(o.h, "get(QNetworkRequest,QByteArray)"); return Obj { h: qtc_ret_obj() }; }
 fn post(o: Obj, a0: Val, a1: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_obj(a1.h); qtc_call(o.h, "post"); return Obj { h: qtc_ret_obj() }; }
-fn post(o: Obj, a0: Val, a1: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_call(o.h, "post(QNetworkRequest,QByteArray)"); return Obj { h: qtc_ret_obj() }; }
+fn post(o: Obj, a0: Val, a1: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_call(o.h, "post"); return Obj { h: qtc_ret_obj() }; }
 fn put(o: Obj, a0: Val, a1: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_obj(a1.h); qtc_call(o.h, "put"); return Obj { h: qtc_ret_obj() }; }
-fn put(o: Obj, a0: Val, a1: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_call(o.h, "put(QNetworkRequest,QByteArray)"); return Obj { h: qtc_ret_obj() }; }
-fn deleteResource(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "deleteResource(QNetworkRequest)"); return Obj { h: qtc_ret_obj() }; }
+fn put(o: Obj, a0: Val, a1: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_call(o.h, "put"); return Obj { h: qtc_ret_obj() }; }
+fn deleteResource(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "deleteResource"); return Obj { h: qtc_ret_obj() }; }
 fn sendCustomRequest(o: Obj, a0: Val, a1: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_call(o.h, "sendCustomRequest(QNetworkRequest,QByteArray)"); return Obj { h: qtc_ret_obj() }; }
 fn sendCustomRequest(o: Obj, a0: Val, a1: const u8[:], a2: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_arg_obj(a2.h); qtc_call(o.h, "sendCustomRequest"); return Obj { h: qtc_ret_obj() }; }
 fn sendCustomRequest(o: Obj, a0: Val, a1: const u8[:], a2: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_arg_bytes(a2); qtc_call(o.h, "sendCustomRequest(QNetworkRequest,QByteArray,QByteArray)"); return Obj { h: qtc_ret_obj() }; }
@@ -6577,10 +6618,10 @@ fn networkAccessManager(o: Obj) -> Obj { qtc_call(o.h, "networkAccessManager()")
 fn deleteResource(o: Obj) -> Obj { qtc_call(o.h, "deleteResource()"); return Obj { h: qtc_ret_obj() }; }
 fn head(o: Obj) -> Obj { qtc_call(o.h, "head()"); return Obj { h: qtc_ret_obj() }; }
 fn get(o: Obj) -> Obj { qtc_call(o.h, "get()"); return Obj { h: qtc_ret_obj() }; }
-fn get(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "get(QNetworkRequest,QJsonDocument)"); return Obj { h: qtc_ret_obj() }; }
-fn post(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "post(QNetworkRequest)"); return Obj { h: qtc_ret_obj() }; }
+fn get(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "get"); return Obj { h: qtc_ret_obj() }; }
+fn post(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "post"); return Obj { h: qtc_ret_obj() }; }
 fn post(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "post"); return Obj { h: qtc_ret_obj() }; }
-fn put(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "put(QNetworkRequest)"); return Obj { h: qtc_ret_obj() }; }
+fn put(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "put"); return Obj { h: qtc_ret_obj() }; }
 fn put(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "put"); return Obj { h: qtc_ret_obj() }; }
 fn patch(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "patch(QNetworkRequest)"); return Obj { h: qtc_ret_obj() }; }
 fn patch(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "patch"); return Obj { h: qtc_ret_obj() }; }
@@ -6783,7 +6824,7 @@ fn alertSent(o: Obj, a0: i64, a1: i64, a2: const u8[:]) { qtc_arg_int(a0); qtc_a
 fn alertReceived(o: Obj, a0: i64, a1: i64, a2: const u8[:]) { qtc_arg_int(a0); qtc_arg_int(a1); qtc_arg_str(a2); qtc_call(o.h, "alertReceived(QSsl::AlertLevel,QSsl::AlertType,QString)"); }
 fn handshakeInterruptedOnError(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "handshakeInterruptedOnError(QSslError)"); }
 fn listen(o: Obj) -> bool { qtc_call(o.h, "listen()"); return qtc_ret_bool(); }
-fn listen(o: Obj, a0: Val) -> bool { qtc_arg_val(a0.h); qtc_call(o.h, "listen(QHostAddress)"); return qtc_ret_bool(); }
+fn listen(o: Obj, a0: Val) -> bool { qtc_arg_val(a0.h); qtc_call(o.h, "listen"); return qtc_ret_bool(); }
 fn listen(o: Obj, a0: Val, a1: i64) -> bool { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_call(o.h, "listen(QHostAddress,quint16)"); return qtc_ret_bool(); }
 fn serverPort(o: Obj) -> i64 { qtc_call(o.h, "serverPort()"); return qtc_ret_int(); }
 fn serverAddress(o: Obj) -> Val { qtc_call(o.h, "serverAddress()"); return Val { h: qtc_ret_val() }; }
@@ -7286,7 +7327,6 @@ fn hasProfiles(o: Val) -> bool { qtc_call(o.h, "hasProfiles()"); return qtc_ret_
 fn isLegacyVersion(o: Val) -> bool { qtc_call(o.h, "isLegacyVersion()"); return qtc_ret_bool(); }
 fn updateBehavior(o: Obj) -> i64 { qtc_call(o.h, "updateBehavior()"); return qtc_ret_int(); }
 fn makeCurrent(o: Obj) { qtc_call(o.h, "makeCurrent()"); }
-fn grabFramebuffer(o: Obj) -> Val { qtc_call(o.h, "grabFramebuffer()"); return Val { h: qtc_ret_val() }; }
 fn frameSwapped(o: Obj) { qtc_call(o.h, "frameSwapped()"); }
 fn setUpdateBehavior(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setUpdateBehavior(QOpenGLWidget::UpdateBehavior)"); }
 fn textureFormat(o: Obj) -> i64 { qtc_call(o.h, "textureFormat()"); return qtc_ret_int(); }
@@ -7521,12 +7561,10 @@ fn booleanLiteral(o: Val) -> bool { qtc_call(o.h, "booleanLiteral"); return qtc_
 fn textureFollowsItemSize(o: Obj) -> bool { qtc_call(o.h, "textureFollowsItemSize()"); return qtc_ret_bool(); }
 fn setTextureFollowsItemSize(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setTextureFollowsItemSize(bool)"); }
 fn mirrorVertically(o: Obj) -> bool { qtc_call(o.h, "mirrorVertically()"); return qtc_ret_bool(); }
-fn setMirrorVertically(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setMirrorVertically(bool)"); }
 fn isTextureProvider(o: Obj) -> bool { qtc_call(o.h, "isTextureProvider()"); return qtc_ret_bool(); }
 fn textureProvider(o: Obj) -> Obj { qtc_call(o.h, "textureProvider()"); return Obj { h: qtc_ret_obj() }; }
 fn releaseResources(o: Obj) { qtc_call(o.h, "releaseResources()"); }
 fn textureFollowsItemSizeChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "textureFollowsItemSizeChanged(bool)"); }
-fn mirrorVerticallyChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "mirrorVerticallyChanged(bool)"); }
 fn parentItem(o: Obj) -> Obj { qtc_call(o.h, "parentItem()"); return Obj { h: qtc_ret_obj() }; }
 fn setParentItem(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "setParentItem(QQuickItem*)"); }
 fn stackBefore(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "stackBefore(const QQuickItem*)"); }
@@ -7672,11 +7710,6 @@ fn render(o: Obj) { qtc_call(o.h, "render()"); }
 fn QQuickRenderControl_renderWindowFor(a0: Obj) -> Obj { qtc_arg_obj(a0.h); qtc_call_static("QQuickRenderControl", "renderWindowFor(QQuickWindow*)"); return Obj { h: qtc_ret_obj() }; }
 fn renderRequested(o: Obj) { qtc_call(o.h, "renderRequested()"); }
 fn sceneChanged(o: Obj) { qtc_call(o.h, "sceneChanged()"); }
-fn sampleCount(o: Obj) -> i64 { qtc_call(o.h, "sampleCount()"); return qtc_ret_int(); }
-fn setSampleCount(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setSampleCount(int)"); }
-fn colorBufferFormat(o: Obj) -> i64 { qtc_call(o.h, "colorBufferFormat()"); return qtc_ret_int(); }
-fn setColorBufferFormat(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setColorBufferFormat(QQuickRhiItem::TextureFormat)"); }
-fn isMirrorVerticallyEnabled(o: Obj) -> bool { qtc_call(o.h, "isMirrorVerticallyEnabled()"); return qtc_ret_bool(); }
 fn alphaBlending(o: Obj) -> bool { qtc_call(o.h, "alphaBlending()"); return qtc_ret_bool(); }
 fn setAlphaBlending(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setAlphaBlending(bool)"); }
 fn fixedColorBufferWidth(o: Obj) -> i64 { qtc_call(o.h, "fixedColorBufferWidth()"); return qtc_ret_int(); }
@@ -9083,6 +9116,407 @@ fn setLanguageChangeEnabled(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, 
 fn isLanguageChangeEnabled(o: Obj) -> bool { qtc_call(o.h, "isLanguageChangeEnabled()"); return qtc_ret_bool(); }
 fn setTranslationEnabled(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setTranslationEnabled(bool)"); }
 fn isTranslationEnabled(o: Obj) -> bool { qtc_call(o.h, "isTranslationEnabled()"); return qtc_ret_bool(); }
+fn clientIdentifier(o: Obj) -> u8[>..] { qtc_call(o.h, "clientIdentifier()"); return view(qtc_ret_str()); }
+fn setClientIdentifier(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setClientIdentifier(QString)"); }
+fn token(o: Obj) -> u8[>..] { qtc_call(o.h, "token()"); return view(qtc_ret_str()); }
+fn setToken(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setToken(QString)"); }
+fn setNetworkAccessManager(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "setNetworkAccessManager(QNetworkAccessManager*)"); }
+fn authorizationUrl(o: Obj) -> Val { qtc_call(o.h, "authorizationUrl()"); return Val { h: qtc_ret_val() }; }
+fn setAuthorizationUrl(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setAuthorizationUrl(QUrl)"); }
+fn extraTokens(o: Obj) -> Val { qtc_call(o.h, "extraTokens()"); return Val { h: qtc_ret_val() }; }
+fn replyHandler(o: Obj) -> Obj { qtc_call(o.h, "replyHandler()"); return Obj { h: qtc_ret_obj() }; }
+fn setReplyHandler(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "setReplyHandler(QAbstractOAuthReplyHandler*)"); }
+fn head(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "head(QUrl,QVariantMap)"); return Obj { h: qtc_ret_obj() }; }
+fn deleteResource(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "deleteResource(QUrl,QVariantMap)"); return Obj { h: qtc_ret_obj() }; }
+fn contentType(o: Obj) -> i64 { qtc_call(o.h, "contentType()"); return qtc_ret_int(); }
+fn grant(o: Obj) { qtc_call(o.h, "grant()"); }
+fn clientIdentifierChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "clientIdentifierChanged(QString)"); }
+fn tokenChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "tokenChanged(QString)"); }
+fn authorizationUrlChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "authorizationUrlChanged(QUrl)"); }
+fn extraTokensChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "extraTokensChanged(QVariantMap)"); }
+fn contentTypeChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "contentTypeChanged(QAbstractOAuth::ContentType)"); }
+fn requestFailed(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "requestFailed(QAbstractOAuth::Error)"); }
+fn authorizeWithBrowser(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "authorizeWithBrowser(QUrl)"); }
+fn granted(o: Obj) { qtc_call(o.h, "granted()"); }
+fn replyDataReceived(o: Obj, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "replyDataReceived(QByteArray)"); }
+fn createAuthenticatedUrl(o: Obj, a0: Val) -> Val { qtc_arg_val(a0.h); qtc_call(o.h, "createAuthenticatedUrl(QUrl)"); return Val { h: qtc_ret_val() }; }
+fn createAuthenticatedUrl(o: Obj, a0: Val, a1: Val) -> Val { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "createAuthenticatedUrl(QUrl,QVariantMap)"); return Val { h: qtc_ret_val() }; }
+fn setScope(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setScope(QString)"); }
+fn grantedScopeTokens(o: Obj) -> Val { qtc_call(o.h, "grantedScopeTokens()"); return Val { h: qtc_ret_val() }; }
+fn requestedScopeTokens(o: Obj) -> Val { qtc_call(o.h, "requestedScopeTokens()"); return Val { h: qtc_ret_val() }; }
+fn setRequestedScopeTokens(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setRequestedScopeTokens(QSet<QByteArray>)"); }
+fn userAgent(o: Obj) -> u8[>..] { qtc_call(o.h, "userAgent()"); return view(qtc_ret_str()); }
+fn setUserAgent(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setUserAgent(QString)"); }
+fn responseType(o: Obj) -> u8[>..] { qtc_call(o.h, "responseType()"); return view(qtc_ret_str()); }
+fn clientIdentifierSharedKey(o: Obj) -> u8[>..] { qtc_call(o.h, "clientIdentifierSharedKey()"); return view(qtc_ret_str()); }
+fn setClientIdentifierSharedKey(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setClientIdentifierSharedKey(QString)"); }
+fn expirationAt(o: Obj) -> Val { qtc_call(o.h, "expirationAt()"); return Val { h: qtc_ret_val() }; }
+fn refreshToken(o: Obj) -> u8[>..] { qtc_call(o.h, "refreshToken()"); return view(qtc_ret_str()); }
+fn setRefreshToken(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setRefreshToken(QString)"); }
+fn autoRefresh(o: Obj) -> bool { qtc_call(o.h, "autoRefresh()"); return qtc_ret_bool(); }
+fn setAutoRefresh(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setAutoRefresh(bool)"); }
+fn nonceMode(o: Obj) -> i64 { qtc_call(o.h, "nonceMode()"); return qtc_ret_int(); }
+fn setNonceMode(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setNonceMode(QAbstractOAuth2::NonceMode)"); }
+fn nonce(o: Obj) -> u8[>..] { qtc_call(o.h, "nonce()"); return view(qtc_ret_str()); }
+fn setNonce(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setNonce(QString)"); }
+fn idToken(o: Obj) -> u8[>..] { qtc_call(o.h, "idToken()"); return view(qtc_ret_str()); }
+fn tokenUrl(o: Obj) -> Val { qtc_call(o.h, "tokenUrl()"); return Val { h: qtc_ret_val() }; }
+fn setTokenUrl(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setTokenUrl(QUrl)"); }
+fn clearNetworkRequestModifier(o: Obj) { qtc_call(o.h, "clearNetworkRequestModifier()"); }
+fn refreshTokens(o: Obj) { qtc_call(o.h, "refreshTokens()"); }
+fn scopeChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "scopeChanged(QString)"); }
+fn grantedScopeTokensChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "grantedScopeTokensChanged(QSet<QByteArray>)"); }
+fn requestedScopeTokensChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "requestedScopeTokensChanged(QSet<QByteArray>)"); }
+fn userAgentChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "userAgentChanged(QString)"); }
+fn responseTypeChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "responseTypeChanged(QString)"); }
+fn clientIdentifierSharedKeyChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "clientIdentifierSharedKeyChanged(QString)"); }
+fn expirationAtChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "expirationAtChanged(QDateTime)"); }
+fn refreshTokenChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "refreshTokenChanged(QString)"); }
+fn accessTokenAboutToExpire(o: Obj) { qtc_call(o.h, "accessTokenAboutToExpire()"); }
+fn autoRefreshChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "autoRefreshChanged(bool)"); }
+fn nonceModeChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "nonceModeChanged(QAbstractOAuth2::NonceMode)"); }
+fn nonceChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "nonceChanged(QString)"); }
+fn idTokenChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "idTokenChanged(QString)"); }
+fn tokenUrlChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "tokenUrlChanged(QUrl)"); }
+fn sslConfigurationChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "sslConfigurationChanged(QSslConfiguration)"); }
+fn error(o: Obj, a0: const u8[:], a1: const u8[:], a2: Val) { qtc_arg_str(a0); qtc_arg_str(a1); qtc_arg_val(a2.h); qtc_call(o.h, "error(QString,QString,QUrl)"); }
+fn serverReportedErrorOccurred(o: Obj, a0: const u8[:], a1: const u8[:], a2: Val) { qtc_arg_str(a0); qtc_arg_str(a1); qtc_arg_val(a2.h); qtc_call(o.h, "serverReportedErrorOccurred(QString,QString,QUrl)"); }
+fn authorizationCallbackReceived(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "authorizationCallbackReceived(QVariantMap)"); }
+fn callback(o: Obj) -> u8[>..] { qtc_call(o.h, "callback()"); return view(qtc_ret_str()); }
+fn networkReplyFinished(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "networkReplyFinished(QNetworkReply*)"); }
+fn callbackReceived(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "callbackReceived(QVariantMap)"); }
+fn tokensReceived(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "tokensReceived(QVariantMap)"); }
+fn tokenRequestErrorOccurred(o: Obj, a0: i64, a1: const u8[:]) { qtc_arg_int(a0); qtc_arg_str(a1); qtc_call(o.h, "tokenRequestErrorOccurred(QAbstractOAuth::Error,QString)"); }
+fn callbackDataReceived(o: Obj, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "callbackDataReceived(QByteArray)"); }
+fn clientSharedSecret(o: Obj) -> u8[>..] { qtc_call(o.h, "clientSharedSecret()"); return view(qtc_ret_str()); }
+fn setClientSharedSecret(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setClientSharedSecret(QString)"); }
+fn setClientCredentials(o: Obj, a0: const u8[:], a1: const u8[:]) { qtc_arg_str(a0); qtc_arg_str(a1); qtc_call(o.h, "setClientCredentials(QString,QString)"); }
+fn tokenSecret(o: Obj) -> u8[>..] { qtc_call(o.h, "tokenSecret()"); return view(qtc_ret_str()); }
+fn setTokenSecret(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setTokenSecret(QString)"); }
+fn setTokenCredentials(o: Obj, a0: const u8[:], a1: const u8[:]) { qtc_arg_str(a0); qtc_arg_str(a1); qtc_call(o.h, "setTokenCredentials(QString,QString)"); }
+fn temporaryCredentialsUrl(o: Obj) -> Val { qtc_call(o.h, "temporaryCredentialsUrl()"); return Val { h: qtc_ret_val() }; }
+fn setTemporaryCredentialsUrl(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setTemporaryCredentialsUrl(QUrl)"); }
+fn tokenCredentialsUrl(o: Obj) -> Val { qtc_call(o.h, "tokenCredentialsUrl()"); return Val { h: qtc_ret_val() }; }
+fn setTokenCredentialsUrl(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setTokenCredentialsUrl(QUrl)"); }
+fn signatureMethod(o: Obj) -> i64 { qtc_call(o.h, "signatureMethod()"); return qtc_ret_int(); }
+fn setSignatureMethod(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setSignatureMethod(QOAuth1::SignatureMethod)"); }
+fn continueGrantWithVerifier(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "continueGrantWithVerifier(QString)"); }
+fn signatureMethodChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "signatureMethodChanged(QOAuth1::SignatureMethod)"); }
+fn clientSharedSecretChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "clientSharedSecretChanged(QString)"); }
+fn tokenSecretChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "tokenSecretChanged(QString)"); }
+fn temporaryCredentialsUrlChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "temporaryCredentialsUrlChanged(QUrl)"); }
+fn tokenCredentialsUrlChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "tokenCredentialsUrlChanged(QUrl)"); }
+fn httpRequestMethod(o: Val) -> i64 { qtc_call(o.h, "httpRequestMethod()"); return qtc_ret_int(); }
+fn setHttpRequestMethod(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setHttpRequestMethod(QOAuth1Signature::HttpRequestMethod)"); }
+fn customMethodString(o: Val) -> u8[>..] { qtc_call(o.h, "customMethodString()"); return view(qtc_ret_str()); }
+fn setCustomMethodString(o: Val, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setCustomMethodString(QByteArray)"); }
+fn parameters(o: Val) -> Val { qtc_call(o.h, "parameters()"); return Val { h: qtc_ret_val() }; }
+fn setParameters(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setParameters(QMultiMap<QString,QVariant>)"); }
+fn addRequestBody(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "addRequestBody(QUrlQuery)"); }
+fn insert(o: Val, a0: const u8[:], a1: Val) { qtc_arg_str(a0); qtc_arg_val(a1.h); qtc_call(o.h, "insert(QString,QVariant)"); }
+fn value(o: Val, a0: const u8[:], a1: Val) -> Val { qtc_arg_str(a0); qtc_arg_val(a1.h); qtc_call(o.h, "value(QString,QVariant)"); return Val { h: qtc_ret_val() }; }
+fn clientSharedKey(o: Val) -> u8[>..] { qtc_call(o.h, "clientSharedKey()"); return view(qtc_ret_str()); }
+fn setClientSharedKey(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setClientSharedKey(QString)"); }
+fn tokenSecret(o: Val) -> u8[>..] { qtc_call(o.h, "tokenSecret()"); return view(qtc_ret_str()); }
+fn setTokenSecret(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setTokenSecret(QString)"); }
+fn hmacSha1(o: Val) -> u8[>..] { qtc_call(o.h, "hmacSha1()"); return view(qtc_ret_str()); }
+fn rsaSha1(o: Val) -> u8[>..] { qtc_call(o.h, "rsaSha1()"); return view(qtc_ret_str()); }
+fn plainText(o: Val) -> u8[>..] { qtc_call(o.h, "plainText()"); return view(qtc_ret_str()); }
+fn QOAuth1Signature_plainText(a0: const u8[:], a1: const u8[:]) -> u8[>..] { qtc_arg_str(a0); qtc_arg_str(a1); qtc_call_static("QOAuth1Signature", "plainText(QString,QString)"); return view(qtc_ret_str()); }
+fn accessTokenUrl(o: Obj) -> Val { qtc_call(o.h, "accessTokenUrl()"); return Val { h: qtc_ret_val() }; }
+fn setAccessTokenUrl(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setAccessTokenUrl(QUrl)"); }
+fn setPkceMethod(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setPkceMethod(QOAuth2AuthorizationCodeFlow::PkceMethod)"); }
+fn setPkceMethod(o: Obj, a0: i64, a1: i64) { qtc_arg_int(a0); qtc_arg_int(a1); qtc_call(o.h, "setPkceMethod(QOAuth2AuthorizationCodeFlow::PkceMethod,qsizetype)"); }
+fn pkceMethod(o: Obj) -> i64 { qtc_call(o.h, "pkceMethod()"); return qtc_ret_int(); }
+fn refreshAccessToken(o: Obj) { qtc_call(o.h, "refreshAccessToken()"); }
+fn accessTokenUrlChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "accessTokenUrlChanged(QUrl)"); }
+fn userCode(o: Obj) -> u8[>..] { qtc_call(o.h, "userCode()"); return view(qtc_ret_str()); }
+fn verificationUrl(o: Obj) -> Val { qtc_call(o.h, "verificationUrl()"); return Val { h: qtc_ret_val() }; }
+fn completeVerificationUrl(o: Obj) -> Val { qtc_call(o.h, "completeVerificationUrl()"); return Val { h: qtc_ret_val() }; }
+fn isPolling(o: Obj) -> bool { qtc_call(o.h, "isPolling()"); return qtc_ret_bool(); }
+fn userCodeExpirationAt(o: Obj) -> Val { qtc_call(o.h, "userCodeExpirationAt()"); return Val { h: qtc_ret_val() }; }
+fn startTokenPolling(o: Obj) -> bool { qtc_call(o.h, "startTokenPolling()"); return qtc_ret_bool(); }
+fn stopTokenPolling(o: Obj) { qtc_call(o.h, "stopTokenPolling()"); }
+fn authorizeWithUserCode(o: Obj, a0: Val, a1: const u8[:], a2: Val) { qtc_arg_val(a0.h); qtc_arg_str(a1); qtc_arg_val(a2.h); qtc_call(o.h, "authorizeWithUserCode(QUrl,QString,QUrl)"); }
+fn userCodeChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "userCodeChanged(QString)"); }
+fn verificationUrlChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "verificationUrlChanged(QUrl)"); }
+fn completeVerificationUrlChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "completeVerificationUrlChanged(QUrl)"); }
+fn pollingChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "pollingChanged(bool)"); }
+fn userCodeExpirationAtChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "userCodeExpirationAtChanged(QDateTime)"); }
+fn callbackPath(o: Obj) -> u8[>..] { qtc_call(o.h, "callbackPath()"); return view(qtc_ret_str()); }
+fn setCallbackPath(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setCallbackPath(QString)"); }
+fn callbackHost(o: Obj) -> u8[>..] { qtc_call(o.h, "callbackHost()"); return view(qtc_ret_str()); }
+fn setCallbackHost(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setCallbackHost(QString)"); }
+fn callbackText(o: Obj) -> u8[>..] { qtc_call(o.h, "callbackText()"); return view(qtc_ret_str()); }
+fn setCallbackText(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setCallbackText(QString)"); }
+fn port(o: Obj) -> i64 { qtc_call(o.h, "port()"); return qtc_ret_int(); }
+fn listen(o: Obj, a0: Val, a1: Val) -> bool { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "listen(QSslConfiguration,QHostAddress)"); return qtc_ret_bool(); }
+fn listen(o: Obj, a0: Val, a1: Val, a2: i64) -> bool { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_arg_int(a2); qtc_call(o.h, "listen(QSslConfiguration,QHostAddress,quint16)"); return qtc_ret_bool(); }
+fn setRedirectUrl(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setRedirectUrl(QUrl)"); }
+fn redirectUrl(o: Obj) -> Val { qtc_call(o.h, "redirectUrl()"); return Val { h: qtc_ret_val() }; }
+fn handleAuthorizationRedirect(o: Obj, a0: Val) -> bool { qtc_arg_val(a0.h); qtc_call(o.h, "handleAuthorizationRedirect(QUrl)"); return qtc_ret_bool(); }
+fn redirectUrlChanged(o: Obj) { qtc_call(o.h, "redirectUrlChanged()"); }
+fn serverPorts(o: Obj) -> Val { qtc_call(o.h, "serverPorts()"); return Val { h: qtc_ret_val() }; }
+fn bind(o: Obj, a0: Obj) -> bool { qtc_arg_obj(a0.h); qtc_call(o.h, "bind"); return qtc_ret_bool(); }
+fn servers(o: Obj) -> Val { qtc_call(o.h, "servers()"); return Val { h: qtc_ret_val() }; }
+fn localServers(o: Obj) -> Val { qtc_call(o.h, "localServers()"); return Val { h: qtc_ret_val() }; }
+fn http2Configuration(o: Obj) -> Val { qtc_call(o.h, "http2Configuration()"); return Val { h: qtc_ret_val() }; }
+fn setHttp2Configuration(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setHttp2Configuration(QHttp2Configuration)"); }
+fn setConfiguration(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setConfiguration(QHttpServerConfiguration)"); }
+fn configuration(o: Obj) -> Val { qtc_call(o.h, "configuration()"); return Val { h: qtc_ret_val() }; }
+fn clearMissingHandler(o: Obj) { qtc_call(o.h, "clearMissingHandler()"); }
+fn setRateLimitPerSecond(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setRateLimitPerSecond(quint32)"); }
+fn rateLimitPerSecond(o: Val) -> i64 { qtc_call(o.h, "rateLimitPerSecond()"); return qtc_ret_int(); }
+fn setMaximumConnectionsPerHost(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumConnectionsPerHost(quint32)"); }
+fn maximumConnectionsPerHost(o: Val) -> i64 { qtc_call(o.h, "maximumConnectionsPerHost()"); return qtc_ret_int(); }
+fn setMaximumConnections(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumConnections(quint32)"); }
+fn maximumConnections(o: Val) -> i64 { qtc_call(o.h, "maximumConnections()"); return qtc_ret_int(); }
+fn setMaximumUrlSize(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumUrlSize(qint64)"); }
+fn maximumUrlSize(o: Val) -> i64 { qtc_call(o.h, "maximumUrlSize()"); return qtc_ret_int(); }
+fn setMaximumTotalHeaderSize(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumTotalHeaderSize(qint64)"); }
+fn maximumTotalHeaderSize(o: Val) -> i64 { qtc_call(o.h, "maximumTotalHeaderSize()"); return qtc_ret_int(); }
+fn setMaximumHeaderFieldSize(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumHeaderFieldSize(qint64)"); }
+fn maximumHeaderFieldSize(o: Val) -> i64 { qtc_call(o.h, "maximumHeaderFieldSize()"); return qtc_ret_int(); }
+fn setMaximumHeaderFieldCount(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumHeaderFieldCount(qint64)"); }
+fn maximumHeaderFieldCount(o: Val) -> i64 { qtc_call(o.h, "maximumHeaderFieldCount()"); return qtc_ret_int(); }
+fn setMaximumBodySize(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumBodySize(qint64)"); }
+fn maximumBodySize(o: Val) -> i64 { qtc_call(o.h, "maximumBodySize()"); return qtc_ret_int(); }
+fn method(o: Val) -> i64 { qtc_call(o.h, "method()"); return qtc_ret_int(); }
+fn body(o: Val) -> u8[>..] { qtc_call(o.h, "body()"); return view(qtc_ret_str()); }
+fn remoteAddress(o: Val) -> Val { qtc_call(o.h, "remoteAddress()"); return Val { h: qtc_ret_val() }; }
+fn remotePort(o: Val) -> i64 { qtc_call(o.h, "remotePort()"); return qtc_ret_int(); }
+fn localAddress(o: Val) -> Val { qtc_call(o.h, "localAddress()"); return Val { h: qtc_ret_val() }; }
+fn denyStatus(o: Val) -> i64 { qtc_call(o.h, "denyStatus()"); return qtc_ret_int(); }
+fn denyMessage(o: Val) -> u8[>..] { qtc_call(o.h, "denyMessage()"); return view(qtc_ret_str()); }
+fn QHttpServerWebSocketUpgradeResponse_accept() -> Val { qtc_call_static("QHttpServerWebSocketUpgradeResponse", "accept()"); return Val { h: qtc_ret_val() }; }
+fn QHttpServerWebSocketUpgradeResponse_deny() -> Val { qtc_call_static("QHttpServerWebSocketUpgradeResponse", "deny()"); return Val { h: qtc_ret_val() }; }
+fn QHttpServerWebSocketUpgradeResponse_deny(a0: i64, a1: const u8[:]) -> Val { qtc_arg_int(a0); qtc_arg_bytes(a1); qtc_call_static("QHttpServerWebSocketUpgradeResponse", "deny(int,QByteArray)"); return Val { h: qtc_ret_val() }; }
+fn QHttpServerWebSocketUpgradeResponse_passToNext() -> Val { qtc_call_static("QHttpServerWebSocketUpgradeResponse", "passToNext()"); return Val { h: qtc_ret_val() }; }
+fn setAuthenticationMethod(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setAuthenticationMethod(QString)"); }
+fn authenticationData(o: Val) -> u8[>..] { qtc_call(o.h, "authenticationData()"); return view(qtc_ret_str()); }
+fn setAuthenticationData(o: Val, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setAuthenticationData(QByteArray)"); }
+fn reason(o: Val) -> u8[>..] { qtc_call(o.h, "reason()"); return view(qtc_ret_str()); }
+fn setReason(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setReason(QString)"); }
+fn userProperties(o: Val) -> Val { qtc_call(o.h, "userProperties()"); return Val { h: qtc_ret_val() }; }
+fn setUserProperties(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setUserProperties(QMqttUserProperties)"); }
+fn setTransport(o: Obj, a0: Obj, a1: i64) { qtc_arg_obj(a0.h); qtc_arg_int(a1); qtc_call(o.h, "setTransport(QIODevice*,QMqttClient::TransportType)"); }
+fn transport(o: Obj) -> Obj { qtc_call(o.h, "transport()"); return Obj { h: qtc_ret_obj() }; }
+fn subscribe(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "subscribe(QMqttTopicFilter)"); return Obj { h: qtc_ret_obj() }; }
+fn subscribe(o: Obj, a0: Val, a1: i64) -> Obj { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_call(o.h, "subscribe(QMqttTopicFilter,quint8)"); return Obj { h: qtc_ret_obj() }; }
+fn subscribe(o: Obj, a0: Val, a1: Val) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "subscribe(QMqttTopicFilter,QMqttSubscriptionProperties)"); return Obj { h: qtc_ret_obj() }; }
+fn subscribe(o: Obj, a0: Val, a1: Val, a2: i64) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_arg_int(a2); qtc_call(o.h, "subscribe(QMqttTopicFilter,QMqttSubscriptionProperties,quint8)"); return Obj { h: qtc_ret_obj() }; }
+fn unsubscribe(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "unsubscribe(QMqttTopicFilter)"); }
+fn unsubscribe(o: Obj, a0: Val, a1: Val) { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "unsubscribe(QMqttTopicFilter,QMqttUnsubscriptionProperties)"); }
+fn publish(o: Obj, a0: Val) -> i64 { qtc_arg_val(a0.h); qtc_call(o.h, "publish(QMqttTopicName)"); return qtc_ret_int(); }
+fn publish(o: Obj, a0: Val, a1: const u8[:]) -> i64 { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_call(o.h, "publish(QMqttTopicName,QByteArray)"); return qtc_ret_int(); }
+fn publish(o: Obj, a0: Val, a1: const u8[:], a2: i64) -> i64 { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_arg_int(a2); qtc_call(o.h, "publish(QMqttTopicName,QByteArray,quint8)"); return qtc_ret_int(); }
+fn publish(o: Obj, a0: Val, a1: const u8[:], a2: i64, a3: bool) -> i64 { qtc_arg_val(a0.h); qtc_arg_bytes(a1); qtc_arg_int(a2); qtc_arg_bool(a3); qtc_call(o.h, "publish(QMqttTopicName,QByteArray,quint8,bool)"); return qtc_ret_int(); }
+fn publish(o: Obj, a0: Val, a1: Val) -> i64 { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "publish(QMqttTopicName,QMqttPublishProperties)"); return qtc_ret_int(); }
+fn publish(o: Obj, a0: Val, a1: Val, a2: const u8[:]) -> i64 { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_arg_bytes(a2); qtc_call(o.h, "publish(QMqttTopicName,QMqttPublishProperties,QByteArray)"); return qtc_ret_int(); }
+fn publish(o: Obj, a0: Val, a1: Val, a2: const u8[:], a3: i64) -> i64 { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_arg_bytes(a2); qtc_arg_int(a3); qtc_call(o.h, "publish(QMqttTopicName,QMqttPublishProperties,QByteArray,quint8)"); return qtc_ret_int(); }
+fn publish(o: Obj, a0: Val, a1: Val, a2: const u8[:], a3: i64, a4: bool) -> i64 { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_arg_bytes(a2); qtc_arg_int(a3); qtc_arg_bool(a4); qtc_call(o.h, "publish(QMqttTopicName,QMqttPublishProperties,QByteArray,quint8,bool)"); return qtc_ret_int(); }
+fn requestPing(o: Obj) -> bool { qtc_call(o.h, "requestPing()"); return qtc_ret_bool(); }
+fn hostname(o: Obj) -> u8[>..] { qtc_call(o.h, "hostname()"); return view(qtc_ret_str()); }
+fn clientId(o: Obj) -> u8[>..] { qtc_call(o.h, "clientId()"); return view(qtc_ret_str()); }
+fn keepAlive(o: Obj) -> i64 { qtc_call(o.h, "keepAlive()"); return qtc_ret_int(); }
+fn protocolVersion(o: Obj) -> i64 { qtc_call(o.h, "protocolVersion()"); return qtc_ret_int(); }
+fn connectToHost(o: Obj) { qtc_call(o.h, "connectToHost()"); }
+fn connectToHostEncrypted(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "connectToHostEncrypted(QSslConfiguration)"); }
+fn connectToHostWebSocket(o: Obj) { qtc_call(o.h, "connectToHostWebSocket()"); }
+fn connectToHostWebSocket(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "connectToHostWebSocket(QWebSocket*)"); }
+fn connectToHostWebSocketEncrypted(o: Obj) { qtc_call(o.h, "connectToHostWebSocketEncrypted()"); }
+fn connectToHostWebSocketEncrypted(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "connectToHostWebSocketEncrypted(QWebSocket*)"); }
+fn username(o: Obj) -> u8[>..] { qtc_call(o.h, "username()"); return view(qtc_ret_str()); }
+fn password(o: Obj) -> u8[>..] { qtc_call(o.h, "password()"); return view(qtc_ret_str()); }
+fn cleanSession(o: Obj) -> bool { qtc_call(o.h, "cleanSession()"); return qtc_ret_bool(); }
+fn willTopic(o: Obj) -> u8[>..] { qtc_call(o.h, "willTopic()"); return view(qtc_ret_str()); }
+fn willQoS(o: Obj) -> i64 { qtc_call(o.h, "willQoS()"); return qtc_ret_int(); }
+fn willMessage(o: Obj) -> u8[>..] { qtc_call(o.h, "willMessage()"); return view(qtc_ret_str()); }
+fn willRetain(o: Obj) -> bool { qtc_call(o.h, "willRetain()"); return qtc_ret_bool(); }
+fn autoKeepAlive(o: Obj) -> bool { qtc_call(o.h, "autoKeepAlive()"); return qtc_ret_bool(); }
+fn setConnectionProperties(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setConnectionProperties(QMqttConnectionProperties)"); }
+fn connectionProperties(o: Obj) -> Val { qtc_call(o.h, "connectionProperties()"); return Val { h: qtc_ret_val() }; }
+fn setLastWillProperties(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setLastWillProperties(QMqttLastWillProperties)"); }
+fn lastWillProperties(o: Obj) -> Val { qtc_call(o.h, "lastWillProperties()"); return Val { h: qtc_ret_val() }; }
+fn serverConnectionProperties(o: Obj) -> Val { qtc_call(o.h, "serverConnectionProperties()"); return Val { h: qtc_ret_val() }; }
+fn authenticate(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "authenticate(QMqttAuthenticationProperties)"); }
+fn messageReceived(o: Obj, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "messageReceived(QByteArray)"); }
+fn messageReceived(o: Obj, a0: const u8[:], a1: Val) { qtc_arg_bytes(a0); qtc_arg_val(a1.h); qtc_call(o.h, "messageReceived(QByteArray,QMqttTopicName)"); }
+fn messageStatusChanged(o: Obj, a0: i64, a1: i64, a2: Val) { qtc_arg_int(a0); qtc_arg_int(a1); qtc_arg_val(a2.h); qtc_call(o.h, "messageStatusChanged(qint32,QMqtt::MessageStatus,QMqttMessageStatusProperties)"); }
+fn messageSent(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "messageSent(qint32)"); }
+fn pingResponseReceived(o: Obj) { qtc_call(o.h, "pingResponseReceived()"); }
+fn brokerSessionRestored(o: Obj) { qtc_call(o.h, "brokerSessionRestored()"); }
+fn hostnameChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "hostnameChanged(QString)"); }
+fn portChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "portChanged(quint16)"); }
+fn clientIdChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "clientIdChanged(QString)"); }
+fn keepAliveChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "keepAliveChanged(quint16)"); }
+fn protocolVersionChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "protocolVersionChanged(QMqttClient::ProtocolVersion)"); }
+fn errorChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "errorChanged(QMqttClient::ClientError)"); }
+fn usernameChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "usernameChanged(QString)"); }
+fn passwordChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "passwordChanged(QString)"); }
+fn cleanSessionChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "cleanSessionChanged(bool)"); }
+fn willTopicChanged(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "willTopicChanged(QString)"); }
+fn willQoSChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "willQoSChanged(quint8)"); }
+fn willMessageChanged(o: Obj, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "willMessageChanged(QByteArray)"); }
+fn willRetainChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "willRetainChanged(bool)"); }
+fn autoKeepAliveChanged(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "autoKeepAliveChanged(bool)"); }
+fn authenticationRequested(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "authenticationRequested(QMqttAuthenticationProperties)"); }
+fn authenticationFinished(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "authenticationFinished(QMqttAuthenticationProperties)"); }
+fn setHostname(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setHostname(QString)"); }
+fn setPort(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setPort(quint16)"); }
+fn setClientId(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setClientId(QString)"); }
+fn setKeepAlive(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setKeepAlive(quint16)"); }
+fn setProtocolVersion(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setProtocolVersion(QMqttClient::ProtocolVersion)"); }
+fn setState(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setState(QMqttClient::ClientState)"); }
+fn setError(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setError(QMqttClient::ClientError)"); }
+fn setUsername(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setUsername(QString)"); }
+fn setPassword(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setPassword(QString)"); }
+fn setCleanSession(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setCleanSession(bool)"); }
+fn setWillTopic(o: Obj, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setWillTopic(QString)"); }
+fn setWillQoS(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setWillQoS(quint8)"); }
+fn setWillMessage(o: Obj, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setWillMessage(QByteArray)"); }
+fn setWillRetain(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setWillRetain(bool)"); }
+fn setAutoKeepAlive(o: Obj, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setAutoKeepAlive(bool)"); }
+fn sessionExpiryInterval(o: Val) -> i64 { qtc_call(o.h, "sessionExpiryInterval()"); return qtc_ret_int(); }
+fn maximumReceive(o: Val) -> i64 { qtc_call(o.h, "maximumReceive()"); return qtc_ret_int(); }
+fn maximumPacketSize(o: Val) -> i64 { qtc_call(o.h, "maximumPacketSize()"); return qtc_ret_int(); }
+fn maximumTopicAlias(o: Val) -> i64 { qtc_call(o.h, "maximumTopicAlias()"); return qtc_ret_int(); }
+fn requestResponseInformation(o: Val) -> bool { qtc_call(o.h, "requestResponseInformation()"); return qtc_ret_bool(); }
+fn requestProblemInformation(o: Val) -> bool { qtc_call(o.h, "requestProblemInformation()"); return qtc_ret_bool(); }
+fn setSessionExpiryInterval(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setSessionExpiryInterval(quint32)"); }
+fn setMaximumReceive(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumReceive(quint16)"); }
+fn setMaximumPacketSize(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumPacketSize(quint32)"); }
+fn setMaximumTopicAlias(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumTopicAlias(quint16)"); }
+fn setRequestResponseInformation(o: Val, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setRequestResponseInformation(bool)"); }
+fn setRequestProblemInformation(o: Val, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setRequestProblemInformation(bool)"); }
+fn willDelayInterval(o: Val) -> i64 { qtc_call(o.h, "willDelayInterval()"); return qtc_ret_int(); }
+fn payloadFormatIndicator(o: Val) -> i64 { qtc_call(o.h, "payloadFormatIndicator()"); return qtc_ret_int(); }
+fn messageExpiryInterval(o: Val) -> i64 { qtc_call(o.h, "messageExpiryInterval()"); return qtc_ret_int(); }
+fn contentType(o: Val) -> u8[>..] { qtc_call(o.h, "contentType()"); return view(qtc_ret_str()); }
+fn responseTopic(o: Val) -> u8[>..] { qtc_call(o.h, "responseTopic()"); return view(qtc_ret_str()); }
+fn correlationData(o: Val) -> u8[>..] { qtc_call(o.h, "correlationData()"); return view(qtc_ret_str()); }
+fn setWillDelayInterval(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setWillDelayInterval(quint32)"); }
+fn setPayloadFormatIndicator(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setPayloadFormatIndicator(QMqtt::PayloadFormatIndicator)"); }
+fn setMessageExpiryInterval(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMessageExpiryInterval(quint32)"); }
+fn setContentType(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setContentType(QString)"); }
+fn setResponseTopic(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setResponseTopic(QString)"); }
+fn setCorrelationData(o: Val, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setCorrelationData(QByteArray)"); }
+fn payload(o: Val) -> u8[>..] { qtc_call(o.h, "payload()"); return view(qtc_ret_str()); }
+fn qos(o: Val) -> i64 { qtc_call(o.h, "qos()"); return qtc_ret_int(); }
+fn topic(o: Val) -> Val { qtc_call(o.h, "topic()"); return Val { h: qtc_ret_val() }; }
+fn duplicate(o: Val) -> bool { qtc_call(o.h, "duplicate()"); return qtc_ret_bool(); }
+fn retain(o: Val) -> bool { qtc_call(o.h, "retain()"); return qtc_ret_bool(); }
+fn publishProperties(o: Val) -> Val { qtc_call(o.h, "publishProperties()"); return Val { h: qtc_ret_val() }; }
+fn reasonCode(o: Val) -> i64 { qtc_call(o.h, "reasonCode()"); return qtc_ret_int(); }
+fn availableProperties(o: Val) -> i64 { qtc_call(o.h, "availableProperties()"); return qtc_ret_int(); }
+fn topicAlias(o: Val) -> i64 { qtc_call(o.h, "topicAlias()"); return qtc_ret_int(); }
+fn setTopicAlias(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setTopicAlias(quint16)"); }
+fn subscriptionIdentifiers(o: Val) -> Val { qtc_call(o.h, "subscriptionIdentifiers()"); return Val { h: qtc_ret_val() }; }
+fn setSubscriptionIdentifiers(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setSubscriptionIdentifiers(QList<quint32>)"); }
+fn maximumQoS(o: Val) -> i64 { qtc_call(o.h, "maximumQoS()"); return qtc_ret_int(); }
+fn retainAvailable(o: Val) -> bool { qtc_call(o.h, "retainAvailable()"); return qtc_ret_bool(); }
+fn clientIdAssigned(o: Val) -> bool { qtc_call(o.h, "clientIdAssigned()"); return qtc_ret_bool(); }
+fn wildcardSupported(o: Val) -> bool { qtc_call(o.h, "wildcardSupported()"); return qtc_ret_bool(); }
+fn subscriptionIdentifierSupported(o: Val) -> bool { qtc_call(o.h, "subscriptionIdentifierSupported()"); return qtc_ret_bool(); }
+fn sharedSubscriptionSupported(o: Val) -> bool { qtc_call(o.h, "sharedSubscriptionSupported()"); return qtc_ret_bool(); }
+fn serverKeepAlive(o: Val) -> i64 { qtc_call(o.h, "serverKeepAlive()"); return qtc_ret_int(); }
+fn responseInformation(o: Val) -> u8[>..] { qtc_call(o.h, "responseInformation()"); return view(qtc_ret_str()); }
+fn serverReference(o: Val) -> u8[>..] { qtc_call(o.h, "serverReference()"); return view(qtc_ret_str()); }
+fn topic(o: Obj) -> Val { qtc_call(o.h, "topic()"); return Val { h: qtc_ret_val() }; }
+fn qos(o: Obj) -> i64 { qtc_call(o.h, "qos()"); return qtc_ret_int(); }
+fn reason(o: Obj) -> u8[>..] { qtc_call(o.h, "reason()"); return view(qtc_ret_str()); }
+fn reasonCode(o: Obj) -> i64 { qtc_call(o.h, "reasonCode()"); return qtc_ret_int(); }
+fn userProperties(o: Obj) -> Val { qtc_call(o.h, "userProperties()"); return Val { h: qtc_ret_val() }; }
+fn isSharedSubscription(o: Obj) -> bool { qtc_call(o.h, "isSharedSubscription()"); return qtc_ret_bool(); }
+fn sharedSubscriptionName(o: Obj) -> u8[>..] { qtc_call(o.h, "sharedSubscriptionName()"); return view(qtc_ret_str()); }
+fn qosChanged(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "qosChanged(quint8)"); }
+fn messageReceived(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "messageReceived(QMqttMessage)"); }
+fn unsubscribe(o: Obj) { qtc_call(o.h, "unsubscribe()"); }
+fn subscriptionIdentifier(o: Val) -> i64 { qtc_call(o.h, "subscriptionIdentifier()"); return qtc_ret_int(); }
+fn setSubscriptionIdentifier(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setSubscriptionIdentifier(quint32)"); }
+fn noLocal(o: Val) -> bool { qtc_call(o.h, "noLocal()"); return qtc_ret_bool(); }
+fn setNoLocal(o: Val, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setNoLocal(bool)"); }
+fn setFilter(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setFilter(QString)"); }
+fn sharedSubscriptionName(o: Val) -> u8[>..] { qtc_call(o.h, "sharedSubscriptionName()"); return view(qtc_ret_str()); }
+fn match_(o: Val, a0: Val) -> bool { qtc_arg_val(a0.h); qtc_call(o.h, "match(QMqttTopicName)"); return qtc_ret_bool(); }
+fn match_(o: Val, a0: Val, a1: i64) -> bool { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_call(o.h, "match(QMqttTopicName,QMqttTopicFilter::MatchOptions)"); return qtc_ret_bool(); }
+fn levelCount(o: Val) -> i64 { qtc_call(o.h, "levelCount()"); return qtc_ret_int(); }
+fn levels(o: Val) -> Val { qtc_call(o.h, "levels()"); return Val { h: qtc_ret_val() }; }
+fn observe(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "observe"); return Obj { h: qtc_ret_obj() }; }
+fn cancelObserve(o: Obj, a0: Obj) { qtc_arg_obj(a0.h); qtc_call(o.h, "cancelObserve(QCoapReply*)"); }
+fn cancelObserve(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "cancelObserve(QUrl)"); }
+fn discover(o: Obj) -> Obj { qtc_call(o.h, "discover()"); return Obj { h: qtc_ret_obj() }; }
+fn discover(o: Obj, a0: i64) -> Obj { qtc_arg_int(a0); qtc_call(o.h, "discover(QtCoap::MulticastGroup)"); return Obj { h: qtc_ret_obj() }; }
+fn discover(o: Obj, a0: i64, a1: i64) -> Obj { qtc_arg_int(a0); qtc_arg_int(a1); qtc_call(o.h, "discover(QtCoap::MulticastGroup,int)"); return Obj { h: qtc_ret_obj() }; }
+fn discover(o: Obj, a0: i64, a1: i64, a2: const u8[:]) -> Obj { qtc_arg_int(a0); qtc_arg_int(a1); qtc_arg_str(a2); qtc_call(o.h, "discover(QtCoap::MulticastGroup,int,QString)"); return Obj { h: qtc_ret_obj() }; }
+fn discover(o: Obj, a0: Val) -> Obj { qtc_arg_val(a0.h); qtc_call(o.h, "discover(QUrl)"); return Obj { h: qtc_ret_obj() }; }
+fn discover(o: Obj, a0: Val, a1: const u8[:]) -> Obj { qtc_arg_val(a0.h); qtc_arg_str(a1); qtc_call(o.h, "discover(QUrl,QString)"); return Obj { h: qtc_ret_obj() }; }
+fn setSecurityConfiguration(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setSecurityConfiguration(QCoapSecurityConfiguration)"); }
+fn setBlockSize(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setBlockSize(quint16)"); }
+fn setMaximumServerResponseDelay(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumServerResponseDelay(uint)"); }
+fn setAckTimeout(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setAckTimeout(uint)"); }
+fn setAckRandomFactor(o: Obj, a0: f64) { qtc_arg_double(a0); qtc_call(o.h, "setAckRandomFactor(double)"); }
+fn setMaximumRetransmitCount(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumRetransmitCount(uint)"); }
+fn setMinimumTokenSize(o: Obj, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMinimumTokenSize(int)"); }
+fn setBindInterface(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setBindInterface(QNetworkInterface)"); }
+fn bindInterface(o: Obj) -> Val { qtc_call(o.h, "bindInterface()"); return Val { h: qtc_ret_val() }; }
+fn responseToMulticastReceived(o: Obj, a0: Obj, a1: Val, a2: Val) { qtc_arg_obj(a0.h); qtc_arg_val(a1.h); qtc_arg_val(a2.h); qtc_call(o.h, "responseToMulticastReceived(QCoapReply*,QCoapMessage,QHostAddress)"); }
+fn error(o: Obj, a0: Obj, a1: i64) { qtc_arg_obj(a0.h); qtc_arg_int(a1); qtc_call(o.h, "error(QCoapReply*,QtCoap::Error)"); }
+fn bindInterfaceChanged(o: Obj, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "bindInterfaceChanged(QNetworkInterface)"); }
+fn token(o: Val) -> u8[>..] { qtc_call(o.h, "token()"); return view(qtc_ret_str()); }
+fn tokenLength(o: Val) -> i64 { qtc_call(o.h, "tokenLength()"); return qtc_ret_int(); }
+fn messageId(o: Val) -> i64 { qtc_call(o.h, "messageId()"); return qtc_ret_int(); }
+fn setVersion(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setVersion(quint8)"); }
+fn setToken(o: Val, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setToken(QByteArray)"); }
+fn setMessageId(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMessageId(quint16)"); }
+fn setPayload(o: Val, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setPayload(QByteArray)"); }
+fn setOptions(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setOptions(QList<QCoapOption>)"); }
+fn optionAt(o: Val, a0: i64) -> Val { qtc_arg_int(a0); qtc_call(o.h, "optionAt(int)"); return Val { h: qtc_ret_val() }; }
+fn option(o: Val, a0: i64) -> Val { qtc_arg_int(a0); qtc_call(o.h, "option(QCoapOption::OptionName)"); return Val { h: qtc_ret_val() }; }
+fn hasOption(o: Val, a0: i64) -> bool { qtc_arg_int(a0); qtc_call(o.h, "hasOption(QCoapOption::OptionName)"); return qtc_ret_bool(); }
+fn options(o: Val, a0: i64) -> Val { qtc_arg_int(a0); qtc_call(o.h, "options(QCoapOption::OptionName)"); return Val { h: qtc_ret_val() }; }
+fn optionCount(o: Val) -> i64 { qtc_call(o.h, "optionCount()"); return qtc_ret_int(); }
+fn addOption(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "addOption(QCoapOption::OptionName)"); }
+fn addOption(o: Val, a0: i64, a1: const u8[:]) { qtc_arg_int(a0); qtc_arg_bytes(a1); qtc_call(o.h, "addOption(QCoapOption::OptionName,QByteArray)"); }
+fn addOption(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "addOption(QCoapOption)"); }
+fn removeOption(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "removeOption(QCoapOption)"); }
+fn removeOption(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "removeOption(QCoapOption::OptionName)"); }
+fn clearOptions(o: Val) { qtc_call(o.h, "clearOptions()"); }
+fn opaqueValue(o: Val) -> u8[>..] { qtc_call(o.h, "opaqueValue()"); return view(qtc_ret_str()); }
+fn uintValue(o: Val) -> i64 { qtc_call(o.h, "uintValue()"); return qtc_ret_int(); }
+fn stringValue(o: Val) -> u8[>..] { qtc_call(o.h, "stringValue()"); return view(qtc_ret_str()); }
+fn encodingFormat(o: Val) -> i64 { qtc_call(o.h, "encodingFormat()"); return qtc_ret_int(); }
+fn passPhrase(o: Val) -> u8[>..] { qtc_call(o.h, "passPhrase()"); return view(qtc_ret_str()); }
+fn responseCode(o: Obj) -> i64 { qtc_call(o.h, "responseCode()"); return qtc_ret_int(); }
+fn method(o: Obj) -> i64 { qtc_call(o.h, "method()"); return qtc_ret_int(); }
+fn errorReceived(o: Obj) -> i64 { qtc_call(o.h, "errorReceived()"); return qtc_ret_int(); }
+fn isAborted(o: Obj) -> bool { qtc_call(o.h, "isAborted()"); return qtc_ret_bool(); }
+fn isSuccessful(o: Obj) -> bool { qtc_call(o.h, "isSuccessful()"); return qtc_ret_bool(); }
+fn abortRequest(o: Obj) { qtc_call(o.h, "abortRequest()"); }
+fn notified(o: Obj, a0: Obj, a1: Val) { qtc_arg_obj(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "notified(QCoapReply*,QCoapMessage)"); }
+fn aborted(o: Obj, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "aborted(QCoapToken)"); }
+fn proxyUrl(o: Val) -> Val { qtc_call(o.h, "proxyUrl()"); return Val { h: qtc_ret_val() }; }
+fn isObserve(o: Val) -> bool { qtc_call(o.h, "isObserve()"); return qtc_ret_bool(); }
+fn setProxyUrl(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setProxyUrl(QUrl)"); }
+fn enableObserve(o: Val) { qtc_call(o.h, "enableObserve()"); }
+fn observable(o: Val) -> bool { qtc_call(o.h, "observable()"); return qtc_ret_bool(); }
+fn resourceType(o: Val) -> u8[>..] { qtc_call(o.h, "resourceType()"); return view(qtc_ret_str()); }
+fn maximumSize(o: Val) -> i64 { qtc_call(o.h, "maximumSize()"); return qtc_ret_int(); }
+fn contentFormat(o: Val) -> i64 { qtc_call(o.h, "contentFormat()"); return qtc_ret_int(); }
+fn setHost(o: Val, a0: Val) { qtc_arg_val(a0.h); qtc_call(o.h, "setHost(QHostAddress)"); }
+fn setObservable(o: Val, a0: bool) { qtc_arg_bool(a0); qtc_call(o.h, "setObservable(bool)"); }
+fn setResourceType(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setResourceType(QString)"); }
+fn setInterface(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setInterface(QString)"); }
+fn setMaximumSize(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setMaximumSize(int)"); }
+fn setContentFormat(o: Val, a0: i64) { qtc_arg_int(a0); qtc_call(o.h, "setContentFormat(uint)"); }
+fn resources(o: Obj) -> Val { qtc_call(o.h, "resources()"); return Val { h: qtc_ret_val() }; }
+fn discovered(o: Obj, a0: Obj, a1: Val) { qtc_arg_obj(a0.h); qtc_arg_val(a1.h); qtc_call(o.h, "discovered(QCoapResourceDiscoveryReply*,QList<QCoapResource>)"); }
+fn setPreSharedKeyIdentity(o: Val, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setPreSharedKeyIdentity(QByteArray)"); }
+fn preSharedKeyIdentity(o: Val) -> u8[>..] { qtc_call(o.h, "preSharedKeyIdentity()"); return view(qtc_ret_str()); }
+fn setPreSharedKey(o: Val, a0: const u8[:]) { qtc_arg_bytes(a0); qtc_call(o.h, "setPreSharedKey(QByteArray)"); }
+fn preSharedKey(o: Val) -> u8[>..] { qtc_call(o.h, "preSharedKey()"); return view(qtc_ret_str()); }
+fn setDefaultCipherString(o: Val, a0: const u8[:]) { qtc_arg_str(a0); qtc_call(o.h, "setDefaultCipherString(QString)"); }
+fn defaultCipherString(o: Val) -> u8[>..] { qtc_call(o.h, "defaultCipherString()"); return view(qtc_ret_str()); }
 
 // ------------------------------------------------------------ constructors
 fn QBindingStorage() -> Val { return Val { h: qtc_val_new("QBindingStorage") }; }
@@ -9346,6 +9780,8 @@ fn QTextBoundaryFinder(a0: i64, a1: const u8[:]) -> Val { qtc_arg_int(a0); qtc_a
 fn QTextBoundaryFinder(a0: i64, a1: const u8[:], a2: i64) -> Val { qtc_arg_int(a0); qtc_arg_str(a1); qtc_arg_null(); qtc_arg_int(a2); return Val { h: qtc_val_new("QTextBoundaryFinder") }; }
 fn QThread() -> Obj { return Obj { h: qtc_new("QThread") }; }
 fn QThread(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QThread") }; }
+fn QThreadPool() -> Obj { return Obj { h: qtc_new("QThreadPool") }; }
+fn QThreadPool(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QThreadPool") }; }
 fn QTime() -> Val { return Val { h: qtc_val_new("QTime") }; }
 fn QTime(a0: i64, a1: i64) -> Val { qtc_arg_int(a0); qtc_arg_int(a1); return Val { h: qtc_val_new("QTime") }; }
 fn QTime(a0: i64, a1: i64, a2: i64) -> Val { qtc_arg_int(a0); qtc_arg_int(a1); qtc_arg_int(a2); return Val { h: qtc_val_new("QTime") }; }
@@ -9862,6 +10298,9 @@ fn QRadioButton() -> Obj { return Obj { h: qtc_new("QRadioButton") }; }
 fn QRadioButton(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QRadioButton") }; }
 fn QRadioButton(a0: const u8[:]) -> Obj { qtc_arg_str(a0); return Obj { h: qtc_new("QRadioButton") }; }
 fn QRadioButton(a0: const u8[:], a1: Obj) -> Obj { qtc_arg_str(a0); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QRadioButton") }; }
+fn QRhiWidget() -> Obj { return Obj { h: qtc_new("QRhiWidget") }; }
+fn QRhiWidget(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QRhiWidget") }; }
+fn QRhiWidget(a0: Obj, a1: i64) -> Obj { qtc_arg_obj(a0.h); qtc_arg_int(a1); return Obj { h: qtc_new("QRhiWidget") }; }
 fn QRubberBand(a0: i64) -> Obj { qtc_arg_int(a0); return Obj { h: qtc_new("QRubberBand") }; }
 fn QRubberBand(a0: i64, a1: Obj) -> Obj { qtc_arg_int(a0); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QRubberBand") }; }
 fn QScrollArea() -> Obj { return Obj { h: qtc_new("QScrollArea") }; }
@@ -10484,6 +10923,83 @@ fn QWebChannel() -> Obj { return Obj { h: qtc_new("QWebChannel") }; }
 fn QWebChannel(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QWebChannel") }; }
 fn QUiLoader() -> Obj { return Obj { h: qtc_new("QUiLoader") }; }
 fn QUiLoader(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QUiLoader") }; }
+fn QOAuth1() -> Obj { return Obj { h: qtc_new("QOAuth1") }; }
+fn QOAuth1(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QOAuth1") }; }
+fn QOAuth1(a0: Obj, a1: Obj) -> Obj { qtc_arg_obj(a0.h); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QOAuth1") }; }
+fn QOAuth1(a0: const u8[:], a1: const u8[:], a2: Obj) -> Obj { qtc_arg_str(a0); qtc_arg_str(a1); qtc_arg_obj(a2.h); return Obj { h: qtc_new("QOAuth1") }; }
+fn QOAuth1(a0: const u8[:], a1: const u8[:], a2: Obj, a3: Obj) -> Obj { qtc_arg_str(a0); qtc_arg_str(a1); qtc_arg_obj(a2.h); qtc_arg_obj(a3.h); return Obj { h: qtc_new("QOAuth1") }; }
+fn QOAuth1Signature() -> Val { return Val { h: qtc_val_new("QOAuth1Signature") }; }
+fn QOAuth1Signature(a0: Val) -> Val { qtc_arg_val(a0.h); return Val { h: qtc_val_new("QOAuth1Signature") }; }
+fn QOAuth1Signature(a0: Val, a1: i64) -> Val { qtc_arg_val(a0.h); qtc_arg_int(a1); return Val { h: qtc_val_new("QOAuth1Signature") }; }
+fn QOAuth1Signature(a0: Val, a1: i64, a2: Val) -> Val { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_arg_val(a2.h); return Val { h: qtc_val_new("QOAuth1Signature") }; }
+fn QOAuth1Signature(a0: Val, a1: const u8[:], a2: const u8[:]) -> Val { qtc_arg_val(a0.h); qtc_arg_str(a1); qtc_arg_str(a2); return Val { h: qtc_val_new("QOAuth1Signature") }; }
+fn QOAuth1Signature(a0: Val, a1: const u8[:], a2: const u8[:], a3: i64) -> Val { qtc_arg_val(a0.h); qtc_arg_str(a1); qtc_arg_str(a2); qtc_arg_int(a3); return Val { h: qtc_val_new("QOAuth1Signature") }; }
+fn QOAuth1Signature(a0: Val, a1: const u8[:], a2: const u8[:], a3: i64, a4: Val) -> Val { qtc_arg_val(a0.h); qtc_arg_str(a1); qtc_arg_str(a2); qtc_arg_int(a3); qtc_arg_val(a4.h); return Val { h: qtc_val_new("QOAuth1Signature") }; }
+fn QOAuth2AuthorizationCodeFlow() -> Obj { return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: Obj, a1: Obj) -> Obj { qtc_arg_obj(a0.h); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: const u8[:], a1: Obj) -> Obj { qtc_arg_str(a0); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: const u8[:], a1: Obj, a2: Obj) -> Obj { qtc_arg_str(a0); qtc_arg_obj(a1.h); qtc_arg_obj(a2.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: Val, a1: Val, a2: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_arg_obj(a2.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: Val, a1: Val, a2: Obj, a3: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_val(a1.h); qtc_arg_obj(a2.h); qtc_arg_obj(a3.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: const u8[:], a1: Val, a2: Val, a3: Obj) -> Obj { qtc_arg_str(a0); qtc_arg_val(a1.h); qtc_arg_val(a2.h); qtc_arg_obj(a3.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2AuthorizationCodeFlow(a0: const u8[:], a1: Val, a2: Val, a3: Obj, a4: Obj) -> Obj { qtc_arg_str(a0); qtc_arg_val(a1.h); qtc_arg_val(a2.h); qtc_arg_obj(a3.h); qtc_arg_obj(a4.h); return Obj { h: qtc_new("QOAuth2AuthorizationCodeFlow") }; }
+fn QOAuth2DeviceAuthorizationFlow() -> Obj { return Obj { h: qtc_new("QOAuth2DeviceAuthorizationFlow") }; }
+fn QOAuth2DeviceAuthorizationFlow(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QOAuth2DeviceAuthorizationFlow") }; }
+fn QOAuth2DeviceAuthorizationFlow(a0: Obj, a1: Obj) -> Obj { qtc_arg_obj(a0.h); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QOAuth2DeviceAuthorizationFlow") }; }
+fn QOAuthHttpServerReplyHandler() -> Obj { return Obj { h: qtc_new("QOAuthHttpServerReplyHandler") }; }
+fn QOAuthHttpServerReplyHandler(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QOAuthHttpServerReplyHandler") }; }
+fn QOAuthHttpServerReplyHandler(a0: i64) -> Obj { qtc_arg_int(a0); return Obj { h: qtc_new("QOAuthHttpServerReplyHandler") }; }
+fn QOAuthHttpServerReplyHandler(a0: i64, a1: Obj) -> Obj { qtc_arg_int(a0); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QOAuthHttpServerReplyHandler") }; }
+fn QOAuthHttpServerReplyHandler(a0: Val, a1: i64) -> Obj { qtc_arg_val(a0.h); qtc_arg_int(a1); return Obj { h: qtc_new("QOAuthHttpServerReplyHandler") }; }
+fn QOAuthHttpServerReplyHandler(a0: Val, a1: i64, a2: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_arg_obj(a2.h); return Obj { h: qtc_new("QOAuthHttpServerReplyHandler") }; }
+fn QOAuthOobReplyHandler() -> Obj { return Obj { h: qtc_new("QOAuthOobReplyHandler") }; }
+fn QOAuthOobReplyHandler(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QOAuthOobReplyHandler") }; }
+fn QOAuthUriSchemeReplyHandler() -> Obj { return Obj { h: qtc_new("QOAuthUriSchemeReplyHandler") }; }
+fn QOAuthUriSchemeReplyHandler(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QOAuthUriSchemeReplyHandler") }; }
+fn QOAuthUriSchemeReplyHandler(a0: Val) -> Obj { qtc_arg_val(a0.h); return Obj { h: qtc_new("QOAuthUriSchemeReplyHandler") }; }
+fn QOAuthUriSchemeReplyHandler(a0: Val, a1: Obj) -> Obj { qtc_arg_val(a0.h); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QOAuthUriSchemeReplyHandler") }; }
+fn QHttpServer() -> Obj { return Obj { h: qtc_new("QHttpServer") }; }
+fn QHttpServer(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QHttpServer") }; }
+fn QHttpServerConfiguration() -> Val { return Val { h: qtc_val_new("QHttpServerConfiguration") }; }
+fn QHttpServerRequest() -> Val { return Val { h: qtc_val_new("QHttpServerRequest") }; }
+fn QMqttAuthenticationProperties() -> Val { return Val { h: qtc_val_new("QMqttAuthenticationProperties") }; }
+fn QMqttClient() -> Obj { return Obj { h: qtc_new("QMqttClient") }; }
+fn QMqttClient(a0: Obj) -> Obj { qtc_arg_obj(a0.h); return Obj { h: qtc_new("QMqttClient") }; }
+fn QMqttConnectionProperties() -> Val { return Val { h: qtc_val_new("QMqttConnectionProperties") }; }
+fn QMqttLastWillProperties() -> Val { return Val { h: qtc_val_new("QMqttLastWillProperties") }; }
+fn QMqttMessage() -> Val { return Val { h: qtc_val_new("QMqttMessage") }; }
+fn QMqttMessageStatusProperties() -> Val { return Val { h: qtc_val_new("QMqttMessageStatusProperties") }; }
+fn QMqttPublishProperties() -> Val { return Val { h: qtc_val_new("QMqttPublishProperties") }; }
+fn QMqttServerConnectionProperties() -> Val { return Val { h: qtc_val_new("QMqttServerConnectionProperties") }; }
+fn QMqttStringPair() -> Val { return Val { h: qtc_val_new("QMqttStringPair") }; }
+fn QMqttStringPair(a0: const u8[:], a1: const u8[:]) -> Val { qtc_arg_str(a0); qtc_arg_str(a1); return Val { h: qtc_val_new("QMqttStringPair") }; }
+fn QMqttSubscriptionProperties() -> Val { return Val { h: qtc_val_new("QMqttSubscriptionProperties") }; }
+fn QMqttTopicFilter() -> Val { return Val { h: qtc_val_new("QMqttTopicFilter") }; }
+fn QMqttTopicFilter(a0: const u8[:]) -> Val { qtc_arg_str(a0); return Val { h: qtc_val_new("QMqttTopicFilter") }; }
+fn QMqttTopicName() -> Val { return Val { h: qtc_val_new("QMqttTopicName") }; }
+fn QMqttTopicName(a0: const u8[:]) -> Val { qtc_arg_str(a0); return Val { h: qtc_val_new("QMqttTopicName") }; }
+fn QMqttUnsubscriptionProperties() -> Val { return Val { h: qtc_val_new("QMqttUnsubscriptionProperties") }; }
+fn QCoapClient() -> Obj { return Obj { h: qtc_new("QCoapClient") }; }
+fn QCoapClient(a0: i64) -> Obj { qtc_arg_int(a0); return Obj { h: qtc_new("QCoapClient") }; }
+fn QCoapClient(a0: i64, a1: Obj) -> Obj { qtc_arg_int(a0); qtc_arg_obj(a1.h); return Obj { h: qtc_new("QCoapClient") }; }
+fn QCoapMessage() -> Val { return Val { h: qtc_val_new("QCoapMessage") }; }
+fn QCoapOption() -> Val { return Val { h: qtc_val_new("QCoapOption") }; }
+fn QCoapOption(a0: i64) -> Val { qtc_arg_int(a0); return Val { h: qtc_val_new("QCoapOption") }; }
+fn QCoapOption(a0: i64, a1: const u8[:]) -> Val { qtc_arg_int(a0); qtc_arg_bytes(a1); return Val { h: qtc_val_new("QCoapOption") }; }
+fn QCoapOption(a0: i64, a1: i64) -> Val { qtc_arg_int(a0); qtc_arg_int(a1); return Val { h: qtc_val_new("QCoapOption") }; }
+fn QCoapPrivateKey() -> Val { return Val { h: qtc_val_new("QCoapPrivateKey") }; }
+fn QCoapPrivateKey(a0: const u8[:], a1: i64) -> Val { qtc_arg_bytes(a0); qtc_arg_int(a1); return Val { h: qtc_val_new("QCoapPrivateKey") }; }
+fn QCoapPrivateKey(a0: const u8[:], a1: i64, a2: i64) -> Val { qtc_arg_bytes(a0); qtc_arg_int(a1); qtc_arg_int(a2); return Val { h: qtc_val_new("QCoapPrivateKey") }; }
+fn QCoapPrivateKey(a0: const u8[:], a1: i64, a2: i64, a3: const u8[:]) -> Val { qtc_arg_bytes(a0); qtc_arg_int(a1); qtc_arg_int(a2); qtc_arg_bytes(a3); return Val { h: qtc_val_new("QCoapPrivateKey") }; }
+fn QCoapRequest() -> Val { return Val { h: qtc_val_new("QCoapRequest") }; }
+fn QCoapRequest(a0: Val) -> Val { qtc_arg_val(a0.h); return Val { h: qtc_val_new("QCoapRequest") }; }
+fn QCoapRequest(a0: Val, a1: i64) -> Val { qtc_arg_val(a0.h); qtc_arg_int(a1); return Val { h: qtc_val_new("QCoapRequest") }; }
+fn QCoapRequest(a0: Val, a1: i64, a2: Val) -> Val { qtc_arg_val(a0.h); qtc_arg_int(a1); qtc_arg_val(a2.h); return Val { h: qtc_val_new("QCoapRequest") }; }
+fn QCoapRequest(a0: const u8[:]) -> Val { qtc_arg_bytes(a0); return Val { h: qtc_val_new("QCoapRequest") }; }
+fn QCoapRequest(a0: const u8[:], a1: i64) -> Val { qtc_arg_bytes(a0); qtc_arg_int(a1); return Val { h: qtc_val_new("QCoapRequest") }; }
+fn QCoapResource() -> Val { return Val { h: qtc_val_new("QCoapResource") }; }
+fn QCoapSecurityConfiguration() -> Val { return Val { h: qtc_val_new("QCoapSecurityConfiguration") }; }
 
 // ------------------------------------------------------------ enum values
 struct QAbstractAnimation_enums { KeepWhenStopped: i64 = 0, DeleteWhenStopped: i64 = 1, Forward: i64 = 0, Backward: i64 = 1, Stopped: i64 = 0, Paused: i64 = 1, Running: i64 = 2 }
@@ -10500,6 +11016,10 @@ struct QAbstractItemModel_enums { CheckIndexOption_NoOption: i64 = 0, CheckIndex
 let QAbstractItemModel = default<QAbstractItemModel_enums>();
 struct QAbstractItemView_enums { NoDragDrop: i64 = 0, DragOnly: i64 = 1, DropOnly: i64 = 2, DragDrop: i64 = 3, InternalMove: i64 = 4, NoEditTriggers: i64 = 0, CurrentChanged: i64 = 1, DoubleClicked: i64 = 2, SelectedClicked: i64 = 4, EditKeyPressed: i64 = 8, AnyKeyPressed: i64 = 16, AllEditTriggers: i64 = 31, EnsureVisible: i64 = 0, PositionAtTop: i64 = 1, PositionAtBottom: i64 = 2, PositionAtCenter: i64 = 3, ScrollPerItem: i64 = 0, ScrollPerPixel: i64 = 1, SelectItems: i64 = 0, SelectRows: i64 = 1, SelectColumns: i64 = 2, NoSelection: i64 = 0, SingleSelection: i64 = 1, MultiSelection: i64 = 2, ExtendedSelection: i64 = 3, ContiguousSelection: i64 = 4 }
 let QAbstractItemView = default<QAbstractItemView_enums>();
+struct QAbstractOAuth2_enums { NonceMode_Automatic: i64 = 0, NonceMode_Enabled: i64 = 1, NonceMode_Disabled: i64 = 2 }
+let QAbstractOAuth2 = default<QAbstractOAuth2_enums>();
+struct QAbstractOAuth_enums { ContentType_WwwFormUrlEncoded: i64 = 0, ContentType_Json: i64 = 1, Error_NoError: i64 = 0, Error_NetworkError: i64 = 1, Error_ServerError: i64 = 2, Error_OAuthTokenNotFoundError: i64 = 3, Error_OAuthTokenSecretNotFoundError: i64 = 4, Error_OAuthCallbackNotVerified: i64 = 5, Error_ClientError: i64 = 6, Error_ExpiredError: i64 = 7, Stage_RequestingTemporaryCredentials: i64 = 0, Stage_RequestingAuthorization: i64 = 1, Stage_RequestingAccessToken: i64 = 2, Stage_RefreshingAccessToken: i64 = 3, Status_NotAuthenticated: i64 = 0, Status_TemporaryCredentialsReceived: i64 = 1, Status_Granted: i64 = 2, Status_RefreshingToken: i64 = 3 }
+let QAbstractOAuth = default<QAbstractOAuth_enums>();
 struct QAbstractPrintDialog_enums { PrintToFile: i64 = 1, PrintSelection: i64 = 2, PrintPageRange: i64 = 4, PrintShowPageSize: i64 = 8, PrintCollateCopies: i64 = 16, PrintCurrentPage: i64 = 64, AllPages: i64 = 0, Selection: i64 = 1, PageRange: i64 = 2, CurrentPage: i64 = 3 }
 let QAbstractPrintDialog = default<QAbstractPrintDialog_enums>();
 struct QAbstractScrollArea_enums { AdjustIgnored: i64 = 0, AdjustToContentsOnFirstShow: i64 = 1, AdjustToContents: i64 = 2 }
@@ -10570,6 +11090,10 @@ struct QChartView_enums { NoRubberBand: i64 = 0, VerticalRubberBand: i64 = 1, Ho
 let QChartView = default<QChartView_enums>();
 struct QClipboard_enums { Clipboard: i64 = 0, Selection: i64 = 1, FindBuffer: i64 = 2, LastMode: i64 = 2 }
 let QClipboard = default<QClipboard_enums>();
+struct QCoapMessage_enums { Type_Confirmable: i64 = 0, Type_NonConfirmable: i64 = 1, Type_Acknowledgment: i64 = 2, Type_Reset: i64 = 3 }
+let QCoapMessage = default<QCoapMessage_enums>();
+struct QCoapOption_enums { Invalid: i64 = 0, IfMatch: i64 = 1, UriHost: i64 = 3, Etag: i64 = 4, IfNoneMatch: i64 = 5, Observe: i64 = 6, UriPort: i64 = 7, LocationPath: i64 = 8, UriPath: i64 = 11, ContentFormat: i64 = 12, MaxAge: i64 = 14, UriQuery: i64 = 15, Accept: i64 = 17, LocationQuery: i64 = 20, Block2: i64 = 23, Block1: i64 = 27, Size2: i64 = 28, ProxyUri: i64 = 35, ProxyScheme: i64 = 39, Size1: i64 = 60 }
+let QCoapOption = default<QCoapOption_enums>();
 struct QColor_enums { HexRgb: i64 = 0, HexArgb: i64 = 1, Invalid: i64 = 0, Rgb: i64 = 1, Hsv: i64 = 2, Cmyk: i64 = 3, Hsl: i64 = 4, ExtendedRgb: i64 = 5 }
 let QColor = default<QColor_enums>();
 struct QColorDialog_enums { ShowAlphaChannel: i64 = 1, NoButtons: i64 = 2, DontUseNativeDialog: i64 = 4, NoEyeDropperButton: i64 = 8 }
@@ -10726,6 +11250,12 @@ struct QHttpHeaders_enums { WellKnownHeader_AIM: i64 = 0, WellKnownHeader_Accept
 let QHttpHeaders = default<QHttpHeaders_enums>();
 struct QHttpMultiPart_enums { MixedType: i64 = 0, RelatedType: i64 = 1, FormDataType: i64 = 2, AlternativeType: i64 = 3 }
 let QHttpMultiPart = default<QHttpMultiPart_enums>();
+struct QHttpServerRequest_enums { Method_Unknown: i64 = 0, Method_Get: i64 = 1, Method_Put: i64 = 2, Method_Delete: i64 = 4, Method_Post: i64 = 8, Method_Head: i64 = 16, Method_Options: i64 = 32, Method_Patch: i64 = 64, Method_Connect: i64 = 128, Method_Trace: i64 = 256, Method_AnyKnown: i64 = 511 }
+let QHttpServerRequest = default<QHttpServerRequest_enums>();
+struct QHttpServerResponder_enums { StatusCode_Continue: i64 = 100, StatusCode_SwitchingProtocols: i64 = 101, StatusCode_Processing: i64 = 102, StatusCode_Ok: i64 = 200, StatusCode_Created: i64 = 201, StatusCode_Accepted: i64 = 202, StatusCode_NonAuthoritativeInformation: i64 = 203, StatusCode_NoContent: i64 = 204, StatusCode_ResetContent: i64 = 205, StatusCode_PartialContent: i64 = 206, StatusCode_MultiStatus: i64 = 207, StatusCode_AlreadyReported: i64 = 208, StatusCode_IMUsed: i64 = 226, StatusCode_MultipleChoices: i64 = 300, StatusCode_MovedPermanently: i64 = 301, StatusCode_Found: i64 = 302, StatusCode_SeeOther: i64 = 303, StatusCode_NotModified: i64 = 304, StatusCode_UseProxy: i64 = 305, StatusCode_TemporaryRedirect: i64 = 307, StatusCode_PermanentRedirect: i64 = 308, StatusCode_BadRequest: i64 = 400, StatusCode_Unauthorized: i64 = 401, StatusCode_PaymentRequired: i64 = 402, StatusCode_Forbidden: i64 = 403, StatusCode_NotFound: i64 = 404, StatusCode_MethodNotAllowed: i64 = 405, StatusCode_NotAcceptable: i64 = 406, StatusCode_ProxyAuthenticationRequired: i64 = 407, StatusCode_RequestTimeout: i64 = 408, StatusCode_Conflict: i64 = 409, StatusCode_Gone: i64 = 410, StatusCode_LengthRequired: i64 = 411, StatusCode_PreconditionFailed: i64 = 412, StatusCode_PayloadTooLarge: i64 = 413, StatusCode_UriTooLong: i64 = 414, StatusCode_UnsupportedMediaType: i64 = 415, StatusCode_RequestRangeNotSatisfiable: i64 = 416, StatusCode_ExpectationFailed: i64 = 417, StatusCode_ImATeapot: i64 = 418, StatusCode_MisdirectedRequest: i64 = 421, StatusCode_UnprocessableEntity: i64 = 422, StatusCode_Locked: i64 = 423, StatusCode_FailedDependency: i64 = 424, StatusCode_UpgradeRequired: i64 = 426, StatusCode_PreconditionRequired: i64 = 428, StatusCode_TooManyRequests: i64 = 429, StatusCode_RequestHeaderFieldsTooLarge: i64 = 431, StatusCode_UnavailableForLegalReasons: i64 = 451, StatusCode_InternalServerError: i64 = 500, StatusCode_NotImplemented: i64 = 501, StatusCode_BadGateway: i64 = 502, StatusCode_ServiceUnavailable: i64 = 503, StatusCode_GatewayTimeout: i64 = 504, StatusCode_HttpVersionNotSupported: i64 = 505, StatusCode_VariantAlsoNegotiates: i64 = 506, StatusCode_InsufficientStorage: i64 = 507, StatusCode_LoopDetected: i64 = 508, StatusCode_NotExtended: i64 = 510, StatusCode_NetworkAuthenticationRequired: i64 = 511, StatusCode_NetworkConnectTimeoutError: i64 = 599 }
+let QHttpServerResponder = default<QHttpServerResponder_enums>();
+struct QHttpServerWebSocketUpgradeResponse_enums { ResponseType_Accept: i64 = 0, ResponseType_Deny: i64 = 1, ResponseType_PassToNext: i64 = 2 }
+let QHttpServerWebSocketUpgradeResponse = default<QHttpServerWebSocketUpgradeResponse_enums>();
 struct QIODeviceBase_enums { NotOpen: i64 = 0, ReadOnly: i64 = 1, WriteOnly: i64 = 2, ReadWrite: i64 = 3, Append: i64 = 4, Truncate: i64 = 8, Text: i64 = 16, Unbuffered: i64 = 32, NewOnly: i64 = 64, ExistingOnly: i64 = 128 }
 let QIODeviceBase = default<QIODeviceBase_enums>();
 struct QIcon_enums { Normal: i64 = 0, Disabled: i64 = 1, Active: i64 = 2, Selected: i64 = 3, On: i64 = 0, Off: i64 = 1, ThemeIcon_AddressBookNew: i64 = 0, ThemeIcon_ApplicationExit: i64 = 1, ThemeIcon_AppointmentNew: i64 = 2, ThemeIcon_CallStart: i64 = 3, ThemeIcon_CallStop: i64 = 4, ThemeIcon_ContactNew: i64 = 5, ThemeIcon_DocumentNew: i64 = 6, ThemeIcon_DocumentOpen: i64 = 7, ThemeIcon_DocumentOpenRecent: i64 = 8, ThemeIcon_DocumentPageSetup: i64 = 9, ThemeIcon_DocumentPrint: i64 = 10, ThemeIcon_DocumentPrintPreview: i64 = 11, ThemeIcon_DocumentProperties: i64 = 12, ThemeIcon_DocumentRevert: i64 = 13, ThemeIcon_DocumentSave: i64 = 14, ThemeIcon_DocumentSaveAs: i64 = 15, ThemeIcon_DocumentSend: i64 = 16, ThemeIcon_EditClear: i64 = 17, ThemeIcon_EditCopy: i64 = 18, ThemeIcon_EditCut: i64 = 19, ThemeIcon_EditDelete: i64 = 20, ThemeIcon_EditFind: i64 = 21, ThemeIcon_EditPaste: i64 = 22, ThemeIcon_EditRedo: i64 = 23, ThemeIcon_EditSelectAll: i64 = 24, ThemeIcon_EditUndo: i64 = 25, ThemeIcon_FolderNew: i64 = 26, ThemeIcon_FormatIndentLess: i64 = 27, ThemeIcon_FormatIndentMore: i64 = 28, ThemeIcon_FormatJustifyCenter: i64 = 29, ThemeIcon_FormatJustifyFill: i64 = 30, ThemeIcon_FormatJustifyLeft: i64 = 31, ThemeIcon_FormatJustifyRight: i64 = 32, ThemeIcon_FormatTextDirectionLtr: i64 = 33, ThemeIcon_FormatTextDirectionRtl: i64 = 34, ThemeIcon_FormatTextBold: i64 = 35, ThemeIcon_FormatTextItalic: i64 = 36, ThemeIcon_FormatTextUnderline: i64 = 37, ThemeIcon_FormatTextStrikethrough: i64 = 38, ThemeIcon_GoDown: i64 = 39, ThemeIcon_GoHome: i64 = 40, ThemeIcon_GoNext: i64 = 41, ThemeIcon_GoPrevious: i64 = 42, ThemeIcon_GoUp: i64 = 43, ThemeIcon_HelpAbout: i64 = 44, ThemeIcon_HelpFaq: i64 = 45, ThemeIcon_InsertImage: i64 = 46, ThemeIcon_InsertLink: i64 = 47, ThemeIcon_InsertText: i64 = 48, ThemeIcon_ListAdd: i64 = 49, ThemeIcon_ListRemove: i64 = 50, ThemeIcon_MailForward: i64 = 51, ThemeIcon_MailMarkImportant: i64 = 52, ThemeIcon_MailMarkRead: i64 = 53, ThemeIcon_MailMarkUnread: i64 = 54, ThemeIcon_MailMessageNew: i64 = 55, ThemeIcon_MailReplyAll: i64 = 56, ThemeIcon_MailReplySender: i64 = 57, ThemeIcon_MailSend: i64 = 58, ThemeIcon_MediaEject: i64 = 59, ThemeIcon_MediaPlaybackPause: i64 = 60, ThemeIcon_MediaPlaybackStart: i64 = 61, ThemeIcon_MediaPlaybackStop: i64 = 62, ThemeIcon_MediaRecord: i64 = 63, ThemeIcon_MediaSeekBackward: i64 = 64, ThemeIcon_MediaSeekForward: i64 = 65, ThemeIcon_MediaSkipBackward: i64 = 66, ThemeIcon_MediaSkipForward: i64 = 67, ThemeIcon_ObjectRotateLeft: i64 = 68, ThemeIcon_ObjectRotateRight: i64 = 69, ThemeIcon_ProcessStop: i64 = 70, ThemeIcon_SystemLockScreen: i64 = 71, ThemeIcon_SystemLogOut: i64 = 72, ThemeIcon_SystemSearch: i64 = 73, ThemeIcon_SystemReboot: i64 = 74, ThemeIcon_SystemShutdown: i64 = 75, ThemeIcon_ToolsCheckSpelling: i64 = 76, ThemeIcon_ViewFullscreen: i64 = 77, ThemeIcon_ViewRefresh: i64 = 78, ThemeIcon_ViewRestore: i64 = 79, ThemeIcon_WindowClose: i64 = 80, ThemeIcon_WindowNew: i64 = 81, ThemeIcon_ZoomFitBest: i64 = 82, ThemeIcon_ZoomIn: i64 = 83, ThemeIcon_ZoomOut: i64 = 84, ThemeIcon_AudioCard: i64 = 85, ThemeIcon_AudioInputMicrophone: i64 = 86, ThemeIcon_Battery: i64 = 87, ThemeIcon_CameraPhoto: i64 = 88, ThemeIcon_CameraVideo: i64 = 89, ThemeIcon_CameraWeb: i64 = 90, ThemeIcon_Computer: i64 = 91, ThemeIcon_DriveHarddisk: i64 = 92, ThemeIcon_DriveOptical: i64 = 93, ThemeIcon_InputGaming: i64 = 94, ThemeIcon_InputKeyboard: i64 = 95, ThemeIcon_InputMouse: i64 = 96, ThemeIcon_InputTablet: i64 = 97, ThemeIcon_MediaFlash: i64 = 98, ThemeIcon_MediaOptical: i64 = 99, ThemeIcon_MediaTape: i64 = 100, ThemeIcon_MultimediaPlayer: i64 = 101, ThemeIcon_NetworkWired: i64 = 102, ThemeIcon_NetworkWireless: i64 = 103, ThemeIcon_Phone: i64 = 104, ThemeIcon_Printer: i64 = 105, ThemeIcon_Scanner: i64 = 106, ThemeIcon_VideoDisplay: i64 = 107, ThemeIcon_AppointmentMissed: i64 = 108, ThemeIcon_AppointmentSoon: i64 = 109, ThemeIcon_AudioVolumeHigh: i64 = 110, ThemeIcon_AudioVolumeLow: i64 = 111, ThemeIcon_AudioVolumeMedium: i64 = 112, ThemeIcon_AudioVolumeMuted: i64 = 113, ThemeIcon_BatteryCaution: i64 = 114, ThemeIcon_BatteryLow: i64 = 115, ThemeIcon_DialogError: i64 = 116, ThemeIcon_DialogInformation: i64 = 117, ThemeIcon_DialogPassword: i64 = 118, ThemeIcon_DialogQuestion: i64 = 119, ThemeIcon_DialogWarning: i64 = 120, ThemeIcon_FolderDragAccept: i64 = 121, ThemeIcon_FolderOpen: i64 = 122, ThemeIcon_FolderVisiting: i64 = 123, ThemeIcon_ImageLoading: i64 = 124, ThemeIcon_ImageMissing: i64 = 125, ThemeIcon_MailAttachment: i64 = 126, ThemeIcon_MailUnread: i64 = 127, ThemeIcon_MailRead: i64 = 128, ThemeIcon_MailReplied: i64 = 129, ThemeIcon_MediaPlaylistRepeat: i64 = 130, ThemeIcon_MediaPlaylistShuffle: i64 = 131, ThemeIcon_NetworkOffline: i64 = 132, ThemeIcon_PrinterPrinting: i64 = 133, ThemeIcon_SecurityHigh: i64 = 134, ThemeIcon_SecurityLow: i64 = 135, ThemeIcon_SoftwareUpdateAvailable: i64 = 136, ThemeIcon_SoftwareUpdateUrgent: i64 = 137, ThemeIcon_SyncError: i64 = 138, ThemeIcon_SyncSynchronizing: i64 = 139, ThemeIcon_UserAvailable: i64 = 140, ThemeIcon_UserOffline: i64 = 141, ThemeIcon_WeatherClear: i64 = 142, ThemeIcon_WeatherClearNight: i64 = 143, ThemeIcon_WeatherFewClouds: i64 = 144, ThemeIcon_WeatherFewCloudsNight: i64 = 145, ThemeIcon_WeatherFog: i64 = 146, ThemeIcon_WeatherShowers: i64 = 147, ThemeIcon_WeatherSnow: i64 = 148, ThemeIcon_WeatherStorm: i64 = 149, ThemeIcon_NThemeIcons: i64 = 150 }
@@ -10830,6 +11360,18 @@ struct QMimeDatabase_enums { MatchDefault: i64 = 0, MatchExtension: i64 = 1, Mat
 let QMimeDatabase = default<QMimeDatabase_enums>();
 struct QMovie_enums { CacheNone: i64 = 0, CacheAll: i64 = 1, NotRunning: i64 = 0, Paused: i64 = 1, Running: i64 = 2 }
 let QMovie = default<QMovie_enums>();
+struct QMqtt_enums { MessageStatus_Unknown: i64 = 0, MessageStatus_Published: i64 = 1, MessageStatus_Acknowledged: i64 = 2, MessageStatus_Received: i64 = 3, MessageStatus_Released: i64 = 4, MessageStatus_Completed: i64 = 5, PayloadFormatIndicator_Unspecified: i64 = 0, PayloadFormatIndicator_UTF8Encoded: i64 = 1, ReasonCode_Success: i64 = 0, ReasonCode_SubscriptionQoSLevel0: i64 = 0, ReasonCode_SubscriptionQoSLevel1: i64 = 1, ReasonCode_SubscriptionQoSLevel2: i64 = 2, ReasonCode_NoMatchingSubscriber: i64 = 16, ReasonCode_NoSubscriptionExisted: i64 = 17, ReasonCode_ContinueAuthentication: i64 = 24, ReasonCode_ReAuthenticate: i64 = 25, ReasonCode_UnspecifiedError: i64 = -128, ReasonCode_MalformedPacket: i64 = -127, ReasonCode_ProtocolError: i64 = -126, ReasonCode_ImplementationSpecificError: i64 = -125, ReasonCode_UnsupportedProtocolVersion: i64 = -124, ReasonCode_InvalidClientId: i64 = -123, ReasonCode_InvalidUserNameOrPassword: i64 = -122, ReasonCode_NotAuthorized: i64 = -121, ReasonCode_ServerNotAvailable: i64 = -120, ReasonCode_ServerBusy: i64 = -119, ReasonCode_ClientBanned: i64 = -118, ReasonCode_InvalidAuthenticationMethod: i64 = -116, ReasonCode_InvalidTopicFilter: i64 = -113, ReasonCode_InvalidTopicName: i64 = -112, ReasonCode_MessageIdInUse: i64 = -111, ReasonCode_MessageIdNotFound: i64 = -110, ReasonCode_PacketTooLarge: i64 = -107, ReasonCode_QuotaExceeded: i64 = -105, ReasonCode_InvalidPayloadFormat: i64 = -103, ReasonCode_RetainNotSupported: i64 = -102, ReasonCode_QoSNotSupported: i64 = -101, ReasonCode_UseAnotherServer: i64 = -100, ReasonCode_ServerMoved: i64 = -99, ReasonCode_SharedSubscriptionsNotSupported: i64 = -98, ReasonCode_ExceededConnectionRate: i64 = -97, ReasonCode_SubscriptionIdsNotSupported: i64 = -95, ReasonCode_WildCardSubscriptionsNotSupported: i64 = -94 }
+let QMqtt = default<QMqtt_enums>();
+struct QMqttClient_enums { NoError: i64 = 0, InvalidProtocolVersion: i64 = 1, IdRejected: i64 = 2, ServerUnavailable: i64 = 3, BadUsernameOrPassword: i64 = 4, NotAuthorized: i64 = 5, TransportInvalid: i64 = 256, ProtocolViolation: i64 = 257, UnknownError: i64 = 258, Mqtt5SpecificError: i64 = 259, Disconnected: i64 = 0, Connecting: i64 = 1, Connected: i64 = 2, MQTT_3_1: i64 = 3, MQTT_3_1_1: i64 = 4, MQTT_5_0: i64 = 5, IODevice: i64 = 0, AbstractSocket: i64 = 1, SecureSocket: i64 = 2, WebSocket: i64 = 3, SecureWebSocket: i64 = 4 }
+let QMqttClient = default<QMqttClient_enums>();
+struct QMqttPublishProperties_enums { None: i64 = 0, PayloadFormatIndicator: i64 = 1, MessageExpiryInterval: i64 = 2, TopicAlias: i64 = 4, ResponseTopic: i64 = 8, CorrelationData: i64 = 16, UserProperty: i64 = 32, SubscriptionIdentifier: i64 = 64, ContentType: i64 = 128 }
+let QMqttPublishProperties = default<QMqttPublishProperties_enums>();
+struct QMqttServerConnectionProperties_enums { None: i64 = 0, SessionExpiryInterval: i64 = 1, MaximumReceive: i64 = 2, MaximumQoS: i64 = 4, RetainAvailable: i64 = 16, MaximumPacketSize: i64 = 32, AssignedClientId: i64 = 64, MaximumTopicAlias: i64 = 128, ReasonString: i64 = 256, UserProperty: i64 = 512, WildCardSupported: i64 = 1024, SubscriptionIdentifierSupport: i64 = 2048, SharedSubscriptionSupport: i64 = 4096, ServerKeepAlive: i64 = 8192, ResponseInformation: i64 = 16384, ServerReference: i64 = 32768, AuthenticationMethod: i64 = 65536, AuthenticationData: i64 = 131072 }
+let QMqttServerConnectionProperties = default<QMqttServerConnectionProperties_enums>();
+struct QMqttSubscription_enums { Unsubscribed: i64 = 0, SubscriptionPending: i64 = 1, Subscribed: i64 = 2, UnsubscriptionPending: i64 = 3, Error: i64 = 4 }
+let QMqttSubscription = default<QMqttSubscription_enums>();
+struct QMqttTopicFilter_enums { NoMatchOption: i64 = 0, WildcardsDontMatchDollarTopicMatchOption: i64 = 1 }
+let QMqttTopicFilter = default<QMqttTopicFilter_enums>();
 struct QNativeIpcKey_enums { Type_SystemV: i64 = 81, Type_PosixRealtime: i64 = 256, Type_Windows: i64 = 257 }
 let QNativeIpcKey = default<QNativeIpcKey_enums>();
 struct QNetworkAccessManager_enums { HeadOperation: i64 = 1, GetOperation: i64 = 2, PutOperation: i64 = 3, PostOperation: i64 = 4, DeleteOperation: i64 = 5, CustomOperation: i64 = 6, UnknownOperation: i64 = 0 }
@@ -10854,6 +11396,12 @@ struct QNmeaPositionInfoSource_enums { RealTimeMode: i64 = 1, SimulationMode: i6
 let QNmeaPositionInfoSource = default<QNmeaPositionInfoSource_enums>();
 struct QNmeaSatelliteInfoSource_enums { UpdateMode_RealTimeMode: i64 = 1, UpdateMode_SimulationMode: i64 = 2 }
 let QNmeaSatelliteInfoSource = default<QNmeaSatelliteInfoSource_enums>();
+struct QOAuth1_enums { SignatureMethod_Hmac_Sha1: i64 = 0, SignatureMethod_Rsa_Sha1: i64 = 1, SignatureMethod_PlainText: i64 = 2 }
+let QOAuth1 = default<QOAuth1_enums>();
+struct QOAuth1Signature_enums { HttpRequestMethod_Head: i64 = 1, HttpRequestMethod_Get: i64 = 2, HttpRequestMethod_Put: i64 = 3, HttpRequestMethod_Post: i64 = 4, HttpRequestMethod_Delete: i64 = 5, HttpRequestMethod_Custom: i64 = 6, HttpRequestMethod_Unknown: i64 = 0 }
+let QOAuth1Signature = default<QOAuth1Signature_enums>();
+struct QOAuth2AuthorizationCodeFlow_enums { PkceMethod_S256: i64 = 0, PkceMethod_Plain: i64 = 1, PkceMethod_None: i64 = -1 }
+let QOAuth2AuthorizationCodeFlow = default<QOAuth2AuthorizationCodeFlow_enums>();
 struct QOpenGLBuffer_enums { ReadOnly: i64 = 35000, WriteOnly: i64 = 35001, ReadWrite: i64 = 35002, RangeRead: i64 = 1, RangeWrite: i64 = 2, RangeInvalidate: i64 = 4, RangeInvalidateBuffer: i64 = 8, RangeFlushExplicit: i64 = 16, RangeUnsynchronized: i64 = 32, VertexBuffer: i64 = 34962, IndexBuffer: i64 = 34963, PixelPackBuffer: i64 = 35051, PixelUnpackBuffer: i64 = 35052, StreamDraw: i64 = 35040, StreamRead: i64 = 35041, StreamCopy: i64 = 35042, StaticDraw: i64 = 35044, StaticRead: i64 = 35045, StaticCopy: i64 = 35046, DynamicDraw: i64 = 35048, DynamicRead: i64 = 35049, DynamicCopy: i64 = 35050 }
 let QOpenGLBuffer = default<QOpenGLBuffer_enums>();
 struct QOpenGLContext_enums { LibGL: i64 = 0, LibGLES: i64 = 1 }
@@ -11246,6 +11794,8 @@ struct QXmlStreamWriter_enums { Error_None: i64 = 0, Error_IO: i64 = 1, Error_En
 let QXmlStreamWriter = default<QXmlStreamWriter_enums>();
 struct Qt_enums { AlignLeft: i64 = 1, AlignLeading: i64 = 1, AlignRight: i64 = 2, AlignTrailing: i64 = 2, AlignHCenter: i64 = 4, AlignJustify: i64 = 8, AlignAbsolute: i64 = 16, AlignHorizontal_Mask: i64 = 31, AlignTop: i64 = 32, AlignBottom: i64 = 64, AlignVCenter: i64 = 128, AlignBaseline: i64 = 256, AlignVertical_Mask: i64 = 480, AlignCenter: i64 = 132, AnchorLeft: i64 = 0, AnchorHorizontalCenter: i64 = 1, AnchorRight: i64 = 2, AnchorTop: i64 = 3, AnchorVerticalCenter: i64 = 4, AnchorBottom: i64 = 5, AA_QtQuickUseDefaultSizePolicy: i64 = 1, AA_DontShowIconsInMenus: i64 = 2, AA_NativeWindows: i64 = 3, AA_DontCreateNativeWidgetSiblings: i64 = 4, AA_PluginApplication: i64 = 5, AA_DontUseNativeMenuBar: i64 = 6, AA_MacDontSwapCtrlAndMeta: i64 = 7, AA_Use96Dpi: i64 = 8, AA_DisableNativeVirtualKeyboard: i64 = 9, AA_DontUseNativeMenuWindows: i64 = 10, AA_SynthesizeTouchForUnhandledMouseEvents: i64 = 11, AA_SynthesizeMouseForUnhandledTouchEvents: i64 = 12, AA_UseHighDpiPixmaps: i64 = 13, AA_ForceRasterWidgets: i64 = 14, AA_UseDesktopOpenGL: i64 = 15, AA_UseOpenGLES: i64 = 16, AA_UseSoftwareOpenGL: i64 = 17, AA_ShareOpenGLContexts: i64 = 18, AA_SetPalette: i64 = 19, AA_EnableHighDpiScaling: i64 = 20, AA_DisableHighDpiScaling: i64 = 21, AA_UseStyleSheetPropagationInWidgetStyles: i64 = 22, AA_DontUseNativeDialogs: i64 = 23, AA_SynthesizeMouseForUnhandledTabletEvents: i64 = 24, AA_CompressHighFrequencyEvents: i64 = 25, AA_DontCheckOpenGLContextThreadAffinity: i64 = 26, AA_DisableShaderDiskCache: i64 = 27, AA_DontShowShortcutsInContextMenus: i64 = 28, AA_CompressTabletEvents: i64 = 29, AA_DisableSessionManager: i64 = 31, AA_AttributeCount: i64 = 32, ApplicationSuspended: i64 = 0, ApplicationHidden: i64 = 1, ApplicationInactive: i64 = 2, ApplicationActive: i64 = 4, NoArrow: i64 = 0, UpArrow: i64 = 1, DownArrow: i64 = 2, LeftArrow: i64 = 3, RightArrow: i64 = 4, IgnoreAspectRatio: i64 = 0, KeepAspectRatio: i64 = 1, KeepAspectRatioByExpanding: i64 = 2, XAxis: i64 = 0, YAxis: i64 = 1, ZAxis: i64 = 2, TransparentMode: i64 = 0, OpaqueMode: i64 = 1, NoBrush: i64 = 0, SolidPattern: i64 = 1, Dense1Pattern: i64 = 2, Dense2Pattern: i64 = 3, Dense3Pattern: i64 = 4, Dense4Pattern: i64 = 5, Dense5Pattern: i64 = 6, Dense6Pattern: i64 = 7, Dense7Pattern: i64 = 8, HorPattern: i64 = 9, VerPattern: i64 = 10, CrossPattern: i64 = 11, BDiagPattern: i64 = 12, FDiagPattern: i64 = 13, DiagCrossPattern: i64 = 14, LinearGradientPattern: i64 = 15, RadialGradientPattern: i64 = 16, ConicalGradientPattern: i64 = 17, TexturePattern: i64 = 24, CaseInsensitive: i64 = 0, CaseSensitive: i64 = 1, Unchecked: i64 = 0, PartiallyChecked: i64 = 1, Checked: i64 = 2, ChecksumIso3309: i64 = 0, ChecksumItuV41: i64 = 1, NoClip: i64 = 0, ReplaceClip: i64 = 1, IntersectClip: i64 = 2, ColorScheme_Unknown: i64 = 0, ColorScheme_Light: i64 = 1, ColorScheme_Dark: i64 = 2, AutoConnection: i64 = 0, DirectConnection: i64 = 1, QueuedConnection: i64 = 2, BlockingQueuedConnection: i64 = 3, UniqueConnection: i64 = 128, SingleShotConnection: i64 = 256, NoContextMenu: i64 = 0, DefaultContextMenu: i64 = 1, ActionsContextMenu: i64 = 2, CustomContextMenu: i64 = 3, PreventContextMenu: i64 = 4, ContextMenuTrigger_Press: i64 = 0, ContextMenuTrigger_Release: i64 = 1, ContrastPreference_NoPreference: i64 = 0, ContrastPreference_HighContrast: i64 = 1, DeviceCoordinates: i64 = 0, LogicalCoordinates: i64 = 1, TopLeftCorner: i64 = 0, TopRightCorner: i64 = 1, BottomLeftCorner: i64 = 2, BottomRightCorner: i64 = 3, LogicalMoveStyle: i64 = 0, VisualMoveStyle: i64 = 1, ArrowCursor: i64 = 0, UpArrowCursor: i64 = 1, CrossCursor: i64 = 2, WaitCursor: i64 = 3, IBeamCursor: i64 = 4, SizeVerCursor: i64 = 5, SizeHorCursor: i64 = 6, SizeBDiagCursor: i64 = 7, SizeFDiagCursor: i64 = 8, SizeAllCursor: i64 = 9, BlankCursor: i64 = 10, SplitVCursor: i64 = 11, SplitHCursor: i64 = 12, PointingHandCursor: i64 = 13, ForbiddenCursor: i64 = 14, WhatsThisCursor: i64 = 15, BusyCursor: i64 = 16, OpenHandCursor: i64 = 17, ClosedHandCursor: i64 = 18, DragCopyCursor: i64 = 19, DragMoveCursor: i64 = 20, DragLinkCursor: i64 = 21, LastCursor: i64 = 21, BitmapCursor: i64 = 24, CustomCursor: i64 = 25, TextDate: i64 = 0, ISODate: i64 = 1, RFC2822Date: i64 = 8, ISODateWithMs: i64 = 9, Monday: i64 = 1, Tuesday: i64 = 2, Wednesday: i64 = 3, Thursday: i64 = 4, Friday: i64 = 5, Saturday: i64 = 6, Sunday: i64 = 7, LeftDockWidgetArea: i64 = 1, RightDockWidgetArea: i64 = 2, TopDockWidgetArea: i64 = 4, BottomDockWidgetArea: i64 = 8, DockWidgetArea_Mask: i64 = 15, AllDockWidgetAreas: i64 = 15, NoDockWidgetArea: i64 = 0, NDockWidgetAreas: i64 = 4, CopyAction: i64 = 1, MoveAction: i64 = 2, LinkAction: i64 = 4, ActionMask: i64 = 255, TargetMoveAction: i64 = 32770, IgnoreAction: i64 = 0, TopEdge: i64 = 1, LeftEdge: i64 = 2, RightEdge: i64 = 4, BottomEdge: i64 = 8, EnterKeyDefault: i64 = 0, EnterKeyReturn: i64 = 1, EnterKeyDone: i64 = 2, EnterKeyGo: i64 = 3, EnterKeySend: i64 = 4, EnterKeySearch: i64 = 5, EnterKeyNext: i64 = 6, EnterKeyPrevious: i64 = 7, HighEventPriority: i64 = 1, NormalEventPriority: i64 = 0, LowEventPriority: i64 = -1, OddEvenFill: i64 = 0, WindingFill: i64 = 1, FindDirectChildrenOnly: i64 = 0, FindChildrenRecursively: i64 = 1, NoFocus: i64 = 0, TabFocus: i64 = 1, ClickFocus: i64 = 2, StrongFocus: i64 = 11, WheelFocus: i64 = 15, MouseFocusReason: i64 = 0, TabFocusReason: i64 = 1, BacktabFocusReason: i64 = 2, ActiveWindowFocusReason: i64 = 3, PopupFocusReason: i64 = 4, ShortcutFocusReason: i64 = 5, MenuBarFocusReason: i64 = 6, OtherFocusReason: i64 = 7, NoFocusReason: i64 = 8, DontStartGestureOnChildren: i64 = 1, ReceivePartialGestures: i64 = 2, IgnoredGesturesPropagateToParent: i64 = 4, NoGesture: i64 = 0, GestureStarted: i64 = 1, GestureUpdated: i64 = 2, GestureFinished: i64 = 3, GestureCanceled: i64 = 4, TapGesture: i64 = 1, TapAndHoldGesture: i64 = 2, PanGesture: i64 = 3, PinchGesture: i64 = 4, SwipeGesture: i64 = 5, CustomGesture: i64 = 256, LastGestureType: i64 = 4294967295, color0: i64 = 0, color1: i64 = 1, black: i64 = 2, white: i64 = 3, darkGray: i64 = 4, gray: i64 = 5, lightGray: i64 = 6, red: i64 = 7, green: i64 = 8, blue: i64 = 9, cyan: i64 = 10, magenta: i64 = 11, yellow: i64 = 12, darkRed: i64 = 13, darkGreen: i64 = 14, darkBlue: i64 = 15, darkCyan: i64 = 16, darkMagenta: i64 = 17, darkYellow: i64 = 18, transparent: i64 = 19, HighDpiScaleFactorRoundingPolicy_Unset: i64 = 0, HighDpiScaleFactorRoundingPolicy_Round: i64 = 1, HighDpiScaleFactorRoundingPolicy_Ceil: i64 = 2, HighDpiScaleFactorRoundingPolicy_Floor: i64 = 3, HighDpiScaleFactorRoundingPolicy_RoundPreferFloor: i64 = 4, HighDpiScaleFactorRoundingPolicy_PassThrough: i64 = 5, ExactHit: i64 = 0, FuzzyHit: i64 = 1, ColorMode_Mask: i64 = 3, AutoColor: i64 = 0, ColorOnly: i64 = 3, MonoOnly: i64 = 2, AlphaDither_Mask: i64 = 12, ThresholdAlphaDither: i64 = 0, OrderedAlphaDither: i64 = 4, DiffuseAlphaDither: i64 = 8, NoAlpha: i64 = 12, Dither_Mask: i64 = 48, DiffuseDither: i64 = 0, OrderedDither: i64 = 16, ThresholdDither: i64 = 32, DitherMode_Mask: i64 = 192, AutoDither: i64 = 0, PreferDither: i64 = 64, AvoidDither: i64 = 128, NoOpaqueDetection: i64 = 256, NoFormatConversion: i64 = 512, Initialization_Uninitialized: i64 = 0, ImhNone: i64 = 0, ImhHiddenText: i64 = 1, ImhSensitiveData: i64 = 2, ImhNoAutoUppercase: i64 = 4, ImhPreferNumbers: i64 = 8, ImhPreferUppercase: i64 = 16, ImhPreferLowercase: i64 = 32, ImhNoPredictiveText: i64 = 64, ImhDate: i64 = 128, ImhTime: i64 = 256, ImhPreferLatin: i64 = 512, ImhMultiLine: i64 = 1024, ImhNoEditMenu: i64 = 2048, ImhNoTextHandles: i64 = 4096, ImhNoFullscreen: i64 = 8192, ImhDigitsOnly: i64 = 65536, ImhFormattedNumbersOnly: i64 = 131072, ImhUppercaseOnly: i64 = 262144, ImhLowercaseOnly: i64 = 524288, ImhDialableCharactersOnly: i64 = 1048576, ImhEmailCharactersOnly: i64 = 2097152, ImhUrlCharactersOnly: i64 = 4194304, ImhLatinOnly: i64 = 8388608, ImhDecimalNumbersOnly: i64 = 16777216, ImhExclusiveInputMask: i64 = 4294901760, ImEnabled: i64 = 1, ImCursorRectangle: i64 = 2, ImFont: i64 = 4, ImCursorPosition: i64 = 8, ImSurroundingText: i64 = 16, ImCurrentSelection: i64 = 32, ImMaximumTextLength: i64 = 64, ImAnchorPosition: i64 = 128, ImHints: i64 = 256, ImPreferredLanguage: i64 = 512, ImAbsolutePosition: i64 = 1024, ImTextBeforeCursor: i64 = 2048, ImTextAfterCursor: i64 = 4096, ImEnterKeyType: i64 = 8192, ImAnchorRectangle: i64 = 16384, ImInputItemClipRectangle: i64 = 32768, ImReadOnly: i64 = 65536, ImPlatformData: i64 = 2147483648, ImQueryInput: i64 = 16570, ImQueryAll: i64 = 4294967295, DisplayRole: i64 = 0, DecorationRole: i64 = 1, EditRole: i64 = 2, ToolTipRole: i64 = 3, StatusTipRole: i64 = 4, WhatsThisRole: i64 = 5, FontRole: i64 = 6, TextAlignmentRole: i64 = 7, BackgroundRole: i64 = 8, ForegroundRole: i64 = 9, CheckStateRole: i64 = 10, AccessibleTextRole: i64 = 11, AccessibleDescriptionRole: i64 = 12, SizeHintRole: i64 = 13, InitialSortOrderRole: i64 = 14, DisplayPropertyRole: i64 = 27, DecorationPropertyRole: i64 = 28, ToolTipPropertyRole: i64 = 29, StatusTipPropertyRole: i64 = 30, WhatsThisPropertyRole: i64 = 31, RangeModelDataRole: i64 = 40, RangeModelAdapterRole: i64 = 41, UserRole: i64 = 256, StandardItemFlagsRole: i64 = 255, FileInfoRole: i64 = 252, RemoteObjectsCacheRole: i64 = 255, NoItemFlags: i64 = 0, ItemIsSelectable: i64 = 1, ItemIsEditable: i64 = 2, ItemIsDragEnabled: i64 = 4, ItemIsDropEnabled: i64 = 8, ItemIsUserCheckable: i64 = 16, ItemIsEnabled: i64 = 32, ItemIsAutoTristate: i64 = 64, ItemNeverHasChildren: i64 = 128, ItemIsUserTristate: i64 = 256, ContainsItemShape: i64 = 0, IntersectsItemShape: i64 = 1, ContainsItemBoundingRect: i64 = 2, IntersectsItemBoundingRect: i64 = 3, ReplaceSelection: i64 = 0, AddToSelection: i64 = 1, Key_Space: i64 = 32, Key_Any: i64 = 32, Key_Exclam: i64 = 33, Key_QuoteDbl: i64 = 34, Key_NumberSign: i64 = 35, Key_Dollar: i64 = 36, Key_Percent: i64 = 37, Key_Ampersand: i64 = 38, Key_Apostrophe: i64 = 39, Key_ParenLeft: i64 = 40, Key_ParenRight: i64 = 41, Key_Asterisk: i64 = 42, Key_Plus: i64 = 43, Key_Comma: i64 = 44, Key_Minus: i64 = 45, Key_Period: i64 = 46, Key_Slash: i64 = 47, Key_0: i64 = 48, Key_1: i64 = 49, Key_2: i64 = 50, Key_3: i64 = 51, Key_4: i64 = 52, Key_5: i64 = 53, Key_6: i64 = 54, Key_7: i64 = 55, Key_8: i64 = 56, Key_9: i64 = 57, Key_Colon: i64 = 58, Key_Semicolon: i64 = 59, Key_Less: i64 = 60, Key_Equal: i64 = 61, Key_Greater: i64 = 62, Key_Question: i64 = 63, Key_At: i64 = 64, Key_A: i64 = 65, Key_B: i64 = 66, Key_C: i64 = 67, Key_D: i64 = 68, Key_E: i64 = 69, Key_F: i64 = 70, Key_G: i64 = 71, Key_H: i64 = 72, Key_I: i64 = 73, Key_J: i64 = 74, Key_K: i64 = 75, Key_L: i64 = 76, Key_M: i64 = 77, Key_N: i64 = 78, Key_O: i64 = 79, Key_P: i64 = 80, Key_Q: i64 = 81, Key_R: i64 = 82, Key_S: i64 = 83, Key_T: i64 = 84, Key_U: i64 = 85, Key_V: i64 = 86, Key_W: i64 = 87, Key_X: i64 = 88, Key_Y: i64 = 89, Key_Z: i64 = 90, Key_BracketLeft: i64 = 91, Key_Backslash: i64 = 92, Key_BracketRight: i64 = 93, Key_AsciiCircum: i64 = 94, Key_Underscore: i64 = 95, Key_QuoteLeft: i64 = 96, Key_BraceLeft: i64 = 123, Key_Bar: i64 = 124, Key_BraceRight: i64 = 125, Key_AsciiTilde: i64 = 126, Key_nobreakspace: i64 = 160, Key_exclamdown: i64 = 161, Key_cent: i64 = 162, Key_sterling: i64 = 163, Key_currency: i64 = 164, Key_yen: i64 = 165, Key_brokenbar: i64 = 166, Key_section: i64 = 167, Key_diaeresis: i64 = 168, Key_copyright: i64 = 169, Key_ordfeminine: i64 = 170, Key_guillemotleft: i64 = 171, Key_notsign: i64 = 172, Key_hyphen: i64 = 173, Key_registered: i64 = 174, Key_macron: i64 = 175, Key_degree: i64 = 176, Key_plusminus: i64 = 177, Key_twosuperior: i64 = 178, Key_threesuperior: i64 = 179, Key_acute: i64 = 180, Key_micro: i64 = 181, Key_mu: i64 = 181, Key_paragraph: i64 = 182, Key_periodcentered: i64 = 183, Key_cedilla: i64 = 184, Key_onesuperior: i64 = 185, Key_masculine: i64 = 186, Key_guillemotright: i64 = 187, Key_onequarter: i64 = 188, Key_onehalf: i64 = 189, Key_threequarters: i64 = 190, Key_questiondown: i64 = 191, Key_Agrave: i64 = 192, Key_Aacute: i64 = 193, Key_Acircumflex: i64 = 194, Key_Atilde: i64 = 195, Key_Adiaeresis: i64 = 196, Key_Aring: i64 = 197, Key_AE: i64 = 198, Key_Ccedilla: i64 = 199, Key_Egrave: i64 = 200, Key_Eacute: i64 = 201, Key_Ecircumflex: i64 = 202, Key_Ediaeresis: i64 = 203, Key_Igrave: i64 = 204, Key_Iacute: i64 = 205, Key_Icircumflex: i64 = 206, Key_Idiaeresis: i64 = 207, Key_ETH: i64 = 208, Key_Ntilde: i64 = 209, Key_Ograve: i64 = 210, Key_Oacute: i64 = 211, Key_Ocircumflex: i64 = 212, Key_Otilde: i64 = 213, Key_Odiaeresis: i64 = 214, Key_multiply: i64 = 215, Key_Ooblique: i64 = 216, Key_Ugrave: i64 = 217, Key_Uacute: i64 = 218, Key_Ucircumflex: i64 = 219, Key_Udiaeresis: i64 = 220, Key_Yacute: i64 = 221, Key_THORN: i64 = 222, Key_ssharp: i64 = 223, Key_division: i64 = 247, Key_ydiaeresis: i64 = 255, Key_Escape: i64 = 16777216, Key_Tab: i64 = 16777217, Key_Backtab: i64 = 16777218, Key_Backspace: i64 = 16777219, Key_Return: i64 = 16777220, Key_Enter: i64 = 16777221, Key_Insert: i64 = 16777222, Key_Delete: i64 = 16777223, Key_Pause: i64 = 16777224, Key_Print: i64 = 16777225, Key_SysReq: i64 = 16777226, Key_Clear: i64 = 16777227, Key_Home: i64 = 16777232, Key_End: i64 = 16777233, Key_Left: i64 = 16777234, Key_Up: i64 = 16777235, Key_Right: i64 = 16777236, Key_Down: i64 = 16777237, Key_PageUp: i64 = 16777238, Key_PageDown: i64 = 16777239, Key_Shift: i64 = 16777248, Key_Control: i64 = 16777249, Key_Meta: i64 = 16777250, Key_Alt: i64 = 16777251, Key_CapsLock: i64 = 16777252, Key_NumLock: i64 = 16777253, Key_ScrollLock: i64 = 16777254, Key_F1: i64 = 16777264, Key_F2: i64 = 16777265, Key_F3: i64 = 16777266, Key_F4: i64 = 16777267, Key_F5: i64 = 16777268, Key_F6: i64 = 16777269, Key_F7: i64 = 16777270, Key_F8: i64 = 16777271, Key_F9: i64 = 16777272, Key_F10: i64 = 16777273, Key_F11: i64 = 16777274, Key_F12: i64 = 16777275, Key_F13: i64 = 16777276, Key_F14: i64 = 16777277, Key_F15: i64 = 16777278, Key_F16: i64 = 16777279, Key_F17: i64 = 16777280, Key_F18: i64 = 16777281, Key_F19: i64 = 16777282, Key_F20: i64 = 16777283, Key_F21: i64 = 16777284, Key_F22: i64 = 16777285, Key_F23: i64 = 16777286, Key_F24: i64 = 16777287, Key_F25: i64 = 16777288, Key_F26: i64 = 16777289, Key_F27: i64 = 16777290, Key_F28: i64 = 16777291, Key_F29: i64 = 16777292, Key_F30: i64 = 16777293, Key_F31: i64 = 16777294, Key_F32: i64 = 16777295, Key_F33: i64 = 16777296, Key_F34: i64 = 16777297, Key_F35: i64 = 16777298, Key_Super_L: i64 = 16777299, Key_Super_R: i64 = 16777300, Key_Menu: i64 = 16777301, Key_Hyper_L: i64 = 16777302, Key_Hyper_R: i64 = 16777303, Key_Help: i64 = 16777304, Key_Direction_L: i64 = 16777305, Key_Direction_R: i64 = 16777312, Key_AltGr: i64 = 16781571, Key_Multi_key: i64 = 16781600, Key_Codeinput: i64 = 16781623, Key_SingleCandidate: i64 = 16781628, Key_MultipleCandidate: i64 = 16781629, Key_PreviousCandidate: i64 = 16781630, Key_Mode_switch: i64 = 16781694, Key_Kanji: i64 = 16781601, Key_Muhenkan: i64 = 16781602, Key_Henkan: i64 = 16781603, Key_Romaji: i64 = 16781604, Key_Hiragana: i64 = 16781605, Key_Katakana: i64 = 16781606, Key_Hiragana_Katakana: i64 = 16781607, Key_Zenkaku: i64 = 16781608, Key_Hankaku: i64 = 16781609, Key_Zenkaku_Hankaku: i64 = 16781610, Key_Touroku: i64 = 16781611, Key_Massyo: i64 = 16781612, Key_Kana_Lock: i64 = 16781613, Key_Kana_Shift: i64 = 16781614, Key_Eisu_Shift: i64 = 16781615, Key_Eisu_toggle: i64 = 16781616, Key_Hangul: i64 = 16781617, Key_Hangul_Start: i64 = 16781618, Key_Hangul_End: i64 = 16781619, Key_Hangul_Hanja: i64 = 16781620, Key_Hangul_Jamo: i64 = 16781621, Key_Hangul_Romaja: i64 = 16781622, Key_Hangul_Jeonja: i64 = 16781624, Key_Hangul_Banja: i64 = 16781625, Key_Hangul_PreHanja: i64 = 16781626, Key_Hangul_PostHanja: i64 = 16781627, Key_Hangul_Special: i64 = 16781631, Key_Dead_Grave: i64 = 16781904, Key_Dead_Acute: i64 = 16781905, Key_Dead_Circumflex: i64 = 16781906, Key_Dead_Tilde: i64 = 16781907, Key_Dead_Macron: i64 = 16781908, Key_Dead_Breve: i64 = 16781909, Key_Dead_Abovedot: i64 = 16781910, Key_Dead_Diaeresis: i64 = 16781911, Key_Dead_Abovering: i64 = 16781912, Key_Dead_Doubleacute: i64 = 16781913, Key_Dead_Caron: i64 = 16781914, Key_Dead_Cedilla: i64 = 16781915, Key_Dead_Ogonek: i64 = 16781916, Key_Dead_Iota: i64 = 16781917, Key_Dead_Voiced_Sound: i64 = 16781918, Key_Dead_Semivoiced_Sound: i64 = 16781919, Key_Dead_Belowdot: i64 = 16781920, Key_Dead_Hook: i64 = 16781921, Key_Dead_Horn: i64 = 16781922, Key_Dead_Stroke: i64 = 16781923, Key_Dead_Abovecomma: i64 = 16781924, Key_Dead_Abovereversedcomma: i64 = 16781925, Key_Dead_Doublegrave: i64 = 16781926, Key_Dead_Belowring: i64 = 16781927, Key_Dead_Belowmacron: i64 = 16781928, Key_Dead_Belowcircumflex: i64 = 16781929, Key_Dead_Belowtilde: i64 = 16781930, Key_Dead_Belowbreve: i64 = 16781931, Key_Dead_Belowdiaeresis: i64 = 16781932, Key_Dead_Invertedbreve: i64 = 16781933, Key_Dead_Belowcomma: i64 = 16781934, Key_Dead_Currency: i64 = 16781935, Key_Dead_a: i64 = 16781952, Key_Dead_A: i64 = 16781953, Key_Dead_e: i64 = 16781954, Key_Dead_E: i64 = 16781955, Key_Dead_i: i64 = 16781956, Key_Dead_I: i64 = 16781957, Key_Dead_o: i64 = 16781958, Key_Dead_O: i64 = 16781959, Key_Dead_u: i64 = 16781960, Key_Dead_U: i64 = 16781961, Key_Dead_Small_Schwa: i64 = 16781962, Key_Dead_Capital_Schwa: i64 = 16781963, Key_Dead_Greek: i64 = 16781964, Key_Dead_Lowline: i64 = 16781968, Key_Dead_Aboveverticalline: i64 = 16781969, Key_Dead_Belowverticalline: i64 = 16781970, Key_Dead_Longsolidusoverlay: i64 = 16781971, Key_Back: i64 = 16777313, Key_Forward: i64 = 16777314, Key_Stop: i64 = 16777315, Key_Refresh: i64 = 16777316, Key_VolumeDown: i64 = 16777328, Key_VolumeMute: i64 = 16777329, Key_VolumeUp: i64 = 16777330, Key_BassBoost: i64 = 16777331, Key_BassUp: i64 = 16777332, Key_BassDown: i64 = 16777333, Key_TrebleUp: i64 = 16777334, Key_TrebleDown: i64 = 16777335, Key_MediaPlay: i64 = 16777344, Key_MediaStop: i64 = 16777345, Key_MediaPrevious: i64 = 16777346, Key_MediaNext: i64 = 16777347, Key_MediaRecord: i64 = 16777348, Key_MediaPause: i64 = 16777349, Key_MediaTogglePlayPause: i64 = 16777350, Key_HomePage: i64 = 16777360, Key_Favorites: i64 = 16777361, Key_Search: i64 = 16777362, Key_Standby: i64 = 16777363, Key_OpenUrl: i64 = 16777364, Key_LaunchMail: i64 = 16777376, Key_LaunchMedia: i64 = 16777377, Key_Launch0: i64 = 16777378, Key_Launch1: i64 = 16777379, Key_Launch2: i64 = 16777380, Key_Launch3: i64 = 16777381, Key_Launch4: i64 = 16777382, Key_Launch5: i64 = 16777383, Key_Launch6: i64 = 16777384, Key_Launch7: i64 = 16777385, Key_Launch8: i64 = 16777386, Key_Launch9: i64 = 16777387, Key_LaunchA: i64 = 16777388, Key_LaunchB: i64 = 16777389, Key_LaunchC: i64 = 16777390, Key_LaunchD: i64 = 16777391, Key_LaunchE: i64 = 16777392, Key_LaunchF: i64 = 16777393, Key_MonBrightnessUp: i64 = 16777394, Key_MonBrightnessDown: i64 = 16777395, Key_KeyboardLightOnOff: i64 = 16777396, Key_KeyboardBrightnessUp: i64 = 16777397, Key_KeyboardBrightnessDown: i64 = 16777398, Key_PowerOff: i64 = 16777399, Key_WakeUp: i64 = 16777400, Key_Eject: i64 = 16777401, Key_ScreenSaver: i64 = 16777402, Key_WWW: i64 = 16777403, Key_Memo: i64 = 16777404, Key_LightBulb: i64 = 16777405, Key_Shop: i64 = 16777406, Key_History: i64 = 16777407, Key_AddFavorite: i64 = 16777408, Key_HotLinks: i64 = 16777409, Key_BrightnessAdjust: i64 = 16777410, Key_Finance: i64 = 16777411, Key_Community: i64 = 16777412, Key_AudioRewind: i64 = 16777413, Key_BackForward: i64 = 16777414, Key_ApplicationLeft: i64 = 16777415, Key_ApplicationRight: i64 = 16777416, Key_Book: i64 = 16777417, Key_CD: i64 = 16777418, Key_Calculator: i64 = 16777419, Key_ToDoList: i64 = 16777420, Key_ClearGrab: i64 = 16777421, Key_Close: i64 = 16777422, Key_Copy: i64 = 16777423, Key_Cut: i64 = 16777424, Key_Display: i64 = 16777425, Key_DOS: i64 = 16777426, Key_Documents: i64 = 16777427, Key_Excel: i64 = 16777428, Key_Explorer: i64 = 16777429, Key_Game: i64 = 16777430, Key_Go: i64 = 16777431, Key_iTouch: i64 = 16777432, Key_LogOff: i64 = 16777433, Key_Market: i64 = 16777434, Key_Meeting: i64 = 16777435, Key_MenuKB: i64 = 16777436, Key_MenuPB: i64 = 16777437, Key_MySites: i64 = 16777438, Key_News: i64 = 16777439, Key_OfficeHome: i64 = 16777440, Key_Option: i64 = 16777441, Key_Paste: i64 = 16777442, Key_Phone: i64 = 16777443, Key_Calendar: i64 = 16777444, Key_Reply: i64 = 16777445, Key_Reload: i64 = 16777446, Key_RotateWindows: i64 = 16777447, Key_RotationPB: i64 = 16777448, Key_RotationKB: i64 = 16777449, Key_Save: i64 = 16777450, Key_Send: i64 = 16777451, Key_Spell: i64 = 16777452, Key_SplitScreen: i64 = 16777453, Key_Support: i64 = 16777454, Key_TaskPane: i64 = 16777455, Key_Terminal: i64 = 16777456, Key_Tools: i64 = 16777457, Key_Travel: i64 = 16777458, Key_Video: i64 = 16777459, Key_Word: i64 = 16777460, Key_Xfer: i64 = 16777461, Key_ZoomIn: i64 = 16777462, Key_ZoomOut: i64 = 16777463, Key_Away: i64 = 16777464, Key_Messenger: i64 = 16777465, Key_WebCam: i64 = 16777466, Key_MailForward: i64 = 16777467, Key_Pictures: i64 = 16777468, Key_Music: i64 = 16777469, Key_Battery: i64 = 16777470, Key_Bluetooth: i64 = 16777471, Key_WLAN: i64 = 16777472, Key_UWB: i64 = 16777473, Key_AudioForward: i64 = 16777474, Key_AudioRepeat: i64 = 16777475, Key_AudioRandomPlay: i64 = 16777476, Key_Subtitle: i64 = 16777477, Key_AudioCycleTrack: i64 = 16777478, Key_Time: i64 = 16777479, Key_Hibernate: i64 = 16777480, Key_View: i64 = 16777481, Key_TopMenu: i64 = 16777482, Key_PowerDown: i64 = 16777483, Key_Suspend: i64 = 16777484, Key_ContrastAdjust: i64 = 16777485, Key_LaunchG: i64 = 16777486, Key_LaunchH: i64 = 16777487, Key_TouchpadToggle: i64 = 16777488, Key_TouchpadOn: i64 = 16777489, Key_TouchpadOff: i64 = 16777490, Key_MicMute: i64 = 16777491, Key_Red: i64 = 16777492, Key_Green: i64 = 16777493, Key_Yellow: i64 = 16777494, Key_Blue: i64 = 16777495, Key_ChannelUp: i64 = 16777496, Key_ChannelDown: i64 = 16777497, Key_Guide: i64 = 16777498, Key_Info: i64 = 16777499, Key_Settings: i64 = 16777500, Key_MicVolumeUp: i64 = 16777501, Key_MicVolumeDown: i64 = 16777502, Key_Keyboard: i64 = 16777503, Key_New: i64 = 16777504, Key_Open: i64 = 16777505, Key_Find: i64 = 16777506, Key_Undo: i64 = 16777507, Key_Redo: i64 = 16777508, Key_MediaLast: i64 = 16842751, Key_Select: i64 = 16842752, Key_Yes: i64 = 16842753, Key_No: i64 = 16842754, Key_Cancel: i64 = 16908289, Key_Printer: i64 = 16908290, Key_Execute: i64 = 16908291, Key_Sleep: i64 = 16908292, Key_Play: i64 = 16908293, Key_Zoom: i64 = 16908294, Key_Exit: i64 = 16908298, Key_Context1: i64 = 17825792, Key_Context2: i64 = 17825793, Key_Context3: i64 = 17825794, Key_Context4: i64 = 17825795, Key_Call: i64 = 17825796, Key_Hangup: i64 = 17825797, Key_Flip: i64 = 17825798, Key_ToggleCallHangup: i64 = 17825799, Key_VoiceDial: i64 = 17825800, Key_LastNumberRedial: i64 = 17825801, Key_Camera: i64 = 17825824, Key_CameraFocus: i64 = 17825825, Key_unknown: i64 = 33554431, NoModifier: i64 = 0, ShiftModifier: i64 = 33554432, ControlModifier: i64 = 67108864, AltModifier: i64 = 134217728, MetaModifier: i64 = 268435456, KeypadModifier: i64 = 536870912, GroupSwitchModifier: i64 = 1073741824, KeyboardModifierMask: i64 = 4261412864, LeftToRight: i64 = 0, RightToLeft: i64 = 1, LayoutDirectionAuto: i64 = 2, MaskInColor: i64 = 0, MaskOutColor: i64 = 1, MatchExactly: i64 = 0, MatchContains: i64 = 1, MatchStartsWith: i64 = 2, MatchEndsWith: i64 = 3, MatchRegularExpression: i64 = 4, MatchWildcard: i64 = 5, MatchFixedString: i64 = 8, MatchTypeMask: i64 = 15, MatchCaseSensitive: i64 = 16, MatchWrap: i64 = 32, MatchRecursive: i64 = 64, META: i64 = 268435456, SHIFT: i64 = 33554432, CTRL: i64 = 67108864, ALT: i64 = 134217728, MODIFIER_MASK: i64 = 4261412864, MotionPreference_NoPreference: i64 = 0, MotionPreference_ReducedMotion: i64 = 1, NoButton: i64 = 0, LeftButton: i64 = 1, RightButton: i64 = 2, MiddleButton: i64 = 4, BackButton: i64 = 8, XButton1: i64 = 8, ExtraButton1: i64 = 8, ForwardButton: i64 = 16, XButton2: i64 = 16, ExtraButton2: i64 = 16, TaskButton: i64 = 32, ExtraButton3: i64 = 32, ExtraButton4: i64 = 64, ExtraButton5: i64 = 128, ExtraButton6: i64 = 256, ExtraButton7: i64 = 512, ExtraButton8: i64 = 1024, ExtraButton9: i64 = 2048, ExtraButton10: i64 = 4096, ExtraButton11: i64 = 8192, ExtraButton12: i64 = 16384, ExtraButton13: i64 = 32768, ExtraButton14: i64 = 65536, ExtraButton15: i64 = 131072, ExtraButton16: i64 = 262144, ExtraButton17: i64 = 524288, ExtraButton18: i64 = 1048576, ExtraButton19: i64 = 2097152, ExtraButton20: i64 = 4194304, ExtraButton21: i64 = 8388608, ExtraButton22: i64 = 16777216, ExtraButton23: i64 = 33554432, ExtraButton24: i64 = 67108864, AllButtons: i64 = 134217727, MaxMouseButton: i64 = 67108864, MouseButtonMask: i64 = 4294967295, NoMouseEventFlag: i64 = 0, MouseEventCreatedDoubleClick: i64 = 1, MouseEventFlagMask: i64 = 255, MouseEventNotSynthesized: i64 = 0, MouseEventSynthesizedBySystem: i64 = 1, MouseEventSynthesizedByQt: i64 = 2, MouseEventSynthesizedByApplication: i64 = 3, BeginNativeGesture: i64 = 0, EndNativeGesture: i64 = 1, PanNativeGesture: i64 = 2, ZoomNativeGesture: i64 = 3, SmartZoomNativeGesture: i64 = 4, RotateNativeGesture: i64 = 5, SwipeNativeGesture: i64 = 6, NavigationModeNone: i64 = 0, NavigationModeKeypadTabOrder: i64 = 1, NavigationModeKeypadDirectional: i64 = 2, NavigationModeCursorAuto: i64 = 3, NavigationModeCursorForceVisible: i64 = 4, Horizontal: i64 = 1, Vertical: i64 = 2, FlatCap: i64 = 0, SquareCap: i64 = 16, RoundCap: i64 = 32, MPenCapStyle: i64 = 48, MiterJoin: i64 = 0, BevelJoin: i64 = 64, RoundJoin: i64 = 128, SvgMiterJoin: i64 = 256, MPenJoinStyle: i64 = 448, NoPen: i64 = 0, SolidLine: i64 = 1, DashLine: i64 = 2, DotLine: i64 = 3, DashDotLine: i64 = 4, DashDotDotLine: i64 = 5, CustomDashLine: i64 = 6, MPenStyle: i64 = 15, PermissionStatus_Undetermined: i64 = 0, PermissionStatus_Granted: i64 = 1, PermissionStatus_Denied: i64 = 2, ReturnByValue: i64 = 0, PrimaryOrientation: i64 = 0, PortraitOrientation: i64 = 1, LandscapeOrientation: i64 = 2, InvertedPortraitOrientation: i64 = 4, InvertedLandscapeOrientation: i64 = 8, ScrollBarAsNeeded: i64 = 0, ScrollBarAlwaysOff: i64 = 1, ScrollBarAlwaysOn: i64 = 2, NoScrollPhase: i64 = 0, ScrollBegin: i64 = 1, ScrollUpdate: i64 = 2, ScrollEnd: i64 = 3, ScrollMomentum: i64 = 4, WidgetShortcut: i64 = 0, WindowShortcut: i64 = 1, ApplicationShortcut: i64 = 2, WidgetWithChildrenShortcut: i64 = 3, MinimumSize: i64 = 0, PreferredSize: i64 = 1, MaximumSize: i64 = 2, MinimumDescent: i64 = 3, NSizeHints: i64 = 4, AbsoluteSize: i64 = 0, RelativeSize: i64 = 1, AscendingOrder: i64 = 0, DescendingOrder: i64 = 1, KeepEmptyParts: i64 = 0, SkipEmptyParts: i64 = 1, NoTabFocus: i64 = 0, TabFocusTextControls: i64 = 1, TabFocusListControls: i64 = 2, TabFocusAllControls: i64 = 255, ElideLeft: i64 = 0, ElideRight: i64 = 1, ElideMiddle: i64 = 2, ElideNone: i64 = 3, TextSingleLine: i64 = 256, TextDontClip: i64 = 512, TextExpandTabs: i64 = 1024, TextShowMnemonic: i64 = 2048, TextWordWrap: i64 = 4096, TextWrapAnywhere: i64 = 8192, TextDontPrint: i64 = 16384, TextIncludeTrailingSpaces: i64 = 134217728, TextHideMnemonic: i64 = 32768, TextJustificationForced: i64 = 65536, TextForceLeftToRight: i64 = 131072, TextForceRightToLeft: i64 = 262144, TextLongestVariant: i64 = 524288, PlainText: i64 = 0, RichText: i64 = 1, AutoText: i64 = 2, MarkdownText: i64 = 3, NoTextInteraction: i64 = 0, TextSelectableByMouse: i64 = 1, TextSelectableByKeyboard: i64 = 2, LinksAccessibleByMouse: i64 = 4, LinksAccessibleByKeyboard: i64 = 8, TextEditable: i64 = 16, TextEditorInteraction: i64 = 19, TextBrowserInteraction: i64 = 13, StretchTile: i64 = 0, RepeatTile: i64 = 1, RoundTile: i64 = 2, LocalTime: i64 = 0, UTC: i64 = 1, OffsetFromUTC: i64 = 2, TimeZone: i64 = 3, TimerId_Invalid: i64 = 0, PreciseTimer: i64 = 0, CoarseTimer: i64 = 1, VeryCoarseTimer: i64 = 2, LeftToolBarArea: i64 = 1, RightToolBarArea: i64 = 2, TopToolBarArea: i64 = 4, BottomToolBarArea: i64 = 8, ToolBarArea_Mask: i64 = 15, AllToolBarAreas: i64 = 15, NoToolBarArea: i64 = 0, NToolBarAreas: i64 = 4, ToolButtonIconOnly: i64 = 0, ToolButtonTextOnly: i64 = 1, ToolButtonTextBesideIcon: i64 = 2, ToolButtonTextUnderIcon: i64 = 3, ToolButtonFollowStyle: i64 = 4, TouchPointUnknownState: i64 = 0, TouchPointPressed: i64 = 1, TouchPointMoved: i64 = 2, TouchPointStationary: i64 = 4, TouchPointReleased: i64 = 8, FastTransformation: i64 = 0, SmoothTransformation: i64 = 1, UI_General: i64 = 0, UI_AnimateMenu: i64 = 1, UI_FadeMenu: i64 = 2, UI_AnimateCombo: i64 = 3, UI_AnimateTooltip: i64 = 4, UI_FadeTooltip: i64 = 5, UI_AnimateToolBox: i64 = 6, WhiteSpaceNormal: i64 = 0, WhiteSpacePre: i64 = 1, WhiteSpaceNoWrap: i64 = 2, WhiteSpaceModeUndefined: i64 = -1, WA_Disabled: i64 = 0, WA_UnderMouse: i64 = 1, WA_MouseTracking: i64 = 2, WA_OpaquePaintEvent: i64 = 4, WA_StaticContents: i64 = 5, WA_LaidOut: i64 = 7, WA_PaintOnScreen: i64 = 8, WA_NoSystemBackground: i64 = 9, WA_UpdatesDisabled: i64 = 10, WA_Mapped: i64 = 11, WA_InputMethodEnabled: i64 = 14, WA_WState_Visible: i64 = 15, WA_WState_Hidden: i64 = 16, WA_ForceDisabled: i64 = 32, WA_KeyCompression: i64 = 33, WA_PendingMoveEvent: i64 = 34, WA_PendingResizeEvent: i64 = 35, WA_SetPalette: i64 = 36, WA_SetFont: i64 = 37, WA_SetCursor: i64 = 38, WA_NoChildEventsFromChildren: i64 = 39, WA_WindowModified: i64 = 41, WA_Resized: i64 = 42, WA_Moved: i64 = 43, WA_PendingUpdate: i64 = 44, WA_InvalidSize: i64 = 45, WA_CustomWhatsThis: i64 = 47, WA_LayoutOnEntireRect: i64 = 48, WA_OutsideWSRange: i64 = 49, WA_GrabbedShortcut: i64 = 50, WA_TransparentForMouseEvents: i64 = 51, WA_PaintUnclipped: i64 = 52, WA_SetWindowIcon: i64 = 53, WA_NoMouseReplay: i64 = 54, WA_DeleteOnClose: i64 = 55, WA_RightToLeft: i64 = 56, WA_SetLayoutDirection: i64 = 57, WA_NoChildEventsForParent: i64 = 58, WA_ForceUpdatesDisabled: i64 = 59, WA_WState_Created: i64 = 60, WA_WState_CompressKeys: i64 = 61, WA_WState_InPaintEvent: i64 = 62, WA_WState_Reparented: i64 = 63, WA_WState_ConfigPending: i64 = 64, WA_WState_Polished: i64 = 66, WA_WState_OwnSizePolicy: i64 = 68, WA_WState_ExplicitShowHide: i64 = 69, WA_ShowModal: i64 = 70, WA_MouseNoMask: i64 = 71, WA_NoMousePropagation: i64 = 73, WA_Hover: i64 = 74, WA_InputMethodTransparent: i64 = 75, WA_QuitOnClose: i64 = 76, WA_KeyboardFocusChange: i64 = 77, WA_AcceptDrops: i64 = 78, WA_DropSiteRegistered: i64 = 79, WA_WindowPropagation: i64 = 80, WA_NoX11EventCompression: i64 = 81, WA_TintedBackground: i64 = 82, WA_X11OpenGLOverlay: i64 = 83, WA_AlwaysShowToolTips: i64 = 84, WA_MacOpaqueSizeGrip: i64 = 85, WA_SetStyle: i64 = 86, WA_SetLocale: i64 = 87, WA_MacShowFocusRect: i64 = 88, WA_MacNormalSize: i64 = 89, WA_MacSmallSize: i64 = 90, WA_MacMiniSize: i64 = 91, WA_LayoutUsesWidgetRect: i64 = 92, WA_StyledBackground: i64 = 93, WA_CanHostQMdiSubWindowTitleBar: i64 = 95, WA_MacAlwaysShowToolWindow: i64 = 96, WA_StyleSheet: i64 = 97, WA_ShowWithoutActivating: i64 = 98, WA_X11BypassTransientForHint: i64 = 99, WA_NativeWindow: i64 = 100, WA_DontCreateNativeAncestors: i64 = 101, WA_DontShowOnScreen: i64 = 103, WA_X11NetWmWindowTypeDesktop: i64 = 104, WA_X11NetWmWindowTypeDock: i64 = 105, WA_X11NetWmWindowTypeToolBar: i64 = 106, WA_X11NetWmWindowTypeMenu: i64 = 107, WA_X11NetWmWindowTypeUtility: i64 = 108, WA_X11NetWmWindowTypeSplash: i64 = 109, WA_X11NetWmWindowTypeDialog: i64 = 110, WA_X11NetWmWindowTypeDropDownMenu: i64 = 111, WA_X11NetWmWindowTypePopupMenu: i64 = 112, WA_X11NetWmWindowTypeToolTip: i64 = 113, WA_X11NetWmWindowTypeNotification: i64 = 114, WA_X11NetWmWindowTypeCombo: i64 = 115, WA_X11NetWmWindowTypeDND: i64 = 116, WA_SetWindowModality: i64 = 118, WA_WState_WindowOpacitySet: i64 = 119, WA_TranslucentBackground: i64 = 120, WA_AcceptTouchEvents: i64 = 121, WA_WState_AcceptedTouchBeginEvent: i64 = 122, WA_TouchPadAcceptSingleTouchEvents: i64 = 123, WA_X11DoNotAcceptFocus: i64 = 126, WA_AlwaysStackOnTop: i64 = 128, WA_TabletTracking: i64 = 129, WA_ContentsMarginsRespectsSafeArea: i64 = 130, WA_StyleSheetTarget: i64 = 131, WA_AttributeCount: i64 = 132, NoSection: i64 = 0, LeftSection: i64 = 1, TopLeftSection: i64 = 2, TopSection: i64 = 3, TopRightSection: i64 = 4, RightSection: i64 = 5, BottomRightSection: i64 = 6, BottomSection: i64 = 7, BottomLeftSection: i64 = 8, TitleBarArea: i64 = 9, NonModal: i64 = 0, WindowModal: i64 = 1, ApplicationModal: i64 = 2, WindowNoState: i64 = 0, WindowMinimized: i64 = 1, WindowMaximized: i64 = 2, WindowFullScreen: i64 = 4, WindowActive: i64 = 8, Widget: i64 = 0, Window: i64 = 1, Dialog: i64 = 3, Sheet: i64 = 5, Drawer: i64 = 7, Popup: i64 = 9, Tool: i64 = 11, ToolTip: i64 = 13, SplashScreen: i64 = 15, Desktop: i64 = 17, SubWindow: i64 = 18, ForeignWindow: i64 = 33, CoverWindow: i64 = 65, WindowType_Mask: i64 = 255, MSWindowsFixedSizeDialogHint: i64 = 256, MSWindowsOwnDC: i64 = 512, BypassWindowManagerHint: i64 = 1024, X11BypassWindowManagerHint: i64 = 1024, FramelessWindowHint: i64 = 2048, WindowTitleHint: i64 = 4096, WindowSystemMenuHint: i64 = 8192, WindowMinimizeButtonHint: i64 = 16384, WindowMaximizeButtonHint: i64 = 32768, WindowMinMaxButtonsHint: i64 = 49152, WindowContextHelpButtonHint: i64 = 65536, WindowShadeButtonHint: i64 = 131072, WindowStaysOnTopHint: i64 = 262144, WindowTransparentForInput: i64 = 524288, WindowOverridesSystemGestures: i64 = 1048576, WindowDoesNotAcceptFocus: i64 = 2097152, MaximizeUsingFullscreenGeometryHint: i64 = 4194304, ExpandedClientAreaHint: i64 = 4194304, NoTitleBarBackgroundHint: i64 = 8388608, CustomizeWindowHint: i64 = 33554432, WindowStaysOnBottomHint: i64 = 67108864, WindowCloseButtonHint: i64 = 134217728, MacWindowToolBarButtonHint: i64 = 268435456, BypassGraphicsProxyWidget: i64 = 536870912, NoDropShadowWindowHint: i64 = 1073741824, WindowFullscreenButtonHint: i64 = 2147483648 }
 let Qt = default<Qt_enums>();
+struct QtCoap_enums { Error_Ok: i64 = 0, Error_HostNotFound: i64 = 1, Error_AddressInUse: i64 = 2, Error_TimeOut: i64 = 3, Error_BadRequest: i64 = 4, Error_Unauthorized: i64 = 5, Error_BadOption: i64 = 6, Error_Forbidden: i64 = 7, Error_NotFound: i64 = 8, Error_MethodNotAllowed: i64 = 9, Error_NotAcceptable: i64 = 10, Error_RequestEntityIncomplete: i64 = 11, Error_PreconditionFailed: i64 = 12, Error_RequestEntityTooLarge: i64 = 13, Error_UnsupportedContentFormat: i64 = 14, Error_InternalServerFault: i64 = 15, Error_NotImplemented: i64 = 16, Error_BadGateway: i64 = 17, Error_ServiceUnavailable: i64 = 18, Error_GatewayTimeout: i64 = 19, Error_ProxyingNotSupported: i64 = 20, Error_Unknown: i64 = 21, Method_Invalid: i64 = 0, Method_Get: i64 = 1, Method_Post: i64 = 2, Method_Put: i64 = 3, Method_Delete: i64 = 4, Method_Other: i64 = 5, MulticastGroup_AllCoapNodesIPv4: i64 = 0, MulticastGroup_AllCoapNodesIPv6LinkLocal: i64 = 1, MulticastGroup_AllCoapNodesIPv6SiteLocal: i64 = 2, DefaultPort: i64 = 5683, DefaultSecurePort: i64 = 5684, ResponseCode_EmptyMessage: i64 = 0, ResponseCode_Created: i64 = 65, ResponseCode_Deleted: i64 = 66, ResponseCode_Valid: i64 = 67, ResponseCode_Changed: i64 = 68, ResponseCode_Content: i64 = 69, ResponseCode_Continue: i64 = 95, ResponseCode_BadRequest: i64 = -128, ResponseCode_Unauthorized: i64 = -127, ResponseCode_BadOption: i64 = -126, ResponseCode_Forbidden: i64 = -125, ResponseCode_NotFound: i64 = -124, ResponseCode_MethodNotAllowed: i64 = -123, ResponseCode_NotAcceptable: i64 = -122, ResponseCode_RequestEntityIncomplete: i64 = -120, ResponseCode_PreconditionFailed: i64 = -116, ResponseCode_RequestEntityTooLarge: i64 = -115, ResponseCode_UnsupportedContentFormat: i64 = -114, ResponseCode_InternalServerFault: i64 = -96, ResponseCode_NotImplemented: i64 = -95, ResponseCode_BadGateway: i64 = -94, ResponseCode_ServiceUnavailable: i64 = -93, ResponseCode_GatewayTimeout: i64 = -92, ResponseCode_ProxyingNotSupported: i64 = -91, ResponseCode_InvalidCode: i64 = -1, SecurityMode_NoSecurity: i64 = 0, SecurityMode_PreSharedKey: i64 = 1, SecurityMode_RawPublicKey: i64 = 2, SecurityMode_Certificate: i64 = 3 }
+let QtCoap = default<QtCoap_enums>();
 struct QtFuture_enums { Launch_Sync: i64 = 0, Launch_Async: i64 = 1, Launch_Inherit: i64 = 2 }
 let QtFuture = default<QtFuture_enums>();
 struct QtGlobalStatic_enums { Destroyed: i64 = -2, Initialized: i64 = -1, Uninitialized: i64 = 0, Initializing: i64 = 1 }
