@@ -1,0 +1,10 @@
+*.o
+__pycache__/
+/test/*.png
+/test/*.qml
+/examples/*.png
+/examples/hello
+/examples/form
+/examples/canvas
+/examples/qml
+/examples/threads

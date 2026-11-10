@@ -1,0 +1,4 @@
+// The shared libraries goose-qt binds at run time. A program's own sidecar can override these.
+dylibs_linux = ["qtc=libqtc.so.1", "qtc_test=libqtc_test.so.1"];
+dylibs_macos = ["qtc=libqtc.1.dylib", "qtc_test=libqtc_test.1.dylib"];
+dylibs_windows = ["qtc=qtc.dll", "qtc_test=qtc_test.dll"];

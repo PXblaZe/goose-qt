@@ -1,0 +1,36 @@
+# Builds qtc on Qt 6.12 LTS and the Goose compiler, then runs goose-qt's tests and examples.
+# Not yet run on GitHub: it mirrors what was run by hand (see README.md).
+name: ci
+on: [push, pull_request]
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: goose-qt }
+      - uses: actions/checkout@v4
+        with: { repository: aardappel/goose, path: goose }
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.12.*'
+          modules: 'qtcharts qtmultimedia qtpositioning qtserialport qtwebsockets qtwebchannel qtspatialaudio'
+          cache: true
+      - name: Build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgl-dev libegl-dev libxkbcommon-dev
+      - name: qtc
+        # set QTC_REPO to where qtc lives; the default assumes a sibling repository
+        run: |
+          git clone --depth 1 "${QTC_REPO:-https://github.com/${{ github.repository_owner }}/qtc}" qtc
+          cmake -S qtc -B qtc/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DQTC_BUILD_EXAMPLES=OFF
+          cmake --build qtc/build
+      - name: goose
+        run: |
+          cmake -S goose -B goose/build -DCMAKE_BUILD_TYPE=Release -DGOOSE_BUILTIN_LIBS=all
+          cmake --build goose/build --config Release
+      - name: tests
+        run: GOOSE=$PWD/goose/build/goose QTC_LIB=$PWD/qtc/build goose-qt/test/run.sh
+      - name: examples
+        run: GOOSE=$PWD/goose/build/goose QTC_LIB=$PWD/qtc/build goose-qt/examples/run.sh
