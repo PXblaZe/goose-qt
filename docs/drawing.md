@@ -55,7 +55,7 @@ img.free();
 ## Inside paintEvent
 
 When a widget subclassed in Goose overrides `paintEvent`, the override draws on the widget
-itself; this is what the [scope sample](../samples/scope/scope.goose) does at 82 frames a
+itself; this is what the [scope sample](../samples/scope/scope.goose) does at 94 frames a
 second:
 
 ```goose

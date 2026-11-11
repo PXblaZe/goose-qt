@@ -36,6 +36,7 @@ does at scale, with measured numbers.
 |---|---|
 | [Build and install](build-and-install.md) | CMake options, installing by hand, fetching from git, `qt.build` |
 | [Performance](performance.md) | what calls cost, and what the samples sustain |
+| [How goose-qt compares](comparison.md) | the same benchmark in C++, qtc, goose-qt, PyQt6, PySide6 and Go, and three misuses in each |
 | [Stability](stability.md) | what "misuse is an error" covers, how it is tested, the known limits |
 | [Troubleshooting](troubleshooting.md) | error messages and what to do about them |
 | [Internals](internals.md) | how `api.goose` is generated, typed variants, the override trampoline |

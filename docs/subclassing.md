@@ -101,7 +101,8 @@ The handler runs inside Qt's call, so a few things are refused there:
 
 Overrides are fast enough for models of any size a view can show. The
 [million sample](../samples/million/million.goose) filters a million rows through
-`QSortFilterProxyModel`, a call into Goose per row, at 1.1 million calls a second.
+`QSortFilterProxyModel`, a call into Goose per row, at 1.4 million calls a second: 2.3–4.4× what
+Go and the Python bindings manage ([comparison](comparison.md)).
 
 ## Classes made at run time
 

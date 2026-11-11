@@ -31,7 +31,7 @@ GOOSE=/path/to/goose QTC_LIB=/path/to/qtc/lib samples/run.sh
 
 The numbers below come from one run of `samples/run.sh` on a small cloud machine: two cores of
 a 2.1 GHz Xeon, 7 GB of memory, no GPU (Vulkan was Mesa's lavapipe, which runs shaders on the
-CPU), Qt 6.12.0, qtc 1.1.0, native builds unless marked. They show the order of things, not a
+CPU), Qt 6.12.0, qtc 1.1.1, native builds unless marked. They show the order of things, not a
 benchmark; your machine will differ.
 
 ## million: a million rows from Goose
@@ -45,10 +45,10 @@ filters every row, and every row's name is a call into Goose.
 
 | Self-test step | Result |
 |---|---|
-| model, view and first paint | 43 ms |
-| 200 pages scrolled and painted | 519 ms (385 pages/s) |
-| filter over all rows | 907 ms: **1,000,000 calls into Goose, 1.1 million a second** (JIT: 916,000) |
-| sort of the 299 matches by price | 5 ms |
+| model, view and first paint | 39 ms |
+| 200 pages scrolled and painted | 498 ms (401 pages/s) |
+| filter over all rows | 724 ms: **1,000,000 calls into Goose, 1.38 million a second** (JIT: 1.16 million) |
+| sort of the 299 matches by price | 4 ms |
 
 It checks the last row, that the filter found exactly the 299 rows a brute-force count expects,
 and that the sort put them in order.
@@ -63,9 +63,9 @@ actions, and a status bar; a search box over a `QListWidget`; a `QPlainTextEdit`
 so saving is `qt::json` written with `write_file_atomic` and loading is `qt::from_json`.
 
 The self-test works the app through its own actions (`trigger()` on the same `QAction`s the
-menus use): 2,000 notes made in 14 ms, one typed into (its list title, stored text and rendered
-preview must agree), a search over all of them (54 of 54 expected shown, 8 ms), a save of 326 KB
-of JSON in 6 ms, a reload in 21 ms that must give back exactly the same JSON, and a delete; then
+menus use): 2,000 notes made in 8 ms, one typed into (its list title, stored text and rendered
+preview must agree), a search over all of them (54 of 54 expected shown, 6 ms), a save of 326 KB
+of JSON in 5 ms, a reload in 17 ms that must give back exactly the same JSON, and a delete; then
 no values may be left over.
 
 ## loopback: networking
@@ -79,8 +79,8 @@ event loop: Qt does the I/O, Goose handles each (coalesced) `readyRead`.
 
 | Self-test step | Native | JIT |
 |---|---|---|
-| echo for 2 seconds | **616,000 round trips a second**, 0 wrong, 0 lost | 495,000 a second |
-| 64 MB stream | 230 ms (277 MB/s), checksum equal | 243 ms (263 MB/s) |
+| echo for 2 seconds | **780,000 round trips a second**, 0 wrong, 0 lost | 656,000 a second |
+| 64 MB stream | 214 ms (298 MB/s), checksum equal | 229 ms (279 MB/s) |
 | afterwards | 0 socket errors, 0 objects, 0 values left | the same |
 
 ## scope: threads into a painted widget
@@ -92,8 +92,8 @@ send them to the GUI thread with `qt::post`, eight 16-bit samples packed into on
 `QWidget` subclassed in Goose paints a grid and the last 1,024 samples of each channel in its
 `paintEvent`. A future is the stop token: canceling it ends the workers.
 
-Self-test, 3 seconds offscreen: **82 frames a second** with 339,000 points drawn a second,
-201,000 samples a second arriving through 25,000 events a second, none dropped.
+Self-test, 3 seconds offscreen: **94 frames a second** with 387,000 points drawn a second,
+202,000 samples a second arriving through 25,000 events a second, none dropped.
 
 ## mandelbrot: CPU threads and a GPU compute shader
 
@@ -107,8 +107,8 @@ little along the edge of the set.
 
 | Self-test step | Result |
 |---|---|
-| CPU, 4 Goose threads (on 2 cores) | 82 ms (9.5 Mpixel/s) |
-| GPU, Vulkan on lavapipe | 58 ms with set-up and read-back (13.4 Mpixel/s); the shader baked in 42 ms |
+| CPU, 4 Goose threads (on 2 cores) | 67 ms (11.7 Mpixel/s) |
+| GPU, Vulkan on lavapipe | 51 ms with set-up and read-back (15.3 Mpixel/s); the shader baked in 45 ms |
 | agreement | 99% of pixels equal; the test needs 97% within 3 iterations |
 
 With no display and no `xvfb-run` there is no GPU context; the self-test then checks the CPU half
@@ -125,8 +125,8 @@ result or an error code; nothing may crash, hang or leak.
 
 | Run | Result |
 |---|---|
-| 300,000 operations, seed 1 | 8.9 s (33,700 a second): 165,961 calls succeeded, the rest refused with an error code, from `QTC_ERR_STALE_HANDLE` (87,673) to `QTC_ERR_AMBIGUOUS` (27); 388,470 events dropped past the queue limit; **0 objects, 0 values left over** |
-| 1,000,000 operations, seeds 1, 2 and 3 | about 30,000 a second each, 0 left over |
+| 300,000 operations, seed 1 | 7.5 s (40,000 a second): 165,961 calls succeeded, the rest refused with an error code, from `QTC_ERR_STALE_HANDLE` (87,673) to `QTC_ERR_AMBIGUOUS` (27); 388,470 events dropped past the queue limit; **0 objects, 0 values left over** |
+| 1,000,000 operations, seeds 1, 2 and 3 | about 36,000 a second each, 0 left over |
 
 ```sh
 ./chaos --ops 1000000 --seed 42           # any seed: the same seed does the same things

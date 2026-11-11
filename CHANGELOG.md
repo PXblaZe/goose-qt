@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.4.0 — 2026-11-11
+
+For qtc 1.1.1, which CMake now requires. Needs a Goose from 8 November 2026 or later.
+
+- **Fixed (in qtc 1.1.1):** on Wayland, every sample and example crashed when a window closed,
+  and `notes` crashed when an open menu was dismissed by a click elsewhere. The crash was in
+  qtc's event filter, which asked Qt's Wayland plugin for the paint device of a window that
+  no longer had a platform window. qtc now has a test that runs on a headless weston.
+- **Faster (through qtc 1.1.1):** in the comparison benchmark, `label.setText("hello")`
+  went from 657 to 157 ns, `slider.value()` from 391 to 100 ns, a signal round trip from 747
+  to 374 ns, and a `QColor` made, read and freed from 1,379 to 443 ns. The `million` sample
+  filters its million rows through Goose at 1.38 million calls a second, up from 1.1 million.
+  Every check stays.
+- `bench/compare/`: the same benchmark in C++, qtc's C API, goose-qt (native and JIT),
+  PyQt6, PySide6 and Go's miqt (eight calls, three whole tasks, startup and memory), and
+  three misuses in each. `docs/comparison.md` reports the results. Per call, goose-qt is level
+  with PyQt6 and ahead of PySide6, and it is 2.3–4.4× faster than any of them on a model
+  written in the language. It is the only one that turned all three misuses into errors.
+  Making and destroying objects, startup and memory are where it is behind.
+- `samples/mandelbrot` shows its two images at half size, so the window fits on smaller
+  screens. Every number in `samples/README.md` and `docs/` was measured again with qtc 1.1.1.
+
 ## 1.3.0 — 2026-11-11
 
 For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.

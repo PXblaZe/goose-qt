@@ -9,3 +9,4 @@ __pycache__/
 /examples/qml
 /examples/threads
 /build*/
+/bench/compare/build/

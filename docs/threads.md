@@ -42,7 +42,7 @@ fn main() {
 
 Two integers go a long way: the [scope sample](../samples/scope/scope.goose) packs eight
 16-bit samples into each post and moves 200,000 samples a second from four threads this way,
-none dropped. A post with its poll costs about 70 ns.
+none dropped. A post with its poll costs about 60 ns.
 
 ## Futures: results, progress, cancellation
 
@@ -94,7 +94,7 @@ A future also makes a good stop token for long-running workers: the scope sample
 loop `while !qt::canceled(token)`, and the GUI thread cancels it on close.
 
 The [mandelbrot sample](../samples/mandelbrot/mandelbrot.goose) renders a 1024 × 768 image
-in four bands this way, in 82 ms on two cores.
+in four bands this way, in 67 ms on two cores.
 
 ## Worker objects
 

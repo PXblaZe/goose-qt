@@ -34,7 +34,7 @@ bug the fuzzers found):
   fixed order, by name, through object lifetimes, and in random orders with random argument
   combinations: 21.7 million calls over 128 random orders in the last release round, plus
   2 million under AddressSanitizer and UndefinedBehaviorSanitizer, with no failure in qtc;
-- unit suites for the core (1,010 checks), the application lifecycle, concurrency (1,696),
+- unit suites for the core (1,025 checks), the application lifecycle, concurrency (1,696),
   overrides, runtime classes and graphics (1,175 checks under Xvfb, with the Vulkan
   validation layers clean), and a stress suite.
 

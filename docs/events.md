@@ -160,5 +160,5 @@ into each), or check `qt::dropped_events()`.
 
 ## Costs
 
-A signal round trip (emit, queue, poll) costs about 0.7 µs from Goose, and a post with its
-poll about 0.07 µs; see [Performance](performance.md).
+A signal round trip (emit, queue, poll) costs about 0.35 µs from Goose, and a post with its
+poll about 0.06 µs; see [Performance](performance.md).

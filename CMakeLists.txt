@@ -13,10 +13,10 @@
 #
 # then, in a program:  import qt from "/usr/local/share/goose-qt";
 cmake_minimum_required(VERSION 3.21)
-project(goose_qt VERSION 1.3.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
+project(goose_qt VERSION 1.4.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
 include(GNUInstallDirs)
 
-set(GOOSE_QT_QTC_MIN 1.1.0)   # the qtc whose manifest api.goose was generated from
+set(GOOSE_QT_QTC_MIN 1.1.1)   # api.goose is generated from 1.1.0's manifest; 1.1.1 fixes widget crashes on Wayland
 
 set(QTC_SOURCE_DIR "" CACHE PATH
   "qtc's source directory: build qtc as part of this build (empty: use an installed qtc, else ../qtc)")

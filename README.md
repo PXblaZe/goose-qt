@@ -55,12 +55,12 @@ check the result. On a two-core cloud machine:
 
 | Sample | Shows |
 |---|---|
-| [million](samples/million) | a model in Goose serving a million rows; filtering calls into Goose 1.1 million times a second |
+| [million](samples/million) | a model in Goose serving a million rows; filtering calls into Goose 1.4 million times a second |
 | [notes](samples/notes) | a complete desktop app: menus, shortcuts, live Markdown preview, atomic JSON files |
-| [loopback](samples/loopback) | an echo server and 16 clients: 616,000 TCP round trips a second on one thread |
-| [scope](samples/scope) | four worker threads streaming 200,000 samples a second into a widget painted at 82 fps |
+| [loopback](samples/loopback) | an echo server and 16 clients: 780,000 TCP round trips a second on one thread |
+| [scope](samples/scope) | four worker threads streaming 200,000 samples a second into a widget painted at 94 fps |
 | [mandelbrot](samples/mandelbrot) | the same fractal from four CPU threads and a GPU compute shader, compared pixel by pixel |
-| [chaos](samples/chaos) | a seeded storm of hostile calls: 33,000 a second, no crash, no leak |
+| [chaos](samples/chaos) | a seeded storm of hostile calls: 36,000 a second, no crash, no leak |
 
 ```sh
 samples/run.sh            # every sample's self-test, with the JIT and native
@@ -76,7 +76,7 @@ samples/run.sh            # every sample's self-test, with the JIT and native
 [embedding](docs/embedding.md), [testing](docs/testing.md),
 [build and install](docs/build-and-install.md), [performance](docs/performance.md),
 [stability](docs/stability.md), [troubleshooting](docs/troubleshooting.md) and
-[internals](docs/internals.md).
+[internals](docs/internals.md), and [how it compares](docs/comparison.md) with C++, PyQt6, PySide6 and Go.
 
 ## Installing
 
@@ -122,9 +122,19 @@ examples/run.sh                                              # every example's s
 | `t09_graphics` | the RHI: a pipeline checked against its shaders, a frame read back, compute, destruction order |
 | `t90_wrappers` | every one of the 8,464 generated instance-method wrappers, called on a null receiver |
 
-`test/bench.goose` measures what calls cost: about 0.6 µs for a generated wrapper call such
-as `label.setText("hello")`, 0.7 µs for a signal round trip, 0.07 µs for `qt::post` with its
+`test/bench.goose` measures what calls cost: about 150 ns for a generated wrapper call such
+as `label.setText("hello")`, 350 ns for a signal round trip, 60 ns for `qt::post` with its
 poll ([performance](docs/performance.md)).
+
+## Compared with other bindings
+
+[bench/compare](bench/compare) runs the same benchmark in C++, qtc's C, goose-qt, PyQt6,
+PySide6 and Go's miqt. Per call, goose-qt is level with PyQt6 and ahead of PySide6. Where Qt
+calls back into the program (a model of a million rows), it is 2.3–4.4× faster than
+the others. Of the misuses tried, it is the only one that reports every one as an error
+instead of crashing on some. It is slower at making and destroying objects (1.6 µs, which
+pays for ownership tracking) and at startup. The numbers and charts are in
+[docs/comparison.md](docs/comparison.md).
 
 ## Limits
 

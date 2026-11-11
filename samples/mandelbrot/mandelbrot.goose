@@ -180,8 +180,10 @@ fn to_image(its: const u8[:]) -> qt::Val {
 fn shown(img: qt::Val, title: const u8[:]) -> qt::Obj {
     let label = qt::QLabel();
     let pm = qt::QPixmap_fromImage(img);
-    label.setPixmap(pm);
-    label.setToolTip(title);
+    let half = pm.scaled(W / 2, H / 2, qt::Qt.KeepAspectRatio, qt::Qt.SmoothTransformation);   // two fit a screen
+    label.setPixmap(half);
+    label.setToolTip(str(title, " (computed at ", W, " x ", H, ")"));
+    half.free();
     pm.free();
     return label;
 }
