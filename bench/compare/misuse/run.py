@@ -54,6 +54,16 @@ def main():
     except (RuntimeError, FileNotFoundError) as e:
         print("Go (miqt) left out: %s" % str(e).splitlines()[0], file=sys.stderr)
 
+    # Rust (cxx-qt): the benchmark program has the probes (qtbench --misuse CASE)
+    rdir = os.path.join(os.path.dirname(HERE), "rust")
+    try:
+        sh([os.environ.get("CARGO", "cargo"), "build", "--release", "-j", os.environ.get("CARGO_JOBS", "2")], cwd=rdir,
+           env=dict(os.environ, QMAKE=os.path.join(qt, "bin", "qmake6")))
+        progs.append(("rust", [os.path.join(rdir, "target", "release", "qtbench"), "--misuse"],
+                      {"LD_LIBRARY_PATH": os.path.join(qt, "lib")}))
+    except (RuntimeError, FileNotFoundError) as e:
+        print("Rust (cxx-qt) left out: %s" % str(e).splitlines()[0], file=sys.stderr)
+
     lines = []
     for case in CASES:
         for name, cmd, extra in progs:
@@ -62,11 +72,11 @@ def main():
                                    env=dict(env, **extra))
                 code = r.returncode if r.returncode >= 0 else 128 - r.returncode
                 out = [l.strip() for l in (r.stdout + r.stderr).splitlines() if l.strip()]
-                said = [l for l in out if l.startswith("error:") or l == "no error reported"]
+                said = [l for l in out if l.startswith("error:") or l.startswith("no error reported")]
                 if said:
                     what = said[-1]
-                elif name == "go" and out:
-                    what = next((l for l in out if "SIGSEGV" in l or l.startswith("panic")), "")
+                elif name in ("go", "rust") and out:
+                    what = next((l for l in out if "SIGSEGV" in l or l.startswith("panic") or "panicked" in l), "")
                 else:
                     what = ""
             except subprocess.TimeoutExpired:

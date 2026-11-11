@@ -31,7 +31,9 @@ handles to the same object are equal, because qtc gives one handle per object.
 - Giving it a parent (`qt::QLabel("x", parent)`, `layout.addWidget(w)`,
   `window.setCentralWidget(w)`) hands it to Qt, which deletes it with its parent.
 - `qt::destroy(o)` hides a widget, makes the handle stale at once, and deletes the object
-  (and its children) when control returns to the event loop. Destroying an object that
+  (and its children): right away, as `delete` would in C++, or, inside an override handler
+  (where Qt may be busy with that very object) and while events are still queued for it,
+  once control returns to the event loop. Destroying an object that
   another one holds by a plain pointer (a scroll area's viewport, a combo box's view) makes
   the holder let go first; what cannot be let go of is refused, with the owner named.
 - Objects Qt hands out without an owner (what `QQmlComponent::create` or

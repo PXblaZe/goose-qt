@@ -13,7 +13,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ORDER = ["cpp", "cpp_wheel", "qtc", "goose", "goose_jit", "pyqt6", "pyside6", "miqt"]
+ORDER = ["cpp", "cpp_wheel", "qtc", "goose", "goose_jit", "cxxqt", "pyqt6", "pyside6", "miqt"]
 OURS = {"qtc", "goose", "goose_jit"}
 SURFACE, INK, MUTED, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
 HIGHLIGHT, OTHER = "#2a78d6", "#a9a8a2"   # qtc and goose-qt; everyone else

@@ -10,3 +10,5 @@ __pycache__/
 /examples/threads
 /build*/
 /bench/compare/build/
+/bench/compare/rust/target/
+/bench/compare/rust/Cargo.lock.bak

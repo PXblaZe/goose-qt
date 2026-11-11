@@ -9,6 +9,7 @@ Settings come from the environment:
     GOOSE        the goose compiler
     PYTHON       a Python with PySide6 and PyQt6 installed (both 6.12)
     GO           the go tool; miqt must be in its module cache (see README.md)
+    CARGO        cargo, for the Rust implementation (cxx-qt from crates.io)
 
 Every implementation runs as its own process, `rounds` times, in a different order each
 round; the result for an operation is the median of its rounds. Startup is timed from the
@@ -41,7 +42,7 @@ def sh(cmd, **kw):
     return r.stdout
 
 
-def impls(build, want_go=True):
+def impls(build, want_go=True, want_rust=True):
     qt = os.environ.get("QT_PREFIX", "/opt/qt612")
     qtc_inc = os.environ.get("QTC_INCLUDE", os.path.join(HERE, "../../../qtc/include"))
     qtc_lib = os.environ.get("QTC_LIB", "")
@@ -83,6 +84,18 @@ def impls(build, want_go=True):
     py = os.path.join(HERE, "python/bench.py")
     add("pyside6", "Python (PySide6)", [python, py, "pyside6"])
     add("pyqt6", "Python (PyQt6)", [python, py, "pyqt6"])
+
+    # Rust: cxx-qt (KDAB), the most used Qt 6 crate; cargo builds it against QT_PREFIX's qmake
+    rdir = os.path.join(HERE, "rust")
+    try:
+        if not want_rust:
+            raise RuntimeError("not asked for")
+        sh([os.environ.get("CARGO", "cargo"), "build", "--release", "-j", os.environ.get("CARGO_JOBS", "2")], cwd=rdir,
+           env=dict(os.environ, QMAKE=os.path.join(qt, "bin", "qmake6")))
+        add("cxxqt", "Rust (cxx-qt)", [os.path.join(rdir, "target", "release", "qtbench")],
+            {"LD_LIBRARY_PATH": os.path.join(qt, "lib")})
+    except (RuntimeError, FileNotFoundError) as e:
+        print("Rust (cxx-qt) left out: %s" % str(e).splitlines()[0], file=sys.stderr)
 
     gomod = os.path.join(HERE, "go")
     exe = os.path.join(build, "go_bench")
@@ -127,11 +140,11 @@ def main():
     ap.add_argument("--startup-runs", type=int, default=15)
     ap.add_argument("--out", default=os.path.join(HERE, "results"))
     ap.add_argument("--build", default=os.path.join(HERE, "build"))
-    ap.add_argument("--only", default="", help="comma-separated keys: cpp,cpp_wheel,qtc,goose,goose_jit,pyside6,pyqt6,miqt")
+    ap.add_argument("--only", default="", help="comma-separated keys: cpp,cpp_wheel,qtc,goose,goose_jit,pyside6,pyqt6,miqt,cxxqt")
     ap.add_argument("--merge", default="", help="an earlier results.json whose implementations are kept")
     a = ap.parse_args()
     keep = set(a.only.split(",")) if a.only else set()
-    ims = impls(a.build, want_go=not keep or "miqt" in keep)
+    ims = impls(a.build, want_go=not keep or "miqt" in keep, want_rust=not keep or "cxxqt" in keep)
     if keep:
         ims = [i for i in ims if i["key"] in keep]
     raw = {i["key"]: [] for i in ims}

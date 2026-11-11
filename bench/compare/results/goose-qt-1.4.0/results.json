@@ -1,0 +1,1197 @@
+{
+ "env": {
+  "machine": "x86_64",
+  "system": "Linux-6.18.44-fc-v378-x86_64-with-glibc2.39",
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "cores": 2,
+  "rounds": 5,
+  "startup_runs": 15,
+  "date": "2026-11-11"
+ },
+ "ops": [
+  [
+   "set_text",
+   "label.setText(\"hello\")"
+  ],
+  [
+   "get_text",
+   "label.text()"
+  ],
+  [
+   "set_value",
+   "slider.setValue(i)"
+  ],
+  [
+   "get_value",
+   "slider.value()"
+  ],
+  [
+   "set_property",
+   "setProperty(\"text\", ...)"
+  ],
+  [
+   "signal",
+   "button.click() reaching a handler"
+  ],
+  [
+   "value_type",
+   "QColor(255, 0, 0).red()"
+  ],
+  [
+   "object_churn",
+   "new QObject, then delete it"
+  ]
+ ],
+ "work": [
+  [
+   "model_filter",
+   "filter 1,000,000 rows of a model written in the language"
+  ],
+  [
+   "paint_lines",
+   "paint 100,000 short lines into a 1024x1024 QImage"
+  ],
+  [
+   "widgets",
+   "2,000 buttons in a grid: create, show, paint, destroy"
+  ]
+ ],
+ "results": {
+  "cpp": {
+   "label": "C++ (direct)",
+   "note": "Qt from QT_PREFIX",
+   "median": {
+    "set_text": 5.178,
+    "get_text": 3.429,
+    "set_value": 29.923,
+    "get_value": 2.146,
+    "set_property": 68.825,
+    "signal": 102.933,
+    "value_type": 2.668,
+    "object_churn": 43.581,
+    "model_filter": 287.983,
+    "model_matches": 299.0,
+    "paint_lines": 29.736,
+    "widgets": 59.281,
+    "startup_ms": 17.613291000088793,
+    "startup_rss_mib": 29.265625
+   },
+   "range": {
+    "set_text": [
+     4.87,
+     5.787
+    ],
+    "get_text": [
+     2.66,
+     3.485
+    ],
+    "set_value": [
+     29.134,
+     41.172
+    ],
+    "get_value": [
+     2.106,
+     2.274
+    ],
+    "set_property": [
+     63.284,
+     78.064
+    ],
+    "signal": [
+     101.74,
+     115.216
+    ],
+    "value_type": [
+     2.576,
+     2.91
+    ],
+    "object_churn": [
+     41.98,
+     51.083
+    ],
+    "model_filter": [
+     254.988,
+     313.365
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     26.077,
+     32.984
+    ],
+    "widgets": [
+     56.093,
+     61.711
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 5.0,
+     "get_text": 3.435,
+     "set_value": 29.923,
+     "get_value": 2.146,
+     "set_property": 63.284,
+     "signal": 101.74,
+     "value_type": 2.668,
+     "object_churn": 43.581,
+     "model_filter": 284.535,
+     "model_matches": 299.0,
+     "paint_lines": 26.077,
+     "widgets": 56.093
+    },
+    {
+     "set_text": 5.787,
+     "get_text": 2.66,
+     "set_value": 30.109,
+     "get_value": 2.127,
+     "set_property": 64.99,
+     "signal": 102.142,
+     "value_type": 2.647,
+     "object_churn": 41.98,
+     "model_filter": 254.988,
+     "model_matches": 299.0,
+     "paint_lines": 32.984,
+     "widgets": 61.711
+    },
+    {
+     "set_text": 5.178,
+     "get_text": 3.092,
+     "set_value": 29.134,
+     "get_value": 2.106,
+     "set_property": 76.136,
+     "signal": 103.331,
+     "value_type": 2.576,
+     "object_churn": 42.672,
+     "model_filter": 306.734,
+     "model_matches": 299.0,
+     "paint_lines": 29.94,
+     "widgets": 60.803
+    },
+    {
+     "set_text": 4.87,
+     "get_text": 3.429,
+     "set_value": 29.662,
+     "get_value": 2.274,
+     "set_property": 68.825,
+     "signal": 102.933,
+     "value_type": 2.697,
+     "object_churn": 51.083,
+     "model_filter": 313.365,
+     "model_matches": 299.0,
+     "paint_lines": 28.291,
+     "widgets": 59.281
+    },
+    {
+     "set_text": 5.664,
+     "get_text": 3.485,
+     "set_value": 41.172,
+     "get_value": 2.266,
+     "set_property": 78.064,
+     "signal": 115.216,
+     "value_type": 2.91,
+     "object_churn": 46.344,
+     "model_filter": 287.983,
+     "model_matches": 299.0,
+     "paint_lines": 29.736,
+     "widgets": 57.649
+    }
+   ]
+  },
+  "cpp_wheel": {
+   "label": "C++ (direct), wheel Qt",
+   "note": "the same program on the Qt build the Python wheels ship",
+   "median": {
+    "set_text": 5.52,
+    "get_text": 3.544,
+    "set_value": 34.089,
+    "get_value": 2.184,
+    "set_property": 71.937,
+    "signal": 113.011,
+    "value_type": 2.747,
+    "object_churn": 49.648,
+    "model_filter": 308.73,
+    "model_matches": 299.0,
+    "paint_lines": 17.613,
+    "widgets": 70.913,
+    "startup_ms": 22.646492999683687,
+    "startup_rss_mib": 27.33203125
+   },
+   "range": {
+    "set_text": [
+     5.333,
+     6.016
+    ],
+    "get_text": [
+     3.251,
+     3.628
+    ],
+    "set_value": [
+     32.616,
+     37.753
+    ],
+    "get_value": [
+     2.073,
+     2.352
+    ],
+    "set_property": [
+     67.177,
+     83.521
+    ],
+    "signal": [
+     103.728,
+     130.4
+    ],
+    "value_type": [
+     2.354,
+     7.539
+    ],
+    "object_churn": [
+     45.59,
+     61.176
+    ],
+    "model_filter": [
+     278.803,
+     358.944
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     17.076,
+     69.7
+    ],
+    "widgets": [
+     63.704,
+     80.23
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 5.52,
+     "get_text": 3.605,
+     "set_value": 32.616,
+     "get_value": 2.111,
+     "set_property": 83.521,
+     "signal": 130.4,
+     "value_type": 7.539,
+     "object_churn": 49.648,
+     "model_filter": 358.624,
+     "model_matches": 299.0,
+     "paint_lines": 69.7,
+     "widgets": 80.23
+    },
+    {
+     "set_text": 6.016,
+     "get_text": 3.628,
+     "set_value": 36.093,
+     "get_value": 2.073,
+     "set_property": 71.937,
+     "signal": 103.728,
+     "value_type": 2.354,
+     "object_churn": 46.53,
+     "model_filter": 278.803,
+     "model_matches": 299.0,
+     "paint_lines": 17.076,
+     "widgets": 66.169
+    },
+    {
+     "set_text": 5.468,
+     "get_text": 3.544,
+     "set_value": 33.122,
+     "get_value": 2.184,
+     "set_property": 68.306,
+     "signal": 113.011,
+     "value_type": 2.595,
+     "object_churn": 51.985,
+     "model_filter": 308.73,
+     "model_matches": 299.0,
+     "paint_lines": 17.613,
+     "widgets": 63.704
+    },
+    {
+     "set_text": 5.524,
+     "get_text": 3.478,
+     "set_value": 34.089,
+     "get_value": 2.33,
+     "set_property": 67.177,
+     "signal": 126.343,
+     "value_type": 3.189,
+     "object_churn": 61.176,
+     "model_filter": 358.944,
+     "model_matches": 299.0,
+     "paint_lines": 17.285,
+     "widgets": 70.913
+    },
+    {
+     "set_text": 5.333,
+     "get_text": 3.251,
+     "set_value": 37.753,
+     "get_value": 2.352,
+     "set_property": 74.056,
+     "signal": 112.515,
+     "value_type": 2.747,
+     "object_churn": 45.59,
+     "model_filter": 298.614,
+     "model_matches": 299.0,
+     "paint_lines": 18.595,
+     "widgets": 73.645
+    }
+   ]
+  },
+  "qtc": {
+   "label": "C (qtc)",
+   "note": "",
+   "median": {
+    "set_text": 164.277,
+    "get_text": 135.287,
+    "set_value": 159.343,
+    "get_value": 104.211,
+    "set_property": 306.2,
+    "signal": 383.221,
+    "value_type": 433.18,
+    "object_churn": 1666.956,
+    "model_filter": 719.531,
+    "model_matches": 299.0,
+    "paint_lines": 34.976,
+    "widgets": 55.972,
+    "startup_ms": 43.786094000097364,
+    "startup_rss_mib": 65.13671875
+   },
+   "range": {
+    "set_text": [
+     143.765,
+     200.53
+    ],
+    "get_text": [
+     131.498,
+     248.807
+    ],
+    "set_value": [
+     150.245,
+     305.432
+    ],
+    "get_value": [
+     96.686,
+     156.36
+    ],
+    "set_property": [
+     298.641,
+     328.557
+    ],
+    "signal": [
+     358.659,
+     389.857
+    ],
+    "value_type": [
+     425.199,
+     487.555
+    ],
+    "object_churn": [
+     1590.953,
+     2804.569
+    ],
+    "model_filter": [
+     712.666,
+     761.545
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     34.201,
+     38.718
+    ],
+    "widgets": [
+     54.37,
+     62.549
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 143.765,
+     "get_text": 131.498,
+     "set_value": 150.245,
+     "get_value": 101.288,
+     "set_property": 306.2,
+     "signal": 358.659,
+     "value_type": 425.199,
+     "object_churn": 1590.953,
+     "model_filter": 720.441,
+     "model_matches": 299.0,
+     "paint_lines": 34.201,
+     "widgets": 55.972
+    },
+    {
+     "set_text": 164.277,
+     "get_text": 146.618,
+     "set_value": 163.23,
+     "get_value": 106.288,
+     "set_property": 324.949,
+     "signal": 385.101,
+     "value_type": 443.844,
+     "object_churn": 1666.956,
+     "model_filter": 712.666,
+     "model_matches": 299.0,
+     "paint_lines": 34.283,
+     "widgets": 55.069
+    },
+    {
+     "set_text": 200.53,
+     "get_text": 248.807,
+     "set_value": 305.432,
+     "get_value": 156.36,
+     "set_property": 328.557,
+     "signal": 389.857,
+     "value_type": 433.18,
+     "object_churn": 1760.384,
+     "model_filter": 718.939,
+     "model_matches": 299.0,
+     "paint_lines": 34.976,
+     "widgets": 54.37
+    },
+    {
+     "set_text": 151.971,
+     "get_text": 132.548,
+     "set_value": 155.673,
+     "get_value": 104.211,
+     "set_property": 298.641,
+     "signal": 376.404,
+     "value_type": 487.555,
+     "object_churn": 2804.569,
+     "model_filter": 761.545,
+     "model_matches": 299.0,
+     "paint_lines": 38.718,
+     "widgets": 62.549
+    },
+    {
+     "set_text": 169.363,
+     "get_text": 135.287,
+     "set_value": 159.343,
+     "get_value": 96.686,
+     "set_property": 299.033,
+     "signal": 383.221,
+     "value_type": 431.024,
+     "object_churn": 1663.636,
+     "model_filter": 719.531,
+     "model_matches": 299.0,
+     "paint_lines": 38.332,
+     "widgets": 58.003
+    }
+   ]
+  },
+  "goose": {
+   "label": "Goose (goose-qt), native",
+   "note": "",
+   "median": {
+    "set_text": 157.323905,
+    "get_text": 151.182805,
+    "set_value": 158.491905,
+    "get_value": 99.82007,
+    "set_property": 297.411615,
+    "signal": 374.03603,
+    "value_type": 443.45287,
+    "object_churn": 1576.84654,
+    "model_filter": 682.536393,
+    "model_matches": 299.0,
+    "paint_lines": 37.928018,
+    "widgets": 57.040318,
+    "startup_ms": 50.87535700022272,
+    "startup_rss_mib": 65.37890625
+   },
+   "range": {
+    "set_text": [
+     147.834025,
+     247.31067
+    ],
+    "get_text": [
+     143.32188,
+     158.114655
+    ],
+    "set_value": [
+     151.56824,
+     190.902125
+    ],
+    "get_value": [
+     92.78353,
+     119.11295
+    ],
+    "set_property": [
+     294.777765,
+     447.97492
+    ],
+    "signal": [
+     359.78049,
+     383.60185
+    ],
+    "value_type": [
+     408.686915,
+     446.9999
+    ],
+    "object_churn": [
+     1558.95312,
+     1838.23734
+    ],
+    "model_filter": [
+     666.283894,
+     712.407844
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     34.806249,
+     38.827355
+    ],
+    "widgets": [
+     54.228756,
+     62.941674
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 157.323905,
+     "get_text": 147.26781,
+     "set_value": 158.491905,
+     "get_value": 95.47188,
+     "set_property": 297.411615,
+     "signal": 359.78049,
+     "value_type": 418.221655,
+     "object_churn": 1712.07298,
+     "model_filter": 691.74836,
+     "model_matches": 299.0,
+     "paint_lines": 35.866846,
+     "widgets": 55.274448
+    },
+    {
+     "set_text": 247.31067,
+     "get_text": 143.32188,
+     "set_value": 152.167175,
+     "get_value": 92.78353,
+     "set_property": 294.777765,
+     "signal": 374.1817,
+     "value_type": 443.45287,
+     "object_churn": 1566.54056,
+     "model_filter": 682.536393,
+     "model_matches": 299.0,
+     "paint_lines": 34.806249,
+     "widgets": 54.228756
+    },
+    {
+     "set_text": 161.82014,
+     "get_text": 153.792425,
+     "set_value": 190.33169,
+     "get_value": 107.870625,
+     "set_property": 447.97492,
+     "signal": 374.03603,
+     "value_type": 446.9999,
+     "object_churn": 1838.23734,
+     "model_filter": 712.407844,
+     "model_matches": 299.0,
+     "paint_lines": 37.928018,
+     "widgets": 62.941674
+    },
+    {
+     "set_text": 152.576265,
+     "get_text": 158.114655,
+     "set_value": 190.902125,
+     "get_value": 119.11295,
+     "set_property": 423.839525,
+     "signal": 383.60185,
+     "value_type": 445.07525,
+     "object_churn": 1576.84654,
+     "model_filter": 666.283894,
+     "model_matches": 299.0,
+     "paint_lines": 38.827355,
+     "widgets": 58.74817
+    },
+    {
+     "set_text": 147.834025,
+     "get_text": 151.182805,
+     "set_value": 151.56824,
+     "get_value": 99.82007,
+     "set_property": 295.1233,
+     "signal": 360.14978,
+     "value_type": 408.686915,
+     "object_churn": 1558.95312,
+     "model_filter": 675.860309,
+     "model_matches": 299.0,
+     "paint_lines": 38.360379,
+     "widgets": 57.040318
+    }
+   ]
+  },
+  "goose_jit": {
+   "label": "Goose (goose-qt), JIT",
+   "note": "",
+   "median": {
+    "set_text": 161.67001,
+    "get_text": 168.38941,
+    "set_value": 160.78459,
+    "get_value": 108.057915,
+    "set_property": 326.624265,
+    "signal": 428.64402,
+    "value_type": 482.29448,
+    "object_churn": 1929.5921,
+    "model_filter": 821.481524,
+    "model_matches": 299.0,
+    "paint_lines": 37.377982,
+    "widgets": 56.882517,
+    "startup_ms": 540.9324610000112,
+    "startup_rss_mib": 239.58203125
+   },
+   "range": {
+    "set_text": [
+     158.72019,
+     289.97397
+    ],
+    "get_text": [
+     164.639885,
+     189.02237
+    ],
+    "set_value": [
+     157.654075,
+     223.16856
+    ],
+    "get_value": [
+     99.82834,
+     131.62507
+    ],
+    "set_property": [
+     313.3122,
+     444.58836
+    ],
+    "signal": [
+     389.24036,
+     460.93118
+    ],
+    "value_type": [
+     444.4731,
+     520.37499
+    ],
+    "object_churn": [
+     1794.8027,
+     2154.86624
+    ],
+    "model_filter": [
+     773.046927,
+     921.42569
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     35.65187,
+     45.035244
+    ],
+    "widgets": [
+     55.800615,
+     61.389101
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 161.67001,
+     "get_text": 189.02237,
+     "set_value": 160.78459,
+     "get_value": 108.057915,
+     "set_property": 313.3122,
+     "signal": 389.24036,
+     "value_type": 444.4731,
+     "object_churn": 1884.31966,
+     "model_filter": 773.046927,
+     "model_matches": 299.0,
+     "paint_lines": 36.134311,
+     "widgets": 56.665772
+    },
+    {
+     "set_text": 160.587315,
+     "get_text": 164.639885,
+     "set_value": 158.614395,
+     "get_value": 99.82834,
+     "set_property": 326.624265,
+     "signal": 453.10877,
+     "value_type": 520.37499,
+     "object_churn": 1929.5921,
+     "model_filter": 835.495195,
+     "model_matches": 299.0,
+     "paint_lines": 45.035244,
+     "widgets": 61.389101
+    },
+    {
+     "set_text": 289.97397,
+     "get_text": 168.38941,
+     "set_value": 157.654075,
+     "get_value": 104.62872,
+     "set_property": 320.72052,
+     "signal": 424.33876,
+     "value_type": 513.928655,
+     "object_churn": 2154.86624,
+     "model_filter": 802.747196,
+     "model_matches": 299.0,
+     "paint_lines": 38.01306,
+     "widgets": 55.800615
+    },
+    {
+     "set_text": 161.7767,
+     "get_text": 164.69339,
+     "set_value": 170.972015,
+     "get_value": 113.173185,
+     "set_property": 337.393635,
+     "signal": 428.64402,
+     "value_type": 464.44398,
+     "object_churn": 1794.8027,
+     "model_filter": 921.42569,
+     "model_matches": 299.0,
+     "paint_lines": 37.377982,
+     "widgets": 59.945987
+    },
+    {
+     "set_text": 158.72019,
+     "get_text": 168.69899,
+     "set_value": 223.16856,
+     "get_value": 131.62507,
+     "set_property": 444.58836,
+     "signal": 460.93118,
+     "value_type": 482.29448,
+     "object_churn": 1951.40288,
+     "model_filter": 821.481524,
+     "model_matches": 299.0,
+     "paint_lines": 35.65187,
+     "widgets": 56.882517
+    }
+   ]
+  },
+  "pyside6": {
+   "label": "Python (PySide6)",
+   "note": "",
+   "median": {
+    "set_text": 270.149,
+    "get_text": 274.243,
+    "set_value": 285.338,
+    "get_value": 227.294,
+    "set_property": 596.781,
+    "signal": 417.982,
+    "value_type": 612.884,
+    "object_churn": 2395.532,
+    "model_filter": 2975.473,
+    "model_matches": 299.0,
+    "paint_lines": 51.755,
+    "widgets": 132.802,
+    "startup_ms": 140.9629859999768,
+    "startup_rss_mib": 56.27734375
+   },
+   "range": {
+    "set_text": [
+     261.331,
+     292.12
+    ],
+    "get_text": [
+     270.5,
+     330.787
+    ],
+    "set_value": [
+     277.758,
+     306.627
+    ],
+    "get_value": [
+     211.22,
+     249.158
+    ],
+    "set_property": [
+     555.203,
+     1140.491
+    ],
+    "signal": [
+     390.891,
+     487.659
+    ],
+    "value_type": [
+     608.393,
+     670.488
+    ],
+    "object_churn": [
+     2257.107,
+     3419.97
+    ],
+    "model_filter": [
+     2798.998,
+     3358.752
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     50.408,
+     54.545
+    ],
+    "widgets": [
+     123.415,
+     143.148
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 275.623,
+     "get_text": 273.139,
+     "set_value": 279.613,
+     "get_value": 240.321,
+     "set_property": 1140.491,
+     "signal": 487.659,
+     "value_type": 670.488,
+     "object_churn": 2276.29,
+     "model_filter": 2798.998,
+     "model_matches": 299.0,
+     "paint_lines": 50.408,
+     "widgets": 127.44
+    },
+    {
+     "set_text": 292.12,
+     "get_text": 330.787,
+     "set_value": 305.87,
+     "get_value": 227.294,
+     "set_property": 610.245,
+     "signal": 417.982,
+     "value_type": 611.704,
+     "object_churn": 3419.97,
+     "model_filter": 2826.322,
+     "model_matches": 299.0,
+     "paint_lines": 51.755,
+     "widgets": 143.148
+    },
+    {
+     "set_text": 262.146,
+     "get_text": 277.212,
+     "set_value": 285.338,
+     "get_value": 211.22,
+     "set_property": 555.203,
+     "signal": 390.891,
+     "value_type": 608.393,
+     "object_churn": 2257.107,
+     "model_filter": 2986.379,
+     "model_matches": 299.0,
+     "paint_lines": 54.545,
+     "widgets": 134.968
+    },
+    {
+     "set_text": 261.331,
+     "get_text": 270.5,
+     "set_value": 277.758,
+     "get_value": 249.158,
+     "set_property": 596.781,
+     "signal": 404.385,
+     "value_type": 612.884,
+     "object_churn": 2436.114,
+     "model_filter": 2975.473,
+     "model_matches": 299.0,
+     "paint_lines": 51.019,
+     "widgets": 123.415
+    },
+    {
+     "set_text": 270.149,
+     "get_text": 274.243,
+     "set_value": 306.627,
+     "get_value": 211.726,
+     "set_property": 573.773,
+     "signal": 437.366,
+     "value_type": 639.545,
+     "object_churn": 2395.532,
+     "model_filter": 3358.752,
+     "model_matches": 299.0,
+     "paint_lines": 53.261,
+     "widgets": 132.802
+    }
+   ]
+  },
+  "pyqt6": {
+   "label": "Python (PyQt6)",
+   "note": "",
+   "median": {
+    "set_text": 168.648,
+    "get_text": 154.193,
+    "set_value": 166.358,
+    "get_value": 117.831,
+    "set_property": 542.216,
+    "signal": 835.754,
+    "value_type": 986.385,
+    "object_churn": 260.092,
+    "model_filter": 2517.824,
+    "model_matches": 299.0,
+    "paint_lines": 69.102,
+    "widgets": 80.386,
+    "startup_ms": 69.98449000002438,
+    "startup_rss_mib": 48.43359375
+   },
+   "range": {
+    "set_text": [
+     162.659,
+     288.881
+    ],
+    "get_text": [
+     144.276,
+     169.552
+    ],
+    "set_value": [
+     157.963,
+     249.267
+    ],
+    "get_value": [
+     108.949,
+     154.524
+    ],
+    "set_property": [
+     487.529,
+     735.183
+    ],
+    "signal": [
+     763.929,
+     877.356
+    ],
+    "value_type": [
+     972.125,
+     1131.743
+    ],
+    "object_churn": [
+     240.32,
+     264.494
+    ],
+    "model_filter": [
+     2366.981,
+     2769.814
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     67.919,
+     72.707
+    ],
+    "widgets": [
+     78.338,
+     139.067
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 288.881,
+     "get_text": 152.522,
+     "set_value": 165.799,
+     "get_value": 120.472,
+     "set_property": 542.216,
+     "signal": 877.356,
+     "value_type": 1068.96,
+     "object_churn": 261.424,
+     "model_filter": 2633.954,
+     "model_matches": 299.0,
+     "paint_lines": 72.707,
+     "widgets": 139.067
+    },
+    {
+     "set_text": 162.659,
+     "get_text": 144.276,
+     "set_value": 157.963,
+     "get_value": 117.831,
+     "set_property": 487.529,
+     "signal": 763.929,
+     "value_type": 972.125,
+     "object_churn": 240.32,
+     "model_filter": 2769.814,
+     "model_matches": 299.0,
+     "paint_lines": 68.361,
+     "widgets": 78.338
+    },
+    {
+     "set_text": 163.183,
+     "get_text": 169.552,
+     "set_value": 170.955,
+     "get_value": 108.949,
+     "set_property": 735.183,
+     "signal": 781.41,
+     "value_type": 986.385,
+     "object_churn": 242.493,
+     "model_filter": 2517.824,
+     "model_matches": 299.0,
+     "paint_lines": 71.776,
+     "widgets": 84.137
+    },
+    {
+     "set_text": 180.875,
+     "get_text": 154.193,
+     "set_value": 249.267,
+     "get_value": 154.524,
+     "set_property": 548.559,
+     "signal": 835.754,
+     "value_type": 983.936,
+     "object_churn": 264.494,
+     "model_filter": 2366.981,
+     "model_matches": 299.0,
+     "paint_lines": 69.102,
+     "widgets": 80.386
+    },
+    {
+     "set_text": 168.648,
+     "get_text": 163.093,
+     "set_value": 166.358,
+     "get_value": 110.524,
+     "set_property": 523.544,
+     "signal": 840.225,
+     "value_type": 1131.743,
+     "object_churn": 260.092,
+     "model_filter": 2497.757,
+     "model_matches": 299.0,
+     "paint_lines": 67.919,
+     "widgets": 80.019
+    }
+   ]
+  },
+  "miqt": {
+   "label": "Go (miqt)",
+   "note": "",
+   "median": {
+    "set_text": 241.474,
+    "get_text": 184.865,
+    "set_value": 93.008,
+    "get_value": 67.343,
+    "set_property": 616.808,
+    "signal": 306.343,
+    "value_type": 189.611,
+    "object_churn": 172.463,
+    "model_filter": 1551.869,
+    "model_matches": 299.0,
+    "paint_lines": 35.312,
+    "widgets": 61.38,
+    "startup_ms": 21.723188999658305,
+    "startup_rss_mib": 35.54296875
+   },
+   "range": {
+    "set_text": [
+     218.541,
+     279.221
+    ],
+    "get_text": [
+     178.61,
+     338.475
+    ],
+    "set_value": [
+     84.187,
+     143.297
+    ],
+    "get_value": [
+     60.439,
+     86.548
+    ],
+    "set_property": [
+     548.822,
+     862.403
+    ],
+    "signal": [
+     267.383,
+     346.816
+    ],
+    "value_type": [
+     184.446,
+     230.038
+    ],
+    "object_churn": [
+     156.715,
+     172.683
+    ],
+    "model_filter": [
+     1504.573,
+     1746.452
+    ],
+    "model_matches": [
+     299.0,
+     299.0
+    ],
+    "paint_lines": [
+     33.289,
+     48.098
+    ],
+    "widgets": [
+     58.88,
+     63.381
+    ]
+   },
+   "runs": [
+    {
+     "set_text": 279.221,
+     "get_text": 338.475,
+     "set_value": 143.297,
+     "get_value": 83.171,
+     "set_property": 862.403,
+     "signal": 267.383,
+     "value_type": 196.886,
+     "object_churn": 172.463,
+     "model_filter": 1504.573,
+     "model_matches": 299.0,
+     "paint_lines": 35.545,
+     "widgets": 62.994
+    },
+    {
+     "set_text": 233.183,
+     "get_text": 198.824,
+     "set_value": 93.008,
+     "get_value": 63.541,
+     "set_property": 616.808,
+     "signal": 315.729,
+     "value_type": 187.086,
+     "object_churn": 158.543,
+     "model_filter": 1558.717,
+     "model_matches": 299.0,
+     "paint_lines": 33.289,
+     "widgets": 58.88
+    },
+    {
+     "set_text": 241.474,
+     "get_text": 184.717,
+     "set_value": 89.629,
+     "get_value": 86.548,
+     "set_property": 780.154,
+     "signal": 346.816,
+     "value_type": 230.038,
+     "object_churn": 172.576,
+     "model_filter": 1543.544,
+     "model_matches": 299.0,
+     "paint_lines": 33.758,
+     "widgets": 61.38
+    },
+    {
+     "set_text": 218.541,
+     "get_text": 184.865,
+     "set_value": 84.187,
+     "get_value": 60.439,
+     "set_property": 548.822,
+     "signal": 279.92,
+     "value_type": 184.446,
+     "object_churn": 156.715,
+     "model_filter": 1551.869,
+     "model_matches": 299.0,
+     "paint_lines": 35.312,
+     "widgets": 60.832
+    },
+    {
+     "set_text": 244.258,
+     "get_text": 178.61,
+     "set_value": 93.355,
+     "get_value": 67.343,
+     "set_property": 584.272,
+     "signal": 306.343,
+     "value_type": 189.611,
+     "object_churn": 172.683,
+     "model_filter": 1746.452,
+     "model_matches": 299.0,
+     "paint_lines": 48.098,
+     "widgets": 63.381
+    }
+   ]
+  }
+ }
+}
