@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.3.0 — 2026-11-11
+
+For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.
+
+- `docs/`: a guide in 19 pages and an index — getting started, concepts (handles, ownership,
+  errors, the GUI thread, the event loop), calling Qt, values, events, interfaces,
+  drawing, QML, subclassing, threads and futures, graphics, networking, embedding,
+  testing, build and install, performance, stability, troubleshooting and internals.
+  Its claims were checked against a running build; the README is shorter and points
+  there.
+- `samples/`: six larger programs that showcase power, performance and stability, each
+  with a `--selftest` that measures, checks its results and checks that nothing leaked:
+  `million` (a Goose model serving a million rows through a sort/filter proxy),
+  `notes` (a complete desktop app with menus, shortcuts, a live Markdown preview and
+  atomic JSON files), `loopback` (a TCP echo server, 16 clients and a 64 MB stream),
+  `scope` (four worker threads streaming into a widget painted in Goose), `mandelbrot`
+  (CPU threads against a GPU compute shader, compared pixel by pixel) and `chaos` (a
+  seeded storm of hostile calls). `samples/run.sh` runs them all with the JIT and
+  native; screenshots and measured numbers are in `samples/README.md`.
+- ctest runs the samples too (`goose_qt_samples`), and the install includes `docs/` and
+  `samples/`.
+- Documented precisely: `qt::last_error()` is the status of the most recent *failed*
+  call and stays until the next failure or `qt::clear_error()`.
+
 ## 1.2.0 — 2026-11-11
 
 For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.

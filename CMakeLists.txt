@@ -8,12 +8,12 @@
 #   cmake -S goose-qt -B build -DCMAKE_PREFIX_PATH="<qtc prefix>;<Qt prefix>"   # an installed qtc
 #   cmake -S goose-qt -B build -DQTC_SOURCE_DIR=path/to/qtc                    # build qtc here too
 #   cmake --build build
-#   ctest --test-dir build                  # goose-qt's tests and examples (needs goose)
+#   ctest --test-dir build                  # goose-qt's tests, examples and samples (needs goose)
 #   cmake --install build --prefix /usr/local
 #
 # then, in a program:  import qt from "/usr/local/share/goose-qt";
 cmake_minimum_required(VERSION 3.21)
-project(goose_qt VERSION 1.2.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
+project(goose_qt VERSION 1.3.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
 include(GNUInstallDirs)
 
 set(GOOSE_QT_QTC_MIN 1.1.0)   # the qtc whose manifest api.goose was generated from
@@ -24,7 +24,7 @@ option(GOOSE_QT_BUILD_QTC "Build qtc from QTC_SOURCE_DIR even when an installed 
 set(GOOSE_QT_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/goose-qt" CACHE STRING
   "Where under the install prefix the package goes; programs import it from there")
 option(GOOSE_QT_PIN_QTC "Write qtc's installed path into the installed qt.build, so programs need no library path" ON)
-option(GOOSE_QT_TESTS "Register goose-qt's tests and examples with ctest (they need goose)" ON)
+option(GOOSE_QT_TESTS "Register goose-qt's tests, examples and samples with ctest (they need goose)" ON)
 set(GOOSE_EXECUTABLE "" CACHE FILEPATH "The goose compiler (found on PATH, or from the GOOSE environment variable)")
 
 # ------------------------------------------------------------------ qtc
@@ -116,6 +116,9 @@ set(_pkg_files qt.goose extra.goose api.goose README.md CHANGELOG.md LICENSE)
 install(FILES ${_pkg_files} DESTINATION "${GOOSE_QT_INSTALL_DIR}")
 install(DIRECTORY include examples test gen DESTINATION "${GOOSE_QT_INSTALL_DIR}" USE_SOURCE_PERMISSIONS
         PATTERN "__pycache__" EXCLUDE PATTERN "*.png" EXCLUDE PATTERN "*.pyc" EXCLUDE)
+# the samples import the package as "../..", which holds installed too; their screenshots and
+# the docs' go along
+install(DIRECTORY samples docs DESTINATION "${GOOSE_QT_INSTALL_DIR}" USE_SOURCE_PERMISSIONS)
 
 # qt.build names the shared libraries goose-qt opens. Installed, it can name them by full path:
 # this platform's line gets the path qtc is installed at, the other platforms' lines stay.
@@ -213,7 +216,8 @@ if(GOOSE_QT_TESTS AND GOOSE_EXECUTABLE)
     set(_env "GOOSE=${GOOSE_EXECUTABLE}" "QTC_LIB=$<TARGET_FILE_DIR:${_qtc}>")
     add_test(NAME goose_qt_tests COMMAND "${_bash}" "${CMAKE_CURRENT_SOURCE_DIR}/test/run.sh")
     add_test(NAME goose_qt_examples COMMAND "${_bash}" "${CMAKE_CURRENT_SOURCE_DIR}/examples/run.sh")
-    set_tests_properties(goose_qt_tests goose_qt_examples PROPERTIES ENVIRONMENT "${_env}" TIMEOUT 3600)
+    add_test(NAME goose_qt_samples COMMAND "${_bash}" "${CMAKE_CURRENT_SOURCE_DIR}/samples/run.sh" --quick)
+    set_tests_properties(goose_qt_tests goose_qt_examples goose_qt_samples PROPERTIES ENVIRONMENT "${_env}" TIMEOUT 3600)
     # installs into a scratch prefix and runs a program that imports goose-qt from there with no
     # library path set: what a user gets from cmake --install
     add_test(NAME goose_qt_installed
