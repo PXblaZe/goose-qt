@@ -37,9 +37,11 @@ fn main() {
 
 ## Installing
 
-1. Build and install qtc on Qt 6.12 LTS (see its README). goose-qt loads `libqtc.so.1`
+1. Get a Goose from 8 November 2026 or later (commit `f4637bfb` was tested): goose-qt
+   uses `const if` and type arguments in method calls, which earlier ones do not have.
+2. Build and install qtc on Qt 6.12 LTS (see its README). goose-qt loads `libqtc.so.1`
    (`libqtc.1.dylib`, `qtc.dll`) at run time, from the library path.
-2. Put this directory somewhere and import it by path:
+3. Put this directory somewhere and import it by path:
    `import qt from "path/to/goose-qt";`
 
 Run with the JIT, or build a native program:
@@ -54,6 +56,9 @@ If qtc is not installed system-wide, point the loader at its build directory:
 
 ## How the API looks
 
+- **Properties** are read with `obj.prop<T>("name")` (`T` one of `i64`, `f64`,
+  `bool`, `qt::Obj`, `qt::Val` or `u8[]`) and written with `qt::set(obj, "name", v)`;
+  `qt::ret<T>()` reads the result of a `qt::call` the same way.
 - **Objects** are `qt::Obj`, **values** (colours, fonts, images, dates, lists,
   maps …) are `qt::Val`. Both are handles; using one after it is gone is an error
   qtc reports (`qt::ERR_STALE_HANDLE`), not a crash. Free values with `v.free()`.
@@ -186,11 +191,13 @@ interop (`qt::native`, `qt::vk_*`, `qt::gl_proc_address`) are there too.
 `canvas`, `qml`, `threads` (native only) and `rhi` (a triangle drawn with
 whichever of Vulkan, Metal, Direct3D, OpenGL or the Null backend the machine
 has). Each runs interactively, or checks
-itself:
+itself. `examples/shared/` is a window written in Goose and built as a shared
+library (`goose build --shared`), with a C program that loads it: the way to
+put Goose-written Qt code inside a C or C++ application.
 
 ```sh
 goose examples/hello.goose -- --selftest
-examples/run.sh                       # all of them, JIT and native
+examples/run.sh                       # all of them, JIT and native, and shared/
 ```
 
 ## Tests

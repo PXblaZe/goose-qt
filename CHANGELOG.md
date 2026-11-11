@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.1 — 2026-11-11
+
+For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.
+
+- `obj.prop<T>("name")` reads a property as `i64`, `f64`, `bool`, `qt::Obj`,
+  `qt::Val` or a string, and `qt::ret<T>()` the result of a call, with the type
+  picked when the function is specialized (Goose's new `const if` and type
+  arguments in method calls). `get_int`, `get_str` and the rest stay.
+- `examples/shared/`: a Qt window written in Goose, built as a shared library
+  with `goose build --shared` and driven from a C program; `examples/run.sh`
+  builds and runs it.
+- Shader sources in `examples/rhi.goose` and `t09_graphics` are multi-line raw
+  strings instead of one line of `\n` escapes.
+- CI checks out the Goose commit this release was tested with.
+
 ## 1.1.0 — 2026-11-11
 
 For qtc 1.1.0.

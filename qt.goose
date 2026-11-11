@@ -424,6 +424,15 @@ fn ret_f64() -> f64 { return qtc_ret_double(); }
 fn ret_str() -> u8[>..] { return view(qtc_ret_str()); }
 fn ret_obj() -> Obj { return Obj { h: qtc_ret_obj() }; }
 fn ret_val() -> Val { return Val { h: qtc_ret_val() }; }
+// The last call's result as T, picked when it is specialized: qt::call(o, "count"); let n = qt::ret<i64>();
+fn ret<T>() -> T {
+    const if same<T, i64> { return ret_int(); }
+    else const if same<T, f64> { return ret_f64(); }
+    else const if same<T, bool> { return ret_bool(); }
+    else const if same<T, Obj> { return ret_obj(); }
+    else const if same<T, Val> { return ret_val(); }
+    else { return ret_str(); }
+}
 
 // Out-parameters (bool *ok, int *x, ...): leave them out of a call and read them after it,
 // in parameter order: let n = s.toInt(16); if !qt::out_bool(0) { ... }
@@ -448,6 +457,17 @@ fn get_str(o: Obj, prop: const u8[:]) -> u8[>..] { return view(qtc_get_str(o.h, 
 fn get_int(o: Obj, prop: const u8[:]) -> i64 { return qtc_get_int(o.h, prop); }
 fn get_f64(o: Obj, prop: const u8[:]) -> f64 { return qtc_get_double(o.h, prop); }
 fn get_bool(o: Obj, prop: const u8[:]) -> bool { return qtc_get_bool(o.h, prop); }
+// One getter for every property type, picked when it is specialized:
+//   let v = slider.prop<i64>("value"); let t = label.prop<u8[]>("text"); let p = w.prop<Obj>("parent");
+// i64, f64, bool, Obj, Val, and a string type for the rest (u8[], or u8[>..] for the view get_str gives).
+fn prop<T>(o: Obj, name: const u8[:]) -> T {
+    const if same<T, i64> { return get_int(o, name); }
+    else const if same<T, f64> { return get_f64(o, name); }
+    else const if same<T, bool> { return get_bool(o, name); }
+    else const if same<T, Obj> { return get_obj(o, name); }
+    else const if same<T, Val> { return get_val(o, name); }
+    else { return get_str(o, name); }
+}
 fn get_obj(o: Obj, prop: const u8[:]) -> Obj {
     if qtc_prop_get(o.h, prop) != 0 { return NONE; }
     return Obj { h: qtc_ret_obj() };

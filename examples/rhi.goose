@@ -4,13 +4,31 @@
 //   goose rhi.goose                   draws until the window is closed
 //   goose rhi.goose -- --selftest     draws a few frames offscreen, reads one back, checks it
 //
-// Shaders are Vulkan-style GLSL, compiled at run time for the backend in use.
+// Shaders are Vulkan-style GLSL in raw strings, compiled at run time for the backend in use.
 import os;
 import math;
 import qt from "..";
 
-let VS = "#version 440\nlayout(location = 0) in vec2 pos;\nlayout(location = 1) in vec3 color;\nlayout(location = 0) out vec3 v_color;\nlayout(std140, binding = 0) uniform buf { vec4 rot; vec4 flip; };\nvoid main() { v_color = color; vec2 p = vec2(rot.x * pos.x - rot.y * pos.y, rot.y * pos.x + rot.x * pos.y); gl_Position = vec4(p.x, p.y * flip.x, 0.0, 1.0); }\n";
-let FS = "#version 440\nlayout(location = 0) in vec3 v_color;\nlayout(location = 0) out vec4 frag;\nvoid main() { frag = vec4(v_color, 1.0); }\n";
+let VS = """
+    #version 440
+    layout(location = 0) in vec2 pos;
+    layout(location = 1) in vec3 color;
+    layout(location = 0) out vec3 v_color;
+    layout(std140, binding = 0) uniform buf { vec4 rot; vec4 flip; };
+    void main() {
+        v_color = color;
+        vec2 p = vec2(rot.x * pos.x - rot.y * pos.y, rot.y * pos.x + rot.x * pos.y);
+        gl_Position = vec4(p.x, p.y * flip.x, 0.0, 1.0);
+    }
+    """;
+let FS = """
+    #version 440
+    layout(location = 0) in vec3 v_color;
+    layout(location = 0) out vec4 frag;
+    void main() {
+        frag = vec4(v_color, 1.0);
+    }
+    """;
 let CLEAR: u32 = 0xff181820;
 
 fn main() {

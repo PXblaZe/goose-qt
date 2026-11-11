@@ -12,9 +12,34 @@ fn check(ok: bool, what: const u8[:]) {
     }
 }
 
-let VS = "#version 440\nlayout(location = 0) in vec2 pos;\nlayout(location = 1) in vec3 color;\nlayout(location = 0) out vec3 v_color;\nlayout(std140, binding = 0) uniform buf { vec4 tint; };\nvoid main() { v_color = color * tint.rgb; gl_Position = vec4(pos, 0.0, 1.0); }\n";
-let FS = "#version 440\nlayout(location = 0) in vec3 v_color;\nlayout(location = 0) out vec4 frag;\nvoid main() { frag = vec4(v_color, 1.0); }\n";
-let CS = "#version 440\nlayout(local_size_x = 16) in;\nlayout(std430, binding = 0) buffer Data { uint vals[]; };\nvoid main() { uint i = gl_GlobalInvocationID.x; vals[i] = i + 100u; }\n";
+let VS = """
+    #version 440
+    layout(location = 0) in vec2 pos;
+    layout(location = 1) in vec3 color;
+    layout(location = 0) out vec3 v_color;
+    layout(std140, binding = 0) uniform buf { vec4 tint; };
+    void main() {
+        v_color = color * tint.rgb;
+        gl_Position = vec4(pos, 0.0, 1.0);
+    }
+    """;
+let FS = """
+    #version 440
+    layout(location = 0) in vec3 v_color;
+    layout(location = 0) out vec4 frag;
+    void main() {
+        frag = vec4(v_color, 1.0);
+    }
+    """;
+let CS = """
+    #version 440
+    layout(local_size_x = 16) in;
+    layout(std430, binding = 0) buffer Data { uint vals[]; };
+    void main() {
+        uint i = gl_GlobalInvocationID.x;
+        vals[i] = i + 100u;
+    }
+    """;
 
 fn render(backend: i64, name: const u8[:]) {
     let r = qt::rhi_create(backend);

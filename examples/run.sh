@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Runs every example in its --selftest mode, with the JIT and as a native build
-# (threads.goose native only: the JIT runs no threads).
+# (threads.goose native only: the JIT runs no threads), and builds shared/ into a
+# shared library that a C program calls.
 #
 #   examples/run.sh
 #   GOOSE=/path/to/goose QTC_LIB=/path/to/qtc/build examples/run.sh
@@ -51,5 +52,17 @@ for f in "$here"/*.goose; do
         sed 's/^/    /' "$work/$name.build.out" | tail -n 25
     fi
 done
+# shared/: a Goose library built with --shared, called from a C program (needs a C compiler)
+if command -v "${CC:-cc}" > /dev/null 2>&1; then
+    mkdir -p "$work/shared"
+    if (cd "$work/shared" && "$GOOSE" build --shared --header "$work/shared/counter.h" -o "$work/shared/libcounter.so" "$here/shared/counter.goose" &&
+        "${CC:-cc}" "$here/shared/host.c" -I. -L. -lcounter -Wl,-rpath,'$ORIGIN' -o host) > "$work/shared.build.out" 2>&1; then
+        run shared native "$work/shared/host" --selftest
+    else
+        fail=$((fail + 1))
+        printf '%-8s %-6s FAIL (build)\n' shared native
+        sed 's/^/    /' "$work/shared.build.out" | tail -n 25
+    fi
+fi
 echo "examples: $pass passed, $fail failed"
 [ "$fail" -eq 0 ]

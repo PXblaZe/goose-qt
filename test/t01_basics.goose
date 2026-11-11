@@ -28,6 +28,16 @@ fn main() {
     check(win.windowTitle() == "Hello", "windowTitle round trip");
     check(qt::set(win, "minimumWidth", 120), "set property");
     check(qt::get_int(win, "minimumWidth") == 120, "get property");
+    // typed getters picked by type argument
+    check(win.prop<i64>("minimumWidth") == 120, "prop<i64>");
+    check(win.prop<u8[]>("windowTitle") == "Hello", "prop<u8[]>");
+    check(win.prop<bool>("enabled"), "prop<bool>");
+    check(win.prop<f64>("windowOpacity") == 1.0, "prop<f64>");
+    let geo = win.prop<qt::Val>("geometry");
+    check(geo.h != 0, "prop<Val>");
+    qt::free(geo);
+    check(qt::call(win, "width") && qt::ret<i64>() == win.width(), "ret<i64>");
+    check(qt::call(win, "windowTitle") && qt::ret<u8[]>() == "Hello", "ret<u8[]>");
     check(!qt::set(win, "noSuchProperty", 1), "unknown property refused");
     check(qt::last_error() == qt::ERR_NOT_FOUND, "unknown property error");
 
