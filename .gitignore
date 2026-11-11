@@ -8,3 +8,4 @@ __pycache__/
 /examples/canvas
 /examples/qml
 /examples/threads
+/build*/

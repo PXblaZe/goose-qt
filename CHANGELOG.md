@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0 — 2026-11-11
+
+For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.
+
+- A CMake build and install: it uses an installed qtc (`find_package(qtc)`) or
+  builds qtc from its source in the same build (`QTC_SOURCE_DIR`), installs the
+  package under `share/goose-qt` with qtc's installed path written into
+  `qt.build` (programs need no library path), and registers the tests, the
+  examples and a check of the installed package with ctest. `uninstall` and
+  `goose_qt_api` (regenerate `api.goose`) targets. Configuring checks that the
+  Goose found is new enough.
+- CI builds and tests through it.
+
 ## 1.1.1 — 2026-11-11
 
 For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.

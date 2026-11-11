@@ -37,22 +37,68 @@ fn main() {
 
 ## Installing
 
-1. Get a Goose from 8 November 2026 or later (commit `f4637bfb` was tested): goose-qt
-   uses `const if` and type arguments in method calls, which earlier ones do not have.
-2. Build and install qtc on Qt 6.12 LTS (see its README). goose-qt loads `libqtc.so.1`
-   (`libqtc.1.dylib`, `qtc.dll`) at run time, from the library path.
-3. Put this directory somewhere and import it by path:
-   `import qt from "path/to/goose-qt";`
+You need a Goose from 8 November 2026 or later (commit `f4637bfb` was tested):
+goose-qt uses `const if` and type arguments in method calls, which earlier ones do
+not have. goose-qt is Goose source; what it needs built is qtc, the C library it
+loads at run time, which needs Qt 6.12 LTS.
 
-Run with the JIT, or build a native program:
+### With CMake (recommended)
+
+The CMake project uses an installed qtc, or builds qtc from its source as part of
+the same build, and installs the package with qtc's path written into its
+`qt.build`, so programs find qtc without a library path:
+
+```sh
+# qtc installed already (its prefix and Qt's in CMAKE_PREFIX_PATH)
+cmake -S goose-qt -B build -DCMAKE_PREFIX_PATH="/opt/qtc;/opt/Qt/6.12.0/gcc_64"
+# or build qtc too, from its source (../qtc is used when it is there)
+cmake -S goose-qt -B build -DQTC_SOURCE_DIR=path/to/qtc -DCMAKE_PREFIX_PATH=/opt/Qt/6.12.0/gcc_64
+
+cmake --build build
+ctest --test-dir build                  # tests, examples, and a program run from the install
+cmake --install build --prefix /usr/local
+```
+
+A program then imports the installed package:
+
+```goose
+import qt from "/usr/local/share/goose-qt";
+```
 
 ```sh
 goose app.goose
 goose build app.goose -o app && ./app
 ```
 
-If qtc is not installed system-wide, point the loader at its build directory:
-`LD_LIBRARY_PATH=/path/to/qtc/build goose app.goose`.
+| option | default | what it does |
+|---|---|---|
+| `QTC_SOURCE_DIR` | (empty) | qtc's source: build qtc with goose-qt when no installed qtc is found (or always, with `GOOSE_QT_BUILD_QTC=ON`); `../qtc` is used when it is there |
+| `GOOSE_QT_BUILD_QTC` | `OFF` | build qtc from `QTC_SOURCE_DIR` even when an installed one is found |
+| `GOOSE_QT_INSTALL_DIR` | `share/goose-qt` | where under the prefix the package goes |
+| `GOOSE_QT_PIN_QTC` | `ON` | write qtc's installed path into the installed `qt.build`; off, programs find qtc on the library path |
+| `GOOSE_QT_TESTS` | `ON` | register the tests with ctest (left out when no `goose` is found) |
+| `GOOSE_EXECUTABLE` | from `PATH` or `$GOOSE` | the Goose compiler the tests use; configuring checks that it is new enough |
+
+qtc's own options (`QTC_GPL_MODULES`, `QTC_SHADER_TOOLS`, ...) apply when it is
+built here; its tests and examples are off unless turned on. `cmake --build build
+--target uninstall` removes what the last install put in place, and
+`--target goose_qt_api` regenerates `api.goose` from qtc's manifest.
+
+### By hand
+
+1. Build and install qtc (see its README). goose-qt loads `libqtc.so.1`
+   (`libqtc.1.dylib`, `qtc.dll`) at run time, from the library path.
+2. Put this directory somewhere and import it by path:
+   `import qt from "path/to/goose-qt";`
+3. If qtc is not where the loader looks, point it there
+   (`LD_LIBRARY_PATH=/path/to/qtc/lib goose app.goose`), or name it in your
+   program's sidecar (`app.build`): `dylibs_linux = ["qtc=/path/to/libqtc.so.1"];`.
+
+### From git
+
+Goose can fetch the package itself: `import qt from "github.com/<owner>/goose-qt@v1.2.0";`
+in the program's root file. qtc still has to be installed where the loader finds
+it, since Goose fetches the Goose source only.
 
 ## How the API looks
 
@@ -203,6 +249,7 @@ examples/run.sh                       # all of them, JIT and native, and shared/
 ## Tests
 
 ```sh
+ctest --test-dir build                                       # through CMake, or by hand:
 GOOSE=/path/to/goose QTC_LIB=/path/to/qtc/build test/run.sh
 ```
 
