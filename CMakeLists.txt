@@ -13,7 +13,7 @@
 #
 # then, in a program:  import qt from "/usr/local/share/goose-qt";
 cmake_minimum_required(VERSION 3.21)
-project(goose_qt VERSION 1.6.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
+project(goose_qt VERSION 1.6.1 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
 include(GNUInstallDirs)
 
 set(GOOSE_QT_QTC_MIN 1.3.0)   # values.goose calls the inline values (qtc_inline.h) qtc 1.3.0 added

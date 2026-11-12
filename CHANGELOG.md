@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.6.1 — 2026-11-12
+
+Tested with qtc 1.4.0; qtc 1.3.0 and later still work.
+
+- **Through qtc 1.4.0:** making and destroying an object costs less. `bench/compare` has a
+  new run: 178 ns, against 245 ns in the previous run, which puts goose-qt ahead of PyQt6
+  (223 ns) and behind Go's miqt (139 ns). Calls cost what they did. `results/goose-qt-1.6.0/`
+  keeps the previous run.
+- `test/t01_basics.goose` expects qtc 1.4.0.
+
 ## 1.6.0 — 2026-11-12
 
 For qtc 1.3.0, which CMake now requires.

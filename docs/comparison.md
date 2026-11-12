@@ -8,27 +8,27 @@ All use Qt 6.12. The benchmark's source, and how to rerun it, are in
 [results.md](../bench/compare/results/results.md).
 
 **In short:**
-- **Per call, goose-qt is 2–5× faster than PyQt6** and 1.8–10× faster than PySide6, and
-  ahead of Go's miqt on every call but object creation: level on signals, up to 4× on
-  properties. A plain call costs 20–66 ns, where C++ pays 1–28 ns.
-- **Small values are structs now.** `qt::color(255, 0, 0).red()` takes 18 ns: 51× faster
-  than PyQt6, 9.6× faster than Go, within 2× of Rust. Points, sizes, rectangles, lines,
-  margins and colors no longer need a handle (goose-qt 1.6.0, qtc 1.3.0).
+- **Per call, goose-qt is 2–5× faster than PyQt6** and 2–10× faster than PySide6, and
+  ahead of Go's miqt on every call but object creation: level on signals, up to 3.5× on
+  properties. A plain call costs 20–67 ns, where C++ pays 1–29 ns.
+- **Small values are structs.** `qt::color(255, 0, 0).red()` takes 18 ns: 50× faster than
+  PyQt6, 9× faster than Go, within 2× of Rust. Points, sizes, rectangles, lines, margins and
+  colors need no handle (since goose-qt 1.6.0, qtc 1.3.0).
 - **Rust's cxx-qt is the closest to C++.** It calls Qt through `cxx` bridges with nothing in
-  between: 1–8× a direct C++ call, and a fraction of goose-qt's cost. It checks nothing at
+  between: 1–7× a direct C++ call, and a fraction of goose-qt's cost. It checks nothing at
   run time. Its misuse probes need `unsafe`, and all three crashed or silently truncated.
 - **Where Qt calls back into your code** (a model written in the language), goose-qt is
-  2.2× faster than Go and 3.9× faster than PyQt6, within 2.5× of C++.
-- **Startup and memory are near C++.** Startup takes 26 ms, against 20 ms for C++, 21–22 ms
-  for Rust and Go and 76 ms for PyQt6. Peak memory is 39 MiB, against 30 MiB for C++ and
-  Rust, 44 MiB for Go and 49 MiB for PyQt6.
-- **Making and destroying a `QObject` is level with PyQt6 and behind Go:** 245 ns against
-  238 and 151. That is a handle, its ownership tracking and the checks that turn "use after
-  delete" into an error.
+  2.3× faster than Go and 3.8× faster than PyQt6, within 2.2× of C++.
+- **Startup and memory are near C++.** Startup takes 28 ms, against 22 ms for C++, Rust and
+  Go and 75 ms for PyQt6. Peak memory is 39 MiB, against 29–30 MiB for C++ and Rust,
+  43 MiB for Go and 48 MiB for PyQt6.
+- **Making and destroying a `QObject` takes 178 ns:** faster than PyQt6 (223 ns), behind Go
+  (139 ns). That is a handle, its ownership tracking and the checks that turn "use after
+  delete" into an error. qtc 1.4.0 cut it from 245 ns in the previous run.
 - **It is the only one where all three misuse probes come back as errors.** The others
   crash, hang or silently do the wrong thing on at least one.
 
-Machine: two cores of a Xeon VM (2.3 GHz nominal; slower than the one of the 1.5.0 run, so
+Machine: two cores of a Xeon VM (2.1 GHz nominal; not the machine of the earlier runs, so
 compare numbers within a table), 7 GB, Linux. Medians of five runs, each in its own
 process; startup over 15 runs. Qt 6.12.0 everywhere: conda-forge's build for the compiled
 programs, and Qt's own build inside the Python wheels. The C++ program ran on both, and the
@@ -40,16 +40,16 @@ two Qt builds are within a few percent of each other except for painting.
 
 | ns per call | C++ | Rust (cxx-qt) | qtc (C) | **goose-qt** | PyQt6 | PySide6 | Go (miqt) |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `label.setText("hello")` | 5.3 | 34 | 58 | **58** | 199 | 230 | 212 |
-| `label.text()` | 1.9 | 16 | 66 | **66** | 151 | 242 | 176 |
-| `slider.setValue(i)` | 28 | 30 | 56 | **55** | 158 | 255 | 83 |
-| `slider.value()` | 0.7 | 3.4 | 21 | **20** | 108 | 196 | 57 |
-| `setProperty("text", …)` | 53 | 72 | 130 | **130** | 472 | 497 | 517 |
-| `button.click()` reaching a handler | 93 | 98 | 213 | **212** | 726 | 372 | 221 |
-| `QColor(255, 0, 0).red()` | 1.6 | 9.9 | 18 | **18** | 947 | 597 | 176 |
-| a `QObject` made and deleted | 40 | 42 | 240 | **245** | 238 | 2,203 | 151 |
+| `label.setText("hello")` | 5.5 | 34 | 58 | **58** | 143 | 265 | 198 |
+| `label.text()` | 2.1 | 15 | 66 | **67** | 130 | 266 | 157 |
+| `slider.setValue(i)` | 29 | 31 | 55 | **54** | 139 | 255 | 74 |
+| `slider.value()` | 0.7 | 3.5 | 21 | **20** | 96 | 194 | 51 |
+| `setProperty("text", …)` | 53 | 71 | 131 | **135** | 418 | 589 | 478 |
+| `button.click()` reaching a handler | 96 | 99 | 215 | **213** | 607 | 426 | 209 |
+| `QColor(255, 0, 0).red()` | 1.7 | 9.9 | 18 | **18** | 902 | 586 | 167 |
+| a `QObject` made and deleted | 41 | 43 | 178 | **178** | 223 | 2,003 | 139 |
 
-goose-qt is the native build; the JIT adds 2–17% (more on the 18 ns color row). C++ is the floor: a binding cannot beat a
+goose-qt is the native build; the JIT adds 3–58% (more on the 18 ns color row). C++ is the floor: a binding cannot beat a
 direct call.
 
 Notes on the rows:
@@ -71,7 +71,11 @@ Notes on the rows:
   which objects hold it, whether Qt owns it, whether it is the internal part of another.
   That bookkeeping turns "use after delete" into an error instead of a crash (see below).
   qtc 1.2.0 cut it from 1.6 µs to 0.2 µs by making objects as a subclass whose destructor
-  releases the handle (sip's technique) and by deleting at once.
+  releases the handle (sip's technique) and by deleting at once. qtc 1.4.0 skips the
+  cleanups an object has nothing for: each handle's slot records whether the event layer
+  or the ownership tracking keeps anything for its object, and most objects have neither.
+  It also takes one lock fewer per object. That is 17% fewer instructions per object, and
+  sanitizer builds check each skipped cleanup at run time.
 
 ## Whole tasks
 
@@ -79,22 +83,22 @@ Notes on the rows:
 
 | | C++ | Rust (cxx-qt) | qtc (C) | **goose-qt** | PyQt6 | PySide6 | Go (miqt) |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| filter 1,000,000 rows of a model written in the language | 229 ms | 250 ms | 609 ms | **564 ms** | 2,201 ms | 2,656 ms | 1,213 ms |
-| paint 100,000 lines into an image | 26 ms | 29 ms | 37 ms | **36 ms** | 64 ms | 53 ms | 33 ms |
-| 2,000 buttons: create, show, paint, destroy | 57 ms | 57 ms | 51 ms | **51 ms** | 76 ms | 131 ms | 61 ms |
-| startup to exit (a label shown and painted) | 20 ms | 21 ms | 25 ms | **26 ms** | 76 ms | 148 ms | 22 ms |
-| peak memory of that program | 30 MiB | 31 MiB | 39 MiB | **39 MiB** | 49 MiB | 57 MiB | 44 MiB |
+| filter 1,000,000 rows of a model written in the language | 260 ms | 254 ms | 588 ms | **553 ms** | 2,113 ms | 2,455 ms | 1,270 ms |
+| paint 100,000 lines into an image | 27 ms | 25 ms | 31 ms | **33 ms** | 67 ms | 45 ms | 35 ms |
+| 2,000 buttons: create, show, paint, destroy | 63 ms | 55 ms | 43 ms | **45 ms** | 79 ms | 114 ms | 61 ms |
+| startup to exit (a label shown and painted) | 22 ms | 22 ms | 29 ms | **28 ms** | 75 ms | 152 ms | 21 ms |
+| peak memory of that program | 29 MiB | 30 MiB | 39 MiB | **39 MiB** | 48 MiB | 56 MiB | 43 MiB |
 
 The model filter calls into the language once per row: Qt asks the model for each row's
-text. goose-qt answers a million of those calls in 564 ms. That is 2.2× faster than Go,
-3.9× faster than PyQt6 and 4.7× faster than PySide6. A model in C++ or Rust, which Qt calls
-as a virtual function, takes 0.2 s.
+text. goose-qt answers a million of those calls in 553 ms. That is 2.3× faster than Go,
+3.8× faster than PyQt6 and 4.4× faster than PySide6. A model in C++ or Rust, which Qt calls
+as a virtual function, takes 0.25 s.
 
 Startup and memory used to be the cost of loading all of qtc at once: 25 Qt modules and the
 tables of 13,600 methods. Since qtc 1.2.0, `libqtc` holds Qt Core, Gui and Widgets, and each
 other module is a library of its own, loaded when the program first uses one of its classes.
 A widgets program maps 4 Qt libraries instead of about 30. The JIT still compiles
-`api.goose` at start, which takes over half a second (645 ms, 241 MiB here): nearly all of it
+`api.goose` at start, which takes over half a second (646 ms, 241 MiB here): nearly all of it
 is the Goose compiler checking every function of `api.goose`, also those the program never
 calls. Native builds do that ahead of time.
 
@@ -126,31 +130,35 @@ qtc 1.1.1 cached what could be cached. qtc 1.2.0 added three things, without dro
 check ([changelog](../../qtc/CHANGELOG.md)): a C function per bound signature, called
 directly by goose-qt's wrappers; objects made as a subclass that tells qtc when it dies;
 and a library per Qt module, loaded on first use. qtc 1.3.0 added small values as structs
-and made the handle registry cheaper.
+and made the handle registry cheaper. qtc 1.4.0 made objects cheaper to make and destroy.
 
 The machine changed between runs, so this table gives each goose-qt number as a multiple
 of PyQt6's speed in the same run:
 
-| goose-qt, native, × PyQt6's speed | 1.4.0 (qtc 1.1.1) | 1.5.0 (qtc 1.2.0) | 1.6.0 (qtc 1.3.0) |
-|---|---:|---:|---:|
-| `label.setText("hello")` | 1.1× | 3.2× | 3.4× |
-| `label.text()` | 1.0× | 2.1× | 2.3× |
-| `slider.setValue(i)` | 1.1× | 3.1× | 2.9× |
-| `slider.value()` | 1.2× | 5.5× | 5.3× |
-| `setProperty("text", …)` | 1.8× | 3.6× | 3.6× |
-| signal round trip | 2.2× | 3.3× | 3.4× |
-| `QColor(255, 0, 0).red()` | 2.2× | 5.7× | 51× |
-| a `QObject` made and deleted | 0.16× | 0.94× | 0.97× |
-| million-row model filter | 3.7× | 3.7× | 3.9× |
-| startup | 1.4× | 3.0× | 2.9× |
-| peak memory (PyQt6's ÷ goose-qt's) | 0.74× | 1.25× | 1.25× |
+| goose-qt, native, × PyQt6's speed | 1.4.0 (qtc 1.1.1) | 1.5.0 (qtc 1.2.0) | 1.6.0 (qtc 1.3.0) | 1.6.1 (qtc 1.4.0) |
+|---|---:|---:|---:|---:|
+| `label.setText("hello")` | 1.1× | 3.2× | 3.4× | 2.5× |
+| `label.text()` | 1.0× | 2.1× | 2.3× | 1.9× |
+| `slider.setValue(i)` | 1.1× | 3.1× | 2.9× | 2.6× |
+| `slider.value()` | 1.2× | 5.5× | 5.3× | 4.7× |
+| `setProperty("text", …)` | 1.8× | 3.6× | 3.6× | 3.1× |
+| signal round trip | 2.2× | 3.3× | 3.4× | 2.8× |
+| `QColor(255, 0, 0).red()` | 2.2× | 5.7× | 51× | 50× |
+| a `QObject` made and deleted | 0.16× | 0.94× | 0.97× | 1.25× |
+| million-row model filter | 3.7× | 3.7× | 3.9× | 3.8× |
+| startup | 1.4× | 3.0× | 2.9× | 2.6× |
+| peak memory (PyQt6's ÷ goose-qt's) | 0.74× | 1.25× | 1.25× | 1.24× |
 
-qtc 1.3.0 passes its 19 test suites in release and AddressSanitizer + UndefinedBehaviorSanitizer
-builds. The sanitizer run found a crash 1.2.0 had made reachable (a CoAP client deleted right
-after a request crashed Qt's protocol thread), fixed in 1.3.0; see qtc's changelog. The
-method fuzzer ran on the new code under the sanitizers: the fixed order, by name, object
-lifetimes and three random orders, clean but for one call that is slow rather than wrong
-(`QString::toUcs4` on a string earlier calls had grown large).
+qtc 1.4.0 changed nothing on the call path. goose-qt's per-call times are about what they
+were in 1.6.0's run (58, 67, 54, 20 and 135 ns against 58, 66, 55, 20 and 130); PyQt6
+measured faster on this machine, so those ratios dropped.
+
+qtc 1.4.0 passes its 19 test suites in release and AddressSanitizer + UndefinedBehaviorSanitizer
+builds; the sanitizer build also checks, at every destruction that skipped a cleanup, that
+there was nothing to clean up. The method fuzzer ran on it under the sanitizers: the fixed
+order, by name, object lifetimes and two random orders, clean but for OpenSSL's known
+double free at exit in one order (Qt's, see qtc's LIMITS.md). goose-qt's 20 tests and 12
+examples pass against it.
 
 ## Caveats
 
