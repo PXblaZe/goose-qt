@@ -7,25 +7,28 @@ spends. For a user interface that is invisible; for hot loops it is worth knowin
 time goes.
 
 All numbers here are from one machine: two cores of a 2.3 GHz Xeon, 7 GB of memory, Linux,
-Qt 6.12.0, qtc 1.2.0. Yours will differ; run the benchmarks to see.
+Qt 6.12.0, qtc 1.2.0 and 1.3.0. Yours will differ; run the benchmarks to see.
 
 ## What a call costs
 
-`test/bench.goose` (nanoseconds per operation, qtc 1.2.0):
+`test/bench.goose` (nanoseconds per operation, qtc 1.3.0; on a slower VM than the 1.2.0 numbers
+this table had, which is why the rows that did not change are 10–20% higher):
 
 | Operation | Native | JIT |
 |---|---:|---:|
-| `label.setText("hello")` (a generated wrapper) | 47 | 54 |
-| `qt::set(label, "text", …)` (the property system) | 107 | 114 |
-| `slider.setValue(i)` | 41 | 43 |
-| `slider.value_int()` | 17 | 20 |
-| `label.text()` (a string back) | 56 | 66 |
-| `qt::val(i)` and free | 45 | 65 |
-| `color.red()` (a method on a value) | 18 | 20 |
-| `button.click()` and `qt::poll` (a signal round trip) | 155 | 181 |
-| `qt::post` and `qt::poll` | 62 | 69 |
-| `qt::alive(handle)` | 5 | 7 |
-| a call on a stale handle (refused) | 137 | 156 |
+| `label.setText("hello")` (a generated wrapper) | 56 | 74 |
+| `qt::set(label, "text", …)` (the property system) | 135 | 177 |
+| `slider.setValue(i)` | 56 | 59 |
+| `slider.value_int()` | 21 | 24 |
+| `label.text()` (a string back) | 67 | 85 |
+| `qt::val(i)` and free | 60 | 71 |
+| `color.red()` (a method on a `qt::Val`) | 21 | 18 |
+| `c.red()` on a `qt::Color` (a struct) | 10 | 10 |
+| `qt::color(…)` made and read (a struct) | 17 | 21 |
+| `button.click()` and `qt::poll` (a signal round trip) | 188 | 168 |
+| `qt::post` and `qt::poll` | 73 | 69 |
+| `qt::alive(handle)` | 6 | 6 |
+| a call on a stale handle (refused) | 160 | 142 |
 
 ```sh
 goose build test/bench.goose -o bench && ./bench
@@ -70,6 +73,9 @@ Qt, the network stack or the arithmetic in Goose more than by calls.
 - **Keep objects you reuse.** Making and destroying a `QObject` costs about 0.2 µs (each gets
   a handle and its ownership is tracked, so that a stale handle is an error, not a crash).
   That is cheap, but a reused object costs nothing.
+- **Use the value structs** for points, sizes, rectangles, lines, margins and colors
+  (`qt::rect(...)`, `qt::color(...)`, see [Values](values.md)): no handle to make, look up
+  and free, a few nanoseconds per method.
 - **Use the typed constructors and methods** (`qt::QObject()`, `label.setText(...)`) rather
   than `qt::new_object("QObject")` and `qt::call(...)` by name: they call qtc's direct entry
   points and skip the lookup by name.

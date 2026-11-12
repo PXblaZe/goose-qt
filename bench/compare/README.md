@@ -24,7 +24,7 @@ Each program does the same things with the same counts, and prints
 | `get_value` | `slider.value()` | 200,000 |
 | `set_property` | `label.setProperty("text", "hello")` through the property system | 200,000 |
 | `signal` | `button.click()` reaching the language's handler | 100,000 |
-| `value_type` | make a `QColor(255, 0, 0)`, read `red()`, free it | 200,000 |
+| `value_type` | make a `QColor(255, 0, 0)`, read `red()`, free it (goose-qt and C: as a struct, nothing to free) | 200,000 |
 | `object_churn` | make a `QObject` and delete it | 50,000 |
 | `model_filter` | a `QAbstractTableModel` written in the language, 1,000,000 rows, filtered for "4242" by a `QSortFilterProxyModel` (a call into the language per row; 299 match) | once |
 | `paint_lines` | 100,000 short lines painted into a 1024 × 1024 `QImage` | once |
