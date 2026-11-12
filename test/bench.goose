@@ -58,6 +58,15 @@ fn main() {
     for i in n { sum += color.red(); }
     report("color.red() (a method on a value)", n, t);
 
+    let c2 = qt::color(10, 20, 30);
+    t = clock_ns();
+    for i in n { sum += c2.red(); }
+    report("c.red() on a qt::Color (a struct)", n, t);
+
+    t = clock_ns();
+    for i in n { let c3 = qt::color(10, 20, i % 256); sum += c3.blue(); }
+    report("qt::color(...) made and read (a struct)", n, t);
+
     qt::connect(button, "clicked", 1);
     t = clock_ns();
     for i in n / 4 {

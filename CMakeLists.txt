@@ -13,10 +13,10 @@
 #
 # then, in a program:  import qt from "/usr/local/share/goose-qt";
 cmake_minimum_required(VERSION 3.21)
-project(goose_qt VERSION 1.5.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
+project(goose_qt VERSION 1.6.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
 include(GNUInstallDirs)
 
-set(GOOSE_QT_QTC_MIN 1.2.0)   # api.goose calls the direct entry points (qtc_direct.h) qtc 1.2.0 added
+set(GOOSE_QT_QTC_MIN 1.3.0)   # values.goose calls the inline values (qtc_inline.h) qtc 1.3.0 added
 
 set(QTC_SOURCE_DIR "" CACHE PATH
   "qtc's source directory: build qtc as part of this build (empty: use an installed qtc, else ../qtc)")
@@ -112,7 +112,7 @@ endif()
 
 # ------------------------------------------------------------------ the package
 
-set(_pkg_files qt.goose extra.goose api.goose README.md CHANGELOG.md LICENSE)
+set(_pkg_files qt.goose extra.goose api.goose values.goose README.md CHANGELOG.md LICENSE)
 install(FILES ${_pkg_files} DESTINATION "${GOOSE_QT_INSTALL_DIR}")
 install(DIRECTORY include examples test gen DESTINATION "${GOOSE_QT_INSTALL_DIR}" USE_SOURCE_PERMISSIONS
         PATTERN "__pycache__" EXCLUDE PATTERN "*.png" EXCLUDE PATTERN "*.pyc" EXCLUDE)

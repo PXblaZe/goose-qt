@@ -10,6 +10,7 @@ your program
   │  qt::QLabel("hi").setText(...)        Goose functions
   ▼
 api.goose      generated: one wrapper per method name and shape, constructors, statics, enums
+values.goose   generated: small value types as structs (qtc_inline.h), gen/generate_values.py
 qt.goose       hand-written: init, the event loop, the generic call, properties, values, drawing
 extra.goose    hand-written: overrides, runtime classes, futures, graphics
   │  extern "qtc" { fn qtc_call(...) ... }  Goose's FFI

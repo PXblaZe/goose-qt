@@ -6,6 +6,7 @@
 #define _POSIX_C_SOURCE 200809L
 #include "qtc.h"
 #include "qtc_direct.h"
+#include "qtc_inline.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -91,10 +92,8 @@ int main(int argc, char **argv) {
 
     t = now_ns();
     for (int i = 0; i < N; i++) {
-        qtc_val c = qtcn_QColor__int_int_int(255, 0, 0);
-        qtcm_red(c);
-        sum += qtc_ret_int();
-        qtc_val_free(c);
+        qtc_QColor c = qtci_QColor__int_int_int(255, 0, 0);   /* qtc_inline.h: a struct, no handle */
+        sum += qtci_QColor_red(c);
     }
     result("value_type", ns_per(t, N), "ns");
 

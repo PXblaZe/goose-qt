@@ -4,6 +4,34 @@
 `QVariant`, a list or a map. Underneath, each is a `QVariant` qtc keeps for you. Values are
 how anything that is not a `QObject` crosses between Goose and Qt.
 
+## Small values as structs
+
+Points, sizes, rectangles, lines, margins and colors also exist as plain Goose structs,
+held by your program with no handle and nothing to free: `qt::Point`, `qt::PointF`,
+`qt::Size`, `qt::SizeF`, `qt::Rect`, `qt::RectF`, `qt::Line`, `qt::LineF`, `qt::Margins`,
+`qt::MarginsF` and `qt::Color` (`values.goose`, from qtc's `qtc_inline.h`). They have the
+Qt type's own layout, their methods call Qt directly, and they cost a few nanoseconds where
+a `qt::Val` costs over a hundred:
+
+```goose
+var r = qt::rect(0, 0, 640, 480);          // constructors: the lowercase type name
+r.moveTo(10, 10);                          // methods that change it work in place (a var)
+let w = r.width();
+let c = qt::color(255, 128, 0);            // qt::Color
+let h = qt::color_fromHsv(120, 255, 255);  // static methods: lowercase name, underscore, method
+win.setGeometry(r);                        // object methods take them
+win.move(qt::point(100, 100));
+let g = qt::to_rect(win.geometry());       // a qt::Val result as a struct (to_point, to_color, ...)
+let v = c.to_val();                        // and a struct as a qt::Val, for anything else
+```
+
+The geometry structs' fields are Qt's own, and may be read and set (`r.x1`, `p.xp`; a
+`Rect` keeps its far corner, `x2 = x + width - 1`); a `Color` is opaque. The checks are the
+usual ones: an integer that does not fit Qt's `int` is `qt::ERR_OUT_OF_RANGE`, and a
+`Color` whose fields your program changed into something that is not a color is
+`qt::ERR_INVALID_ARG`, not undefined behaviour in Qt. Object methods that return these
+types still return a `qt::Val`; `qt::to_rect` and its siblings convert it.
+
 ## Making values
 
 ```goose

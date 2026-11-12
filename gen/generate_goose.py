@@ -298,6 +298,17 @@ def main():
     with open(os.path.join(args.out, "api.goose"), "w") as f:
         f.write("\n".join(out) + "\n")
     write_wrapper_test(args.out, out)
+    # values.goose: the small value types as structs (qtc_inline.h)
+    ip = os.path.join(os.path.dirname(args.manifest), "qtc_inline.json")
+    if os.path.exists(ip):
+        import generate_values
+
+        def gname_of(n, recv, gparams):
+            f = gname(n)
+            if (f, (recv,) + tuple(gparams)) in core or (f in core_names and f in ("free", "call", "set", "arg")):
+                f += "_"
+            return f
+        generate_values.generate(ip, direct, man, args.out, gname_of)
     print("api.goose: %d return types kept from the baseline" % kept)
     print("api.goose: %d functions and %d constructors call direct entry points" % (stats["direct"], stats["direct_ctors"]))
     print("api.goose: %d method functions (%d typed variants, from %d overload entries), %d constructors, "

@@ -85,9 +85,8 @@ fn main() {
 
     t = clock_ns();
     for i in N {
-        let c = qt::QColor(255, 0, 0);
+        let c = qt::color(255, 0, 0);   // a qt::Color struct (values.goose): no handle to free
         sum += c.red();
-        c.free();
     }
     result("value_type", ns_per(t, N), "ns");
 
