@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Builds the three misuse probes in each implementation, runs every probe in its own process,
-and writes what happened to results/misuse.txt: an error reported, or the exit status.
+"""Builds the misuse probes in each implementation, runs every probe in its own process, and
+writes what happened to results/misuse.txt: an error reported, or the exit status.
 
     python3 misuse/run.py
 
@@ -14,7 +14,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 from run import sh  # noqa: E402
 
-CASES = ["deleted", "range", "qtbug"]
+# the probes, in the order of the table in docs/comparison.md
+CASES = [
+    ("deleted", "a child used after its parent was deleted"),
+    ("deleted_self", "an object used after it was deleted"),
+    ("double_delete", "an object deleted twice"),
+    ("stale_index", "a model index kept across the model's clear()"),
+    ("held_deleted", "a widget deleted while a table still shows it (setCellWidget)"),
+    ("null", "a method on a null object: an uneditable combo box's lineEdit()"),
+    ("range", "an int argument of 10,000,000,000"),
+    ("wrong_thread", "a label's text set from another thread"),
+    ("before_app", "a widget made before the application object"),
+    ("qtbug", "a call Qt itself crashes on: combo.setView(combo.view())"),
+]
 
 
 def main():
@@ -65,20 +77,21 @@ def main():
         print("Rust (cxx-qt) left out: %s" % str(e).splitlines()[0], file=sys.stderr)
 
     lines = []
-    for case in CASES:
+    for case, _ in CASES:
         for name, cmd, extra in progs:
             try:
                 r = subprocess.run(cmd + [case], capture_output=True, text=True, timeout=60,
                                    env=dict(env, **extra))
                 code = r.returncode if r.returncode >= 0 else 128 - r.returncode
                 out = [l.strip() for l in (r.stdout + r.stderr).splitlines() if l.strip()]
-                said = [l for l in out if l.startswith("error:") or l.startswith("no error reported")]
+                said = [l for l in out if l.startswith(("error:", "no error reported", "refused:", "handled:"))]
                 if said:
                     what = said[-1]
                 elif name in ("go", "rust") and out:
-                    what = next((l for l in out if "SIGSEGV" in l or l.startswith("panic") or "panicked" in l), "")
+                    what = next((l for l in out if "SIGSEGV" in l or l.startswith("panic") or "panicked" in l
+                                 or "Must construct" in l or "malloc" in l), "")
                 else:
-                    what = ""
+                    what = next((l for l in out if "Must construct" in l or "malloc" in l), "")
             except subprocess.TimeoutExpired:
                 code, what = "hung", "no exit within 60 s"
             line = "%-8s %-8s exit=%-4s %s" % (case, name, code, what[:140])

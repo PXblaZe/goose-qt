@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.7.1 — 2026-11-12
+
+Benchmark and documentation only; the package is unchanged.
+
+- `bench/compare/misuse` has ten probes instead of three, in all six bindings: use after
+  delete (a child, the object itself), double delete, a model index kept across `clear()`,
+  a widget deleted while a table shows it, a null object, an integer too large, the wrong
+  thread, a widget before the application, and a call Qt crashes on. `misuse/report.py`
+  draws the results (`results/safety.png`). goose-qt catches all ten; PyQt6 and PySide6
+  five, Rust three at compile time, Go and C++ none.
+- [Comparison](docs/comparison.md#safety-and-stability) has a safety and stability section:
+  the grid, what each binding checks, and how qtc and goose-qt are tested.
+
 ## 1.7.0 — 2026-11-12
 
 Needs qtc 1.5.0.

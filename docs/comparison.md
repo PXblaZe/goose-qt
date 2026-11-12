@@ -27,8 +27,10 @@ All use Qt 6.12. The benchmark's source, and how to rerun it, are in
   17–21 ms for C++, Rust and Go and 70 ms for PyQt6, and peaks at 39 MiB, against 29–30 MiB
   for C++ and Rust, 43 MiB for Go and 49 MiB for PyQt6. The JIT starts in 0.43 s (0.65 s
   before goose-qt 1.7.0 split the API by Qt module).
-- **It is the only one where all three misuse probes come back as errors.** The others
-  crash, hang or silently do the wrong thing on at least one.
+- **It catches all ten misuse probes** (use after delete, double delete, a stale model index,
+  a widget deleted while Qt shows it, null, an integer too large, the wrong thread, no
+  application yet, a call Qt crashes on). PyQt6 and PySide6 catch five, Rust three at
+  compile time, Go and C++ none; the rest crash, abort or silently do the wrong thing.
 
 Machine: two cores of a Xeon VM (2.1 GHz nominal; not the machine of the earlier runs, so
 compare numbers within a table), 7 GB, Linux. Medians of five runs, each in its own
@@ -120,26 +122,83 @@ compiler that skipped the unused functions of imported packages when running a p
 locally, the same program started in about 250 ms. Native builds do all of this ahead of
 time.
 
-## Misuse
+## Safety and stability
 
-Three mistakes, each made once in each binding ([bench/compare/misuse](../bench/compare/misuse); output in
-[misuse.txt](../bench/compare/results/misuse.txt)):
+![Ten misuses in each binding](../bench/compare/results/safety.png)
 
-| | a child used after its parent was deleted | an `int` argument of 10,000,000,000 | a call Qt itself crashes on: `combo.setView(combo.view())` |
-|---|---|---|---|
-| C++ | segfault | silently truncated | segfault |
-| **goose-qt** | **error: `QTC_ERR_STALE_HANDLE`** | **error: `QTC_ERR_OUT_OF_RANGE`** | **error: `QTC_ERR_STATE`, refused** |
-| PyQt6 | exception (`RuntimeError`) | exception (`OverflowError`) | segfault |
-| PySide6 | exception (`RuntimeError`) | exception (`OverflowError`) | segfault (in another run, a hang) |
-| Go (miqt) | segfault (`SIGSEGV` in cgo) | silently truncated | segfault |
-| Rust (cxx-qt) | segfault (in an `unsafe` block) | silently truncated (an `as i32` cast) | segfault (in an `unsafe` block) |
+Ten mistakes, each made once in each binding, every probe in a process of its own
+([bench/compare/misuse](../bench/compare/misuse); output in
+[misuse.txt](../bench/compare/results/misuse.txt)). They are mistakes real programs make:
+using an object after Qt deleted it, keeping something across a reset, calling from the
+wrong thread, passing a number too large, or a call Qt itself crashes on.
 
-The Python bindings track deleted wrappers and check integer ranges. Rust makes the program
-spell out the dangerous parts: a raw pointer to an object Qt owns can only be used in
-`unsafe`, and the 64-bit value has to be cast. None of them protects against inputs that
-crash Qt itself. qtc refuses nearly 400 such inputs, each found by fuzzing, see
-[Stability](stability.md). Those checks are part of the per-call cost above: the call path
-still does all of them.
+| | goose-qt | PyQt6 | PySide6 | Rust (cxx-qt) | Go (miqt) | C++ |
+|---|---|---|---|---|---|---|
+| a child used after its parent was deleted | **error** | error | error | crash (in `unsafe`) | crash | crash |
+| an object used after it was deleted | **error** | error | error | won't compile; crash in `unsafe` | crash | crash |
+| an object deleted twice | **error** | error | ignored | won't compile; crash in `unsafe` | crash | crash |
+| a model index kept across the model's `clear()` | **refused** | crash | crash | crash, in safe Rust | crash | crash |
+| a widget deleted while a table still shows it | **handled** | crash | crash | crash (in `unsafe`) | crash | crash |
+| a method on a null object (`lineEdit()` of an uneditable combo box) | **error** | error | error | crash (in `unsafe`) | panic | crash |
+| an `int` argument of 10,000,000,000 | **error** | error | error | truncated (an `as` cast) | truncated | truncated |
+| a label's text set from another thread | **error** | data race | data race | won't compile; data race in `unsafe` | data race (2 of 10 runs crashed) | data race (1 of 10 aborted) |
+| a widget made before the application object | **error** | abort | abort | abort, in safe Rust | abort | abort |
+| a call Qt itself crashes on: `combo.setView(combo.view())` | **error** | crash | crash (in another run, a hang) | crash (in `unsafe`) | crash | crash |
+| **caught** | **10 of 10** | 5 of 10 | 5 of 10 | 3 of 10, at compile time | 0 of 10 | 0 of 10 |
+
+What each does:
+- **goose-qt** reports eight as errors the program can check (`qt::last_error()`; or logs
+  or aborts on them, by `qt::set_error_policy`), and handles two without one. The model index reads as
+  invalid once its model is cleared, so `setData` returns false, as Qt's API says it does for
+  an invalid index. The table lets go of the button before it is deleted, as `qtc_destroy`
+  makes every holder do. Each object is a handle that goes stale when the object dies; the
+  calling thread, every argument's range and type, and nearly 400 inputs known to crash Qt
+  are checked on every call.
+- **PyQt6 and PySide6** catch what Python itself can see: a deleted wrapper, `None`, an
+  integer too large for C++. They do not track what Qt holds (the model's index, the
+  table's cell widget), do not check threads (the GIL makes each call atomic, not the
+  widget thread-safe), and pass Qt's own crashes through.
+- **Rust** refuses three at compile time: a value cannot be used after it is dropped or be
+  dropped twice, and cxx's C++ types cannot be sent to another thread. The others need
+  `unsafe`, because cxx gives raw pointers for objects Qt owns (a parent's child, a cell
+  widget, `lineEdit()`), and Rust trusts the program inside it. Two crash in safe Rust: the
+  model index is a plain value Qt's model trusts, and Qt aborts on a widget made before the
+  application. The 64-bit value needs an explicit `as i32`, which truncates. The compile
+  errors were checked with cargo (E0382, E0277); the probes write the `unsafe` version to
+  see what happens at run time.
+- **Go (miqt)** checks nothing: a deleted object is a dangling pointer, `nil` panics, and
+  wider integers are cut to fit.
+- **C++** is the baseline: Qt trusts its caller.
+
+Two probes vary between runs: setting a label from another thread is a data race wherever it
+is not refused, and over ten runs each it aborted the C++ program once and crashed the Go
+one twice (goose-qt reported the error all ten times). PySide6 hung on the combo box once in
+earlier runs and crashed in this one.
+
+### How the stability is tested
+
+The probes show what happens to one mistake. qtc's tests are what keep the whole surface
+from crashing ([qtc's TESTING.md](../../qtc/docs/TESTING.md)):
+
+- **A method fuzzer** calls every bound method of every class with generated arguments
+  (wrong types, nulls, extremes, objects in odd states, objects destroyed in between):
+  90,000 to 170,000 calls a run, in a fixed order, by name, and in random orders, also under
+  AddressSanitizer and UndefinedBehaviorSanitizer. Each crash it found became a check:
+  that is where the nearly 400 refused inputs come from.
+- **19 test suites** with 1,202 checks in `test_core` alone, run in release and sanitizer
+  builds. Sanitizer builds also check at run time that the registry's shortcuts skip only
+  work that is not there (`QTC_CROSSCHECK`).
+- **Lifetime tests**: objects destroyed in random orders with their addresses reused at
+  once, senders destroyed by their own handlers, handlers that nest.
+- **goose-qt's own tests** call each of its 8,461 generated wrappers with a null receiver and
+  check that every one reports the error (`test/t90_wrappers.goose`), and its
+  [chaos sample](../samples/chaos/chaos.goose) runs a seeded storm of hostile calls (random
+  widgets made, reparented and destroyed; 100 KB strings, invalid UTF-8, NaN, stale and
+  forged handles, double frees, queue floods): a million operations each with seeds 1, 2 and
+  3 end with nothing crashed and nothing leaked. See [Stability](stability.md).
+
+What is still not covered is listed in qtc's [LIMITS.md](../../qtc/docs/LIMITS.md): for
+example, Qt code that crashes with arguments no check can tell apart from good ones.
 
 ## What changed to get here
 

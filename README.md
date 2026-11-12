@@ -140,9 +140,10 @@ Signals can run inside the emission (`qt::CONN_DIRECT`, 157 ns from click to han
 against 185 for miqt and 693 for PyQt6), making and destroying an object is level with
 miqt (135 ns, ownership tracking included), and where Qt calls back into the program (a
 model of a million rows) it is 2.4–4.9× faster than the Python and Go bindings. A native
-program starts in 24 ms with 39 MiB (C++: 17 ms, 29 MiB). Of the misuses tried, it is the
-only one that reports every one as an error instead of crashing on some. The numbers and
-charts are in [docs/comparison.md](docs/comparison.md).
+program starts in 24 ms with 39 MiB (C++: 17 ms, 29 MiB). Of ten misuses (use after
+delete, double delete, a stale model index, the wrong thread, a call Qt crashes on, ...) it
+catches all ten; PyQt6 and PySide6 catch five, Rust three at compile time, Go and C++ none.
+The numbers and charts are in [docs/comparison.md](docs/comparison.md#safety-and-stability).
 
 ## Limits
 

@@ -34,14 +34,14 @@ bug the fuzzers found):
   fixed order, by name, through object lifetimes, and in random orders with random argument
   combinations: 21.7 million calls over 128 random orders in the last release round, plus
   2 million under AddressSanitizer and UndefinedBehaviorSanitizer, with no failure in qtc;
-- unit suites for the core (1,025 checks), the application lifecycle, concurrency (1,696),
+- unit suites for the core (1,202 checks), the application lifecycle, concurrency (1,696),
   overrides, runtime classes and graphics (1,175 checks under Xvfb, with the Vulkan
   validation layers clean), and a stress suite.
 
 At the Goose level:
 
 - `test/run.sh`: the suite, with the JIT and as native builds, including a call of each of
-  the 8,464 generated instance-method wrappers on a null receiver, which must come back with
+  the 8,461 generated instance-method wrappers on a null receiver, which must come back with
   `qt::ERR_NULL_HANDLE`;
 - the [chaos sample](../samples/chaos/chaos.goose): a seeded storm of random and hostile
   calls (widgets of 25 classes made, reparented and destroyed; 51 methods called with 100 KB
@@ -51,6 +51,9 @@ At the Goose level:
 - every sample checks its own results and that no object or value is left over.
 
 Any seed can be replayed: `./chaos --ops 1000000 --seed 42` does the same things every time.
+
+How this compares with the other bindings, on ten common mistakes made in each of them, is in
+[Comparison](comparison.md#safety-and-stability).
 
 ## Where it stops
 

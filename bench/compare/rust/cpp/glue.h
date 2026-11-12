@@ -8,7 +8,10 @@
 #include <QtGui/QImage>
 #include <QtGui/QPainter>
 #include <QtWidgets/QApplication>
+#include <QtGui/QStandardItemModel>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
@@ -42,4 +45,10 @@ inline void show(QWidget &w) { w.show(); }
 inline void grab(QWidget &w) { (void)w.grab(); }
 inline void show_label(QLabel &w) { w.show(); }
 inline void grab_label(QLabel &w) { (void)w.grab(); }
+// for the misuse probes
+inline std::unique_ptr<QStandardItemModel> new_item_model(int rows, int cols) { return std::make_unique<QStandardItemModel>(rows, cols); }
+inline std::unique_ptr<QTableWidget> new_table(int rows, int cols) { return std::make_unique<QTableWidget>(rows, cols); }
+inline void show_table(QTableWidget &t) { t.show(); }
+inline void resize_table(QTableWidget &t, int w, int h) { t.resize(w, h); }
+inline QWidget *button_as_widget(QPushButton *b) { return b; }
 }  // namespace qtbench

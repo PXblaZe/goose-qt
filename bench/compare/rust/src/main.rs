@@ -27,6 +27,8 @@ pub mod qt {
         type QImage = cxx_qt_lib::QImage;
         include!("cxx-qt-lib/qpainter.h");
         type QPainter = cxx_qt_lib::QPainter;
+        include!("cxx-qt-lib/qmodelindex.h");
+        type QModelIndex = cxx_qt_lib::QModelIndex;
 
         include!("qtbench/cpp/glue.h");
         type QApplication;
@@ -39,6 +41,9 @@ pub mod qt {
         type QAbstractItemView;
         type QGridLayout;
         type QSortFilterProxyModel;
+        type QStandardItemModel;
+        type QTableWidget;
+        type QLineEdit;
 
         #[rust_name = "set_text"]
         fn setText(self: Pin<&mut QLabel>, text: &QString);
@@ -56,6 +61,17 @@ pub mod qt {
         unsafe fn setView(self: Pin<&mut QComboBox>, view: *mut QAbstractItemView);
         #[rust_name = "show_popup"]
         fn showPopup(self: Pin<&mut QComboBox>);
+        fn index(self: &QStandardItemModel, row: i32, column: i32, parent: &QModelIndex) -> QModelIndex;
+        fn clear(self: Pin<&mut QStandardItemModel>);
+        #[rust_name = "set_data"]
+        fn setData(self: Pin<&mut QStandardItemModel>, index: &QModelIndex, value: &QVariant, role: i32) -> bool;
+        #[rust_name = "set_cell_widget"]
+        unsafe fn setCellWidget(self: Pin<&mut QTableWidget>, row: i32, column: i32, widget: *mut QWidget);
+        #[rust_name = "line_edit"]
+        fn lineEdit(self: &QComboBox) -> *mut QLineEdit;
+        #[rust_name = "set_line_text"]
+        #[cxx_name = "setText"]
+        fn setText(self: Pin<&mut QLineEdit>, text: &QString);
         #[rust_name = "set_filter_fixed_string"]
         fn setFilterFixedString(self: Pin<&mut QSortFilterProxyModel>, pattern: &QString);
     }
@@ -81,6 +97,11 @@ pub mod qt {
         fn grab(w: Pin<&mut QWidget>);
         fn show_label(w: Pin<&mut QLabel>);
         fn grab_label(w: Pin<&mut QLabel>);
+        fn new_item_model(rows: i32, cols: i32) -> UniquePtr<QStandardItemModel>;
+        fn new_table(rows: i32, cols: i32) -> UniquePtr<QTableWidget>;
+        fn show_table(t: Pin<&mut QTableWidget>);
+        fn resize_table(t: Pin<&mut QTableWidget>, w: i32, h: i32);
+        unsafe fn button_as_widget(b: *mut QPushButton) -> *mut QWidget;
     }
 
     unsafe extern "C++Qt" {
@@ -107,9 +128,86 @@ fn ms_since(t: Instant) -> f64 {
 
 static CLICKS: AtomicU64 = AtomicU64::new(0);
 
+// A label pointer sent to another thread: Rust refuses to send a UniquePtr<QLabel> (cxx's
+// opaque C++ types are not Send), so the probe has to promise it is fine.
+struct SendLabel(*mut qt::QLabel);
+unsafe impl Send for SendLabel {}
+
 fn misuse(case: &str) -> i32 {
+    if case == "before_app" {
+        // a widget made before the application: plain safe Rust
+        let mut label = qt::new_label_text(&QString::from("x"));
+        qt::show_label(label.pin_mut());
+        println!("no error reported");
+        return 0;
+    }
     let _app = qt::new_app();
     match case {
+        "deleted_self" => {
+            // safe Rust cannot use a label after dropping it (E0382: use of moved value);
+            // through its raw pointer it can, in unsafe
+            let label = qt::new_label_text(&QString::from("x")).into_raw();
+            unsafe {
+                drop(cxx::UniquePtr::from_raw(label));
+                Pin::new_unchecked(&mut *label).set_text(&QString::from("y"));
+            }
+            println!("no error reported");
+        }
+        "double_delete" => {
+            // safe Rust cannot drop a UniquePtr twice (E0382); a raw pointer can be, in unsafe
+            let label = qt::new_label_text(&QString::from("x")).into_raw();
+            unsafe {
+                drop(cxx::UniquePtr::from_raw(label));
+                drop(cxx::UniquePtr::from_raw(label));
+            }
+            println!("no error reported");
+        }
+        "stale_index" => {
+            // all safe Rust: a QModelIndex is a plain value
+            let mut model = qt::new_item_model(2, 1);
+            let index = model.index(1, 0, &QModelIndex::default());
+            model.pin_mut().clear();
+            model.pin_mut().set_data(&index, &QVariant::from(&QString::from("b")), 2);
+            println!("no error reported");
+        }
+        "held_deleted" => {
+            // the table keeps a plain pointer to the button, which Rust then drops
+            let mut table = qt::new_table(2, 2);
+            let button = qt::new_button(&QString::from("x"));
+            unsafe {
+                let w = qt::button_as_widget(button.as_mut_ptr());
+                table.pin_mut().set_cell_widget(0, 0, w);
+            }
+            qt::show_table(table.pin_mut());
+            qt::process_events();
+            drop(button);
+            qt::resize_table(table.pin_mut(), 400, 300);
+            qt::process_events();
+            println!("no error reported");
+        }
+        "null" => {
+            // lineEdit() of a combo box that is not editable is null; reaching it needs unsafe
+            let combo = qt::new_combo();
+            let edit = combo.line_edit();
+            unsafe { Pin::new_unchecked(&mut *edit).set_line_text(&QString::from("x")) };
+            println!("no error reported");
+        }
+        "wrong_thread" => {
+            let mut label = qt::new_label_text(&QString::from("x"));
+            qt::show_label(label.pin_mut());
+            let p = SendLabel(label.as_mut_ptr());
+            let t = std::thread::spawn(move || {
+                let p = p;
+                for i in 0..1000 {
+                    unsafe { Pin::new_unchecked(&mut *p.0).set_text(&QString::from(&i.to_string())) };
+                }
+            });
+            for _ in 0..1000 {
+                qt::process_events();
+            }
+            t.join().unwrap();
+            println!("no error reported");
+        }
         "deleted" => {
             // a label owned by its parent (Qt deletes it with the parent), reached afterwards
             let mut parent = qt::new_widget();

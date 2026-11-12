@@ -60,18 +60,31 @@ faster, and `results/goose-qt-1.4.0/` to `goose-qt-1.6.1/` the runs against qtc 
 
 ## Misuse
 
-`misuse/` runs three mistakes in C++, goose-qt, Python (both bindings), Go and Rust, each in
-its own process, and records whether the program got an error or crashed:
+`misuse/` runs ten mistakes in C++, goose-qt, Python (both bindings), Go and Rust, each in
+its own process, and records whether the program got an error, went on silently, or
+crashed:
 
 | Probe | The mistake |
 |---|---|
 | `deleted` | call a method on a label whose parent was already deleted |
+| `deleted_self` | call a method on a label after deleting it |
+| `double_delete` | delete a label twice |
+| `stale_index` | keep a `QStandardItemModel` index across `clear()`, then `setData` through it |
+| `held_deleted` | delete a button a `QTableWidget` shows (`setCellWidget`), then resize the table |
+| `null` | `lineEdit().setText(...)` on a combo box that is not editable (it has no line edit) |
 | `range` | pass a value out of range for the argument (`QSpinBox.setValue(10000000000)`, past `int`) |
+| `wrong_thread` | set a label's text 1,000 times from another thread while the GUI thread runs |
+| `before_app` | make and show a label before the application object |
 | `qtbug` | a call Qt itself does not guard: `combo.setView(combo.view())`, then open the popup |
 
 ```sh
 python3 misuse/run.py          # results/misuse.txt
+python3 misuse/report.py       # results/safety.png
 ```
+
+`report.py` also carries what one run cannot show: Rust's compile errors for the safe
+versions of three probes (checked with cargo) and how often the racy probe crashed over ten
+runs.
 
 ## What is fair and what is not
 
@@ -79,16 +92,18 @@ python3 misuse/run.py          # results/misuse.txt
   `QT_PREFIX` (here conda-forge's 6.12.0 build); the Python wheels bring Qt's official 6.12.0
   build. The C++ program is run on both (`C++ (direct), wheel Qt`) so the difference between
   the two Qt builds can be read off directly.
-- **Signals differ by design.** C++, Python and Go connect a function that Qt calls inside
-  the emission. qtc and goose-qt never call into the program from a signal: the emission is
-  queued and the program polls it, so `signal` there includes the queue round trip.
+- **Signals.** C++, Python, Go and Rust connect a function that Qt calls inside the
+  emission; so do qtc and goose-qt in the `signal` row (`QTC_CONN_DIRECT`). Their default,
+  where the emission is queued and the program polls it, is the `signal_queued` row.
 - **Deletion.** `qtc_destroy` / `qt::destroy` invalidate the handle and delete the object at
   once (in the event loop only when events are still queued for it); the timing includes an
   event-loop pass at the end all the same.
-- **Rust's misuse probes need `unsafe`.** cxx-qt hands out raw pointers for objects Qt owns
-  (a child, `combo.view()`); using one after its owner deleted it, or giving it to another
-  owner, has to be written in an `unsafe` block. The `range` probe is an `as i32` cast, which
-  Rust makes the program write.
+- **Most of Rust's misuse probes need `unsafe`.** cxx-qt hands out raw pointers for objects
+  Qt owns (a child, a cell widget, `combo.view()`, `lineEdit()`); using one after its owner
+  deleted it, or giving it to another owner, has to be written in an `unsafe` block. Three
+  probes do not compile in safe Rust at all (use after drop, double drop, sending a widget
+  to another thread). Two crash in safe Rust (the stale model index, the widget before the
+  application). The `range` probe is an `as i32` cast, which Rust makes the program write.
 - **The checks are the point.** Every qtc call checks the receiver handle (alive, right
   thread, right class), each argument and the preconditions of the method, and converts the
   result; the others call Qt directly (C++, Go, Rust) or through generated wrappers with type
