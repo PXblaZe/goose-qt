@@ -2,7 +2,10 @@
 # imports goose-qt from there, with the JIT and as a native build, with no library path set.
 # Arguments: -DBUILD_DIR -DPREFIX -DPKG (the package's directory under the prefix) -DGOOSE -DCONFIG
 file(REMOVE_RECURSE "${PREFIX}")
+# By component, so the install writes install_manifest_Unspecified.txt: install_manifest.txt
+# belongs to the user's own install, which after `sudo cmake --install` only root can write.
 execute_process(COMMAND "${CMAKE_COMMAND}" --install "${BUILD_DIR}" --prefix "${PREFIX}" --config "${CONFIG}"
+                        --component Unspecified
                 RESULT_VARIABLE rc OUTPUT_VARIABLE out ERROR_VARIABLE out)
 if(NOT rc EQUAL 0)
   message(FATAL_ERROR "install failed:\n${out}")
