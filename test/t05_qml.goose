@@ -1,6 +1,8 @@
 // QML: components, properties, functions and signals of QML objects, the QtcBridge
 // between Goose and QML, Qt Quick rendering, and errors.
 import qt from "..";
+import qt.qml;
+import qt.quick;
 
 var failures = 0;
 var checks = 0;

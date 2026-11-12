@@ -6,6 +6,14 @@ both directions. The [qml example](../examples/qml.goose) is a complete program.
 
 ## Loading QML
 
+QML's classes are in the `qml` module, Qt Quick's in `quick`:
+
+```goose
+import qt from "path/to/goose-qt";
+import qt.qml;
+import qt.quick;      // QQuickView, QQuickItem, ... when the program uses them
+```
+
 ```goose
 qt::init(qt::APP_GUI);                     // QGuiApplication is enough for Qt Quick
 let engine = qt::QQmlApplicationEngine();

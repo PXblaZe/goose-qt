@@ -6,7 +6,8 @@ event loop, so a program can serve many connections on the GUI thread without th
 [loopback sample](../samples/loopback/loopback.goose) runs an echo server and 16 clients
 this way at over 600,000 round trips a second.
 
-A program that needs no windows starts with `qt::init(qt::APP_CORE)`.
+A program imports the module with `import qt.network;` after `import qt from "...";`, and
+one that needs no windows starts with `qt::init(qt::APP_CORE)`.
 
 ## A TCP server
 

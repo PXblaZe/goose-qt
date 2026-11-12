@@ -9,6 +9,7 @@
 // and functions are reached like C++ ones: qt::get_int, qt::set, qt::call.
 import os;
 import qt from "..";
+import qt.qml;
 
 let QML = """
     import QtQuick

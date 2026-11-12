@@ -52,7 +52,8 @@ The C library underneath has its own documents, which these link to where they m
 |---|---|
 | `qt.goose` | the hand-written core: start and stop, the event loop, the generic call, properties, values, drawing, test helpers |
 | `extra.goose` | overrides, runtime classes, futures, worker objects, graphics |
-| `api.goose` | generated: about 11,000 wrappers for Qt's methods, constructors, statics and enums |
+| `api.goose` | generated: wrappers for Qt Core, Gui and Widgets' methods, constructors, statics and enums |
+| `network.goose`, `qml.goose`, ... | generated: the same for each other Qt module (`import qt.network;`); `all.goose` imports every one |
 | `qt.build` | which shared libraries the package loads (`libqtc`, `libqtc_test`) |
 | `include/goose_qt.h` | the C trampoline override handlers go through |
 | `examples/` | short programs, one feature each |

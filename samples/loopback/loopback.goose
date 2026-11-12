@@ -8,6 +8,7 @@
 //   goose loopback.goose -- --selftest echo for 2 seconds, then the 64 MB stream; checks both
 import os;
 import qt from "../..";
+import qt.network;
 
 let CLIENTS = 16;
 let DEPTH = 8;                   // records each client keeps in flight

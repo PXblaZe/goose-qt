@@ -24,6 +24,12 @@ static void result(const char *name, double v, const char *unit) { printf("RESUL
 static double ns_per(int64_t t0, int n) { return (double)(now_ns() - t0) / n; }
 static double ms_since(int64_t t0) { return (double)(now_ns() - t0) / 1e6; }
 
+static int g_direct_clicks = 0;
+static void on_signal(const qtc_event *e, void *user) {
+    (void)user;
+    if (e->tag == 1) g_direct_clicks++;
+}
+
 static int32_t on_override(const qtc_override_call *c, void *user) {
     (void)user;
     if (c->tag == T_ROWS || c->tag == T_COLS) {
@@ -80,6 +86,15 @@ int main(int argc, char **argv) {
     for (int i = 0; i < N; i++) qtc_set_str(label, QTC_S("text"), QTC_S("hello"));
     result("set_property", ns_per(t, N), "ns");
 
+    /* a direct connection: the handler runs inside the emission, as a slot does in C++ */
+    qtc_set_signal_handler(on_signal, NULL);
+    uint64_t direct = qtc_connect(button, QTC_S("clicked"), 1, QTC_CONN_DIRECT);
+    t = now_ns();
+    for (int i = 0; i < N_SIGNAL; i++) qtcm_click(button);
+    result("signal", ns_per(t, N_SIGNAL), "ns");
+    qtc_disconnect(direct);
+
+    /* the default: the emission is queued as an event, which the program polls */
     qtc_connect(button, QTC_S("clicked"), 1, 0);
     qtc_event ev;
     int clicks = 0;
@@ -88,7 +103,7 @@ int main(int argc, char **argv) {
         qtcm_click(button);
         while (qtc_poll(&ev)) clicks++;
     }
-    result("signal", ns_per(t, N_SIGNAL), "ns");
+    result("signal_queued", ns_per(t, N_SIGNAL), "ns");
 
     t = now_ns();
     for (int i = 0; i < N; i++) {

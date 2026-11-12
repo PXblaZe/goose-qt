@@ -19,6 +19,11 @@ fn result(name: const u8[:], v: f64, unit: const u8[:]) { print("RESULT ", name,
 fn ns_per(t0: i64, n: i64) -> f64 { return (clock_ns() - t0) / (n + 0.0); }
 fn ms_since(t0: i64) -> f64 { return (clock_ns() - t0) / 1e6; }
 
+var direct_clicks = 0;
+export "goose_qt_signal" fn on_signal(tag: u64, source: u64, seq: u64) {
+    if tag == 1 { direct_clicks++; }
+}
+
 export "goose_qt_override" fn on_override(obj: u64, tag: u64, nargs: i64, depth: i64) -> i32 {
     if tag == T_ROWS || tag == T_COLS {
         let rows = if tag == T_ROWS { ROWS } else { 1 };
@@ -73,6 +78,15 @@ fn main() {
     for i in N { qt::set(label, "text", "hello"); }
     result("set_property", ns_per(t, N), "ns");
 
+    // a direct connection: goose_qt_signal runs inside the emission, as a slot does in C++
+    qt::use_direct_signals();
+    let direct = qt::connect(button, "clicked", 1, qt::CONN_DIRECT);
+    t = clock_ns();
+    for i in N_SIGNAL { button.click(); }
+    result("signal", ns_per(t, N_SIGNAL), "ns");
+    qt::disconnect(direct);
+
+    // the default: the emission is queued as an event, which the program polls
     qt::connect(button, "clicked", 1);
     var ev = default<qt::Event>();
     var clicks = 0;
@@ -81,7 +95,7 @@ fn main() {
         button.click();
         while qt::poll(ev) { clicks++; }
     }
-    result("signal", ns_per(t, N_SIGNAL), "ns");
+    result("signal_queued", ns_per(t, N_SIGNAL), "ns");
 
     t = clock_ns();
     for i in N {

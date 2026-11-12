@@ -9,6 +9,8 @@ import binary;
 
 extern fn gq_override_handler() -> u64;
 extern fn gq_has_override_handler() -> bool;
+extern fn gq_signal_handler() -> u64;
+extern fn gq_has_signal_handler() -> bool;
 
 extern "qtc" {
     // overridable objects
@@ -18,6 +20,8 @@ extern "qtc" {
     fn qtc_overridable_methods(class_name: const u8[:]) -> View;
     fn qtc_override(obj: u64, method: const u8[:], tag: u64) -> i32;
     fn qtc_set_override_handler(handler: u64, user: u64) -> i32;
+    fn qtc_set_signal_handler(handler: u64, user: u64) -> i32;
+    fn qtc_direct_event(out: Event&) -> bool;
     fn qtc_ov_arg_kind(index: i32) -> i32;
     fn qtc_ov_arg_type(index: i32) -> View;
     fn qtc_ov_arg_bool(index: i32) -> bool;
@@ -178,6 +182,31 @@ extern "qtc" {
 
 let OV_DONE = 0;
 let OV_BASE = 1;
+
+// --------------------------------------------------- direct signals
+//
+// A connection made with CONN_DIRECT runs the exported goose_qt_signal inside the emission, as
+// a slot runs in C++, instead of queueing an event for qt::poll:
+//
+//   export "goose_qt_signal" fn on_signal(tag: u64, source: u64, seq: u64) {
+//       if tag == CLICKED { count++; }
+//   }
+//   fn main() {
+//       qt::init();
+//       qt::use_direct_signals();
+//       qt::connect(button, "clicked", CLICKED, qt::CONN_DIRECT);
+//
+// It runs as an override handler does: it may call qt as usual and destroy the sender (which is
+// deleted once Qt's call returns), but not run the event loop. qt::direct_event() is the whole
+// event (its arguments: qt::arg_int(qt::direct_event(), 0), ...).
+
+// Points libqtc at the exported goose_qt_signal. False when the program exports none.
+fn use_direct_signals() -> bool {
+    if !gq_has_signal_handler() { return false; }
+    return qtc_set_signal_handler(gq_signal_handler(), 0) == 0;
+}
+// The event goose_qt_signal is running for.
+fn direct_event() -> Event { var e = default<Event>(); qtc_direct_event(e); return e; }
 
 // Points libqtc at the exported goose_qt_override. False when the program exports none.
 fn use_overrides() -> bool {

@@ -81,10 +81,38 @@ Flags for `qt::connect`:
 | `qt::CONN_COALESCE` | while an event from this connection is still queued, a new emission updates it instead of queueing another; `ev.count` says how many were merged. Use it for chatty signals: typing, scrolling, progress, `readyRead` |
 | `qt::CONN_ONCE` | the connection ends after its first event |
 | `qt::CONN_NO_ARGS` | the arguments are not captured (faster, for signals whose arguments you ignore) |
+| `qt::CONN_DIRECT` | the program's `goose_qt_signal` runs inside the emission instead (below) |
 
 Because the handler runs after the emission is over, it may destroy anything, the sender
 included. Later events from a destroyed sender are still delivered, flagged:
 `qt::stale_source(ev)`.
+
+## Direct signals
+
+A connection made with `qt::CONN_DIRECT` runs a function of the program inside the
+emission, as a slot runs in C++, instead of queueing an event. Goose has no function
+pointers, so the program exports it under the name `goose_qt_signal`, and turns direct
+signals on once:
+
+```goose
+export "goose_qt_signal" fn on_signal(tag: u64, source: u64, seq: u64) {
+    if tag == T_CLICKED { clicks++; }
+    if tag == T_VALUE { let v = qt::arg_int(qt::direct_event(), 0); }
+}
+
+fn main() {
+    qt::init();
+    qt::use_direct_signals();      // false if the program exports no goose_qt_signal
+    qt::connect(button, "clicked", T_CLICKED, qt::CONN_DIRECT);
+    qt::connect(slider, "valueChanged", T_VALUE, qt::CONN_DIRECT);
+```
+
+`qt::direct_event()` is the whole event. The function runs as an override handler does
+([Subclassing](subclassing.md)): it may call Qt as usual and may destroy the sender, which is
+deleted once Qt's call returns, but it may not run the event loop (`qt::wait` fails).
+Emissions inside it nest, up to 64 deep. Queued events stay the default: they need no
+exported function and their handler may do anything. A direct signal takes about a quarter
+fewer instructions than a queued one.
 
 `qt::connect_to(sender, "valueChanged", receiver, "setValue")` forwards a signal straight to
 another object's method inside the emission, without an event: no Goose code runs, and the
@@ -160,5 +188,5 @@ into each), or check `qt::dropped_events()`.
 
 ## Costs
 
-A signal round trip (emit, queue, poll) costs about 0.35 µs from Goose, and a post with its
-poll about 0.06 µs; see [Performance](performance.md).
+A signal round trip (emit, queue, poll) costs about 0.2 µs from Goose, a direct signal about
+0.15 µs, and a post with its poll about 0.06 µs; see [Comparison](comparison.md).

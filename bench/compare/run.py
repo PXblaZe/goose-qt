@@ -29,6 +29,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OPS = [("set_text", "label.setText(\"hello\")"), ("get_text", "label.text()"),
        ("set_value", "slider.setValue(i)"), ("get_value", "slider.value()"),
        ("set_property", "setProperty(\"text\", ...)"), ("signal", "button.click() reaching a handler"),
+       ("signal_queued", "button.click(), queued and polled (qtc, goose-qt)"),
        ("value_type", "QColor(255, 0, 0).red()"), ("object_churn", "new QObject, then delete it")]
 WORK = [("model_filter", "filter 1,000,000 rows of a model written in the language"),
         ("paint_lines", "paint 100,000 short lines into a 1024x1024 QImage"),

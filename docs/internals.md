@@ -10,6 +10,7 @@ your program
   │  qt::QLabel("hi").setText(...)        Goose functions
   ▼
 api.goose      generated: one wrapper per method name and shape, constructors, statics, enums
+               (Qt Core, Gui, Widgets; each other module in a file of its own: network.goose, ...)
 values.goose   generated: small value types as structs (qtc_inline.h), gen/generate_values.py
 qt.goose       hand-written: init, the event loop, the generic call, properties, values, drawing
 extra.goose    hand-written: overrides, runtime classes, futures, graphics
@@ -38,6 +39,10 @@ python3 gen/generate_goose.py --manifest /path/to/qtc/manifest/qtc_api.json --ou
 
 qtc's manifest describes every bound class, method, constructor, static and enum. The
 generator:
+
+- writes Qt Core, Gui and Widgets to `api.goose` and each other Qt module to a file named
+  after it (`network.goose`), with `all.goose` importing them all. A function shared by
+  classes of more than one file goes in `api.goose`, as does each extern several files use;
 
 - groups instance methods across classes by name, receiver kind (`Obj` or `Val`) and Goose
   parameter types: one Goose function per group. When every Qt overload behind a group has

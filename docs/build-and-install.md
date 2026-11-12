@@ -11,7 +11,7 @@ path.
 |---|---|
 | Goose | 8 November 2026 or later (`const if`, type arguments in method calls); commit `f4637bfb` is tested |
 | Qt | 6.12 LTS, for qtc |
-| qtc | 1.1.0 or later (the version whose manifest `api.goose` was generated from) |
+| qtc | 1.5.0 or later (the version whose manifest `api.goose` was generated from) |
 | CMake | 3.21 or later, for the CMake route |
 | a C compiler | for native builds (Goose uses it), and to build qtc |
 
@@ -49,7 +49,7 @@ When qtc is built here, its own options apply (`QTC_GPL_MODULES`, `QTC_MODULES`,
 | Target | Does |
 |---|---|
 | `cmake --build build --target uninstall` | removes what the last install put in place |
-| `cmake --build build --target goose_qt_api` | regenerates `api.goose` from qtc's manifest |
+| `cmake --build build --target goose_qt_api` | regenerates `api.goose` and the module files from qtc's manifest |
 
 | ctest test | Runs |
 |---|---|
@@ -59,7 +59,7 @@ When qtc is built here, its own options apply (`QTC_GPL_MODULES`, `QTC_MODULES`,
 | `goose_qt_installed` | installs into a scratch prefix and runs a program from there with no library path set |
 
 What is installed under `share/goose-qt`: the package (`qt.goose`, `extra.goose`,
-`api.goose`, `qt.build`, `include/`), the docs, examples, samples, tests and generator. The
+`api.goose`, the module files, `qt.build`, `include/`), the docs, examples, samples, tests and generator. The
 samples import the package as `"../.."`, which holds in the install too, so they run from
 there.
 
@@ -107,7 +107,7 @@ library path either.
 goose-qt is MIT. What a program is bound by depends on the libqtc it runs with: a default
 qtc build binds only Qt modules available under the LGPL-3.0, which closed-source programs
 may use; a build with `-DQTC_GPL_MODULES=ON` adds the GPL-3.0-only modules (Charts, Network
-Authorization, HTTP Server, MQTT, CoAP). Their functions are in `api.goose` either way; with
+Authorization, HTTP Server, MQTT, CoAP). Their functions are in their module files either way; with
 a default libqtc they fail with `qt::ERR_NOT_FOUND`. `qt::stats()` lists the GPL-3.0-only
 modules a libqtc links. qtc's [licensing notes](../../qtc/docs/LICENSING.md) have the
 details.

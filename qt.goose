@@ -276,6 +276,7 @@ let EVF_STALE_SOURCE = 1;
 let CONN_COALESCE = 1;
 let CONN_ONCE = 2;
 let CONN_NO_ARGS = 4;
+let CONN_DIRECT = 8;   // the exported goose_qt_signal runs inside the emission (see use_direct_signals)
 
 let T_NONE = 0;
 let T_BOOL = 1;
@@ -364,7 +365,7 @@ fn arg_val(ev: Event, i: i64) -> Val { return Val { h: qtc_event_arg_val(ev.seq,
 
 // signal: "clicked" or "clicked(bool)". Returns a connection id (0 on failure).
 fn connect(o: Obj, signal: const u8[:], tag: u64) -> u64 { return qtc_connect(o.h, signal, tag, 0); }
-// flags: CONN_COALESCE, CONN_ONCE, CONN_NO_ARGS.
+// flags: CONN_COALESCE, CONN_ONCE, CONN_NO_ARGS, CONN_DIRECT.
 fn connect(o: Obj, signal: const u8[:], tag: u64, flags: i64) -> u64 { return qtc_connect(o.h, signal, tag, flags as u32); }
 fn disconnect(connection: u64) -> bool { return qtc_disconnect(connection) == 0; }
 // A direct Qt connection between two objects, e.g. slider valueChanged -> progress setValue.

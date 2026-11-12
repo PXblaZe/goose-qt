@@ -13,10 +13,10 @@
 #
 # then, in a program:  import qt from "/usr/local/share/goose-qt";
 cmake_minimum_required(VERSION 3.21)
-project(goose_qt VERSION 1.6.1 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
+project(goose_qt VERSION 1.7.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
 include(GNUInstallDirs)
 
-set(GOOSE_QT_QTC_MIN 1.3.0)   # values.goose calls the inline values (qtc_inline.h) qtc 1.3.0 added
+set(GOOSE_QT_QTC_MIN 1.5.0)   # extra.goose calls the direct-signal functions qtc 1.5.0 added
 
 set(QTC_SOURCE_DIR "" CACHE PATH
   "qtc's source directory: build qtc as part of this build (empty: use an installed qtc, else ../qtc)")
@@ -112,7 +112,15 @@ endif()
 
 # ------------------------------------------------------------------ the package
 
-set(_pkg_files qt.goose extra.goose api.goose values.goose README.md CHANGELOG.md LICENSE)
+# qt.goose and its modules: api.goose (Qt Core, Gui, Widgets), values.goose, extra.goose, and a
+# file per other Qt module (network.goose, ...), which all.goose lists
+file(STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/all.goose" _mod_lines REGEX "^import [a-z0-9]+;")
+set(_mod_files all.goose)
+foreach(_l ${_mod_lines})
+  string(REGEX REPLACE "^import ([a-z0-9]+);" "\\1.goose" _f "${_l}")
+  list(APPEND _mod_files "${_f}")
+endforeach()
+set(_pkg_files qt.goose extra.goose api.goose values.goose ${_mod_files} README.md CHANGELOG.md LICENSE)
 install(FILES ${_pkg_files} DESTINATION "${GOOSE_QT_INSTALL_DIR}")
 install(DIRECTORY include examples test gen DESTINATION "${GOOSE_QT_INSTALL_DIR}" USE_SOURCE_PERMISSIONS
         PATTERN "__pycache__" EXCLUDE PATTERN "*.png" EXCLUDE PATTERN "*.pyc" EXCLUDE)
@@ -198,7 +206,7 @@ if(NOT TARGET uninstall)
                     COMMENT "Removing the installed files")
 endif()
 
-# cmake --build build --target goose_qt_api: regenerates api.goose from qtc's manifest
+# cmake --build build --target goose_qt_api: regenerates api.goose and the module files from qtc's manifest
 find_package(Python3 COMPONENTS Interpreter QUIET)
 if(Python3_FOUND AND EXISTS "${_qtc_manifest}")
   add_custom_target(goose_qt_api

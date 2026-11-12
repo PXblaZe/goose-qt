@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.7.0 — 2026-11-12
+
+Needs qtc 1.5.0.
+
+### Changed (programs using Qt modules beyond Core, Gui and Widgets need an import)
+- The API is split by Qt module. `import qt from "...";` brings Qt Core, Gui and Widgets
+  (`api.goose`); every other module is a file of its own, imported when used:
+  `import qt.network;`, `import qt.qml;`, `import qt.charts;`, ... `import qt.all;` imports
+  every one. Names stay in the `qt` namespace, and a function shared with a widgets class
+  (`setText`, ...) is in `api.goose`. A program compiles only what it imports, so the JIT
+  starts faster: the comparison's widgets program in 430 ms with 183 MiB, against 646 ms
+  and 241 MiB. To update a program, add the imports of the modules it uses; the compiler
+  names the functions it cannot find.
+
+### Added
+- Direct signals: `qt::connect(button, "clicked", TAG, qt::CONN_DIRECT)` runs the function
+  the program exports as `goose_qt_signal` inside the emission, as a slot runs in C++;
+  `qt::use_direct_signals()` turns them on and `qt::direct_event()` is the event. The
+  function may call Qt and destroy the sender (deleted once Qt's call returns), but may not
+  run the event loop. `test/t11_direct.goose` covers it.
+
+### Faster (through qtc 1.5.0)
+- `bench/compare` has a new run. From click to handler, 157 ns with a direct signal (Go's
+  miqt: 185, PyQt6: 693). A `QObject` made and destroyed: 135 ns, level with miqt (141).
+  Calls: `value()` 20 ns, `setText` 51 ns. goose-qt is now ahead of miqt on every method
+  call. `results/goose-qt-1.6.1/` keeps the previous run.
+
 ## 1.6.1 — 2026-11-12
 
 Tested with qtc 1.4.0; qtc 1.3.0 and later still work.

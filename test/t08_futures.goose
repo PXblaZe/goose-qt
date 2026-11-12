@@ -1,6 +1,7 @@
 // Futures filled by Goose worker threads, watched and waited for on the GUI thread; worker
 // objects (native builds only: the JIT has no threads).
 import qt from "..";
+import qt.qml;
 
 var failures = 0;
 var checks = 0;

@@ -1,9 +1,29 @@
 # Calling Qt
 
-`api.goose` turns qtc's manifest into about 11,000 Goose functions: a constructor for each
-class qtc can make, a function for each method name and parameter shape, one for each static
-method, and a value for each enum scope. This page explains how Qt's C++ API maps onto them,
-and how to reach what the generated functions do not cover.
+`api.goose` and the module files turn qtc's manifest into about 11,000 Goose functions: a
+constructor for each class qtc can make, a function for each method name and parameter
+shape, one for each static method, and a value for each enum scope. This page explains how
+Qt's C++ API maps onto them, and how to reach what the generated functions do not cover.
+
+## Qt modules
+
+`import qt from "...";` brings Qt Core, Gui and Widgets. Every other Qt module is a file of
+its own, imported when the program uses it:
+
+```goose
+import qt from "path/to/goose-qt";
+import qt.network;      // QTcpSocket, QNetworkAccessManager, ...
+import qt.qml;          // QQmlApplicationEngine, ...
+import qt.all;          // or every module goose-qt binds
+```
+
+The names are the Qt module's in lower case: `network`, `sql`, `xml`, `printsupport`, `svg`,
+`qml`, `quick`, `quickwidgets`, `multimedia`, `charts`, `serialport`, `websockets`, ... (see
+`all.goose`). Everything stays in the `qt` namespace. A program compiles only the modules it
+imports, so the JIT starts faster: about 0.45 s for a widgets program against 0.7 s with
+everything. A function a module's class needs but a widgets class also has, such as
+`setText`, is in `api.goose`; what is missing without the import is that module's
+constructors, enums and the methods only its classes have.
 
 ## Constructors
 
@@ -186,5 +206,5 @@ from Goose.
 qtc binds what it can make safe; [qtc's coverage](../../qtc/docs/COVERAGE.md) lists by module
 what is in and why the rest is out (raw pointers to non-QObject data, functions taking
 callbacks, APIs that hand over ownership in ways that cannot be checked). With a default,
-LGPL-only libqtc, the GPL-3.0-only modules' functions are in `api.goose` but fail with
+LGPL-only libqtc, the GPL-3.0-only modules' functions are in their module files but fail with
 `qt::ERR_NOT_FOUND`; see [Build and install](build-and-install.md#licensing).

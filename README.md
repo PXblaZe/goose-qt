@@ -34,6 +34,9 @@ fn main() {
 }
 ```
 
+`import qt` brings Qt Core, Gui and Widgets; other Qt modules are imported when used:
+`import qt.network;`, `import qt.qml;`, ... ([Calling Qt](docs/calling-qt.md#qt-modules)).
+
 ## What it can do
 
 - **All of Qt's widgets, models and main-window machinery**, called as in C++ through Goose's
@@ -130,15 +133,16 @@ as `label.setText("hello")`, 20 ns for `slider.value_int()`, 10 ns for `c.red()`
 ## Compared with other bindings
 
 [bench/compare](bench/compare) runs the same benchmark in C++, qtc's C, goose-qt, PyQt6,
-PySide6, Go's miqt and Rust's cxx-qt. Per call, goose-qt is 2–5× faster than PyQt6 and
-ahead of miqt (a `QColor` made and read: 18 ns, against 176 for miqt and 947 for PyQt6);
-only cxx-qt, which calls Qt with no run-time checks at all, is closer to C++. Where Qt
-calls back into the program (a model of a million rows), it is 2.2–4.7× faster than the
-Python and Go bindings. It starts in 26 ms with 39 MiB (C++: 20 ms, 30 MiB). Of the
-misuses tried, it is the only one that reports every one as an error instead of crashing
-on some. Making and destroying an object (0.25 µs, which pays for ownership tracking) is
-level with PyQt6 and behind Go. The numbers and charts are in
-[docs/comparison.md](docs/comparison.md).
+PySide6, Go's miqt and Rust's cxx-qt. goose-qt is ahead of miqt on every method call and
+2–6× faster than PyQt6 (a `QColor` made and read: 15 ns, against 162 for miqt and 966 for
+PyQt6); only cxx-qt, which calls Qt with no run-time checks at all, is closer to C++.
+Signals can run inside the emission (`qt::CONN_DIRECT`, 157 ns from click to handler,
+against 185 for miqt and 693 for PyQt6), making and destroying an object is level with
+miqt (135 ns, ownership tracking included), and where Qt calls back into the program (a
+model of a million rows) it is 2.4–4.9× faster than the Python and Go bindings. A native
+program starts in 24 ms with 39 MiB (C++: 17 ms, 29 MiB). Of the misuses tried, it is the
+only one that reports every one as an error instead of crashing on some. The numbers and
+charts are in [docs/comparison.md](docs/comparison.md).
 
 ## Limits
 
