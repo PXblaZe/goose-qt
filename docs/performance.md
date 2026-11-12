@@ -6,29 +6,32 @@ converted back. That costs a fraction of a microsecond per call, on top of what 
 spends. For a user interface that is invisible; for hot loops it is worth knowing where the
 time goes.
 
-All numbers here are from one machine: two cores of a 2.3 GHz Xeon, 7 GB of memory, Linux,
-Qt 6.12.0, qtc 1.2.0 and 1.3.0. Yours will differ; run the benchmarks to see.
+All numbers here are from one machine: two cores of a 2.1 GHz Xeon, 7 GB of memory, Linux,
+Qt 6.12.0. Yours will differ; run the benchmarks to see.
 
 ## What a call costs
 
-`test/bench.goose` (nanoseconds per operation, qtc 1.3.0; on a slower VM than the 1.2.0 numbers
-this table had, which is why the rows that did not change are 10–20% higher):
+`test/bench.goose` (nanoseconds per operation, medians of five native runs and three JIT
+runs; this machine is noisy, so differences under about 15% mean little):
 
 | Operation | Native | JIT |
 |---|---:|---:|
-| `label.setText("hello")` (a generated wrapper) | 56 | 74 |
-| `qt::set(label, "text", …)` (the property system) | 135 | 177 |
-| `slider.setValue(i)` | 56 | 59 |
-| `slider.value_int()` | 21 | 24 |
-| `label.text()` (a string back) | 67 | 85 |
-| `qt::val(i)` and free | 60 | 71 |
-| `color.red()` (a method on a `qt::Val`) | 21 | 18 |
-| `c.red()` on a `qt::Color` (a struct) | 10 | 10 |
-| `qt::color(…)` made and read (a struct) | 17 | 21 |
-| `button.click()` and `qt::poll` (a signal round trip) | 188 | 168 |
-| `qt::post` and `qt::poll` | 73 | 69 |
-| `qt::alive(handle)` | 6 | 6 |
-| a call on a stale handle (refused) | 160 | 142 |
+| `label.setText("hello")` (a generated wrapper) | 59 | 98 |
+| `qt::set(label, "text", …)` (the property system) | 139 | 193 |
+| `slider.setValue(i)` | 50 | 49 |
+| `slider.value_int()` | 16 | 25 |
+| `label.text()` (a string back) | 61 | 73 |
+| `qt::val(i)` and free | 53 | 84 |
+| `color.red()` (a method on a `qt::Val`) | 18 | 26 |
+| `c.red()` on a `qt::Color` (a struct) | 10 | 14 |
+| `qt::color(…)` made and read (a struct) | 18 | 27 |
+| `button.click()` and `qt::poll` (a signal round trip) | 186 | 216 |
+| `qt::post` and `qt::poll` | 77 | 91 |
+| `qt::alive(handle)` | 4 | 6 |
+| a call on a stale handle (refused) | 180 | 191 |
+
+A direct signal (`qt::CONN_DIRECT`, see [Events](events.md#direct-signals)) runs its handler
+inside the click: 157 ns in [the comparison](comparison.md)'s run.
 
 ```sh
 goose build test/bench.goose -o bench && ./bench
@@ -39,13 +42,13 @@ work. A generated wrapper calls qtc's entry point for that exact signature
 (`qtcm_setText__QString`), which looks the signature up once per class and then goes
 straight to the thunk; the thunk checks the receiver handle (alive, its thread, its class)
 and each argument, converts the string, and makes the call. The JIT and native builds are
-close, because the time is spent outside Goose. qtc 1.1.0 took 3–6× as long for most of
-these. [How goose-qt compares](comparison.md) has the work that changed that, and the same
-operations in C++, PyQt6, PySide6 and Go.
+close, because the time is spent outside Goose. Early in development these took 3–6× as
+long. [How goose-qt compares](comparison.md) has the work that changed that, and the same
+operations in C++, PyQt6, PySide6, Go and Rust.
 
 ## What the samples sustain
 
-The million row is from qtc 1.2.0; the others were measured with qtc 1.1.1, and are bound by
+These were measured during development, before the last call-path work; they are bound by
 Qt, the network stack or the arithmetic in Goose more than by calls.
 
 | Sample | Sustained |

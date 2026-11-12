@@ -17,7 +17,7 @@ fn main() {
     check(qt::init(qt::APP_WIDGETS, "t01\0-platform\0offscreen"), "init");
     check(qt::is_initialized(), "initialized");
     qt::set_error_policy(qt::ERRORS_RETURN);
-    check(qt::version() == "1.5.0", "qtc version");
+    check(qt::version() == "1.0.0", "qtc version");
     check(qt::qt_version().len >= 5, "qt version");
 
     // objects and properties

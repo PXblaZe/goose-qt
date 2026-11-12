@@ -31,7 +31,7 @@ GOOSE=/path/to/goose QTC_LIB=/path/to/qtc/lib samples/run.sh
 
 The numbers below come from one run of `samples/run.sh` on a small cloud machine: two cores of
 a 2.1 GHz Xeon, 7 GB of memory, no GPU (Vulkan was Mesa's lavapipe, which runs shaders on the
-CPU), Qt 6.12.0, qtc 1.1.1, native builds unless marked. They show the order of things, not a
+CPU), Qt 6.12.0, a development build before 1.0.0, native builds unless marked. They show the order of things, not a
 benchmark; your machine will differ.
 
 ## million: a million rows from Goose

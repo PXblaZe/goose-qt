@@ -54,9 +54,9 @@ build anything else against miqt with the same flags or it compiles again. Witho
 `run.py` leaves it out.
 
 `run.py --only NAME` runs one implementation and `--merge` adds its results to the existing
-ones. `results/before-fix/` holds the run against qtc 1.1.0, before the call path was made
-faster, and `results/goose-qt-1.4.0/` to `goose-qt-1.6.1/` the runs against qtc 1.1.1,
-1.2.0, 1.3.0 and 1.4.0, for comparison.
+ones. `results/dev-1-first-run/` to `dev-5-object-lifetimes/` keep the runs made during
+development, before 1.0.0, for comparison (see the table at the end of
+[docs/comparison.md](../../docs/comparison.md#how-it-got-here)).
 
 ## Misuse
 

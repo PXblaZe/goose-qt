@@ -1,197 +1,40 @@
 # Changelog
 
-## 1.7.1 — 2026-11-12
+## 1.0.0 — 2026-11-12
 
-Benchmark and documentation only; the package is unchanged.
+The first release: Qt 6.12 LTS for the Goose language, through qtc 1.0.0.
 
-- `bench/compare/misuse` has ten probes instead of three, in all six bindings: use after
-  delete (a child, the object itself), double delete, a model index kept across `clear()`,
-  a widget deleted while a table shows it, a null object, an integer too large, the wrong
-  thread, a widget before the application, and a call Qt crashes on. `misuse/report.py`
-  draws the results (`results/safety.png`). goose-qt catches all ten; PyQt6 and PySide6
-  five, Rust three at compile time, Go and C++ none.
-- [Comparison](docs/comparison.md#safety-and-stability) has a safety and stability section:
-  the grid, what each binding checks, and how qtc and goose-qt are tested.
+### What it binds
+- Qt's classes as Goose functions generated from qtc's manifest: a constructor per class,
+  a function per method name and parameter shape, statics and enums, called with Goose's
+  method syntax (`label.setText("hi")`). `import qt from "...";` brings Qt Core, Gui and
+  Widgets; every other Qt module is imported when used (`import qt.network;`,
+  `import qt.qml;`, `import qt.all;`), so a program compiles only what it uses.
+- Small values as structs with Qt's layout (`qt::color`, `qt::rect`, ...), other values
+  as `qt::Val` handles.
+- Signals queued and polled (`qt::connect`, `qt::poll`), or run inside the emission
+  (`qt::CONN_DIRECT` with an exported `goose_qt_signal`).
+- Qt Quick and QML with a bridge for structured values; subclassing Qt classes in Goose
+  (models, painted widgets, validators, delegates); classes with signals, slots and
+  properties made at run time; worker threads and futures; GPU rendering and compute
+  through Qt's RHI; a Goose UI built as a shared library for a C or C++ program.
+- Six samples that each push one part hard and check the result, and a guide in `docs/`.
 
-## 1.7.0 — 2026-11-12
+### Safety
+- Every call goes through qtc's checks: stale and forged handles, wrong argument types and
+  ranges, the wrong thread, and nearly 400 inputs known to crash Qt are errors the program
+  can check (`qt::last_error()`), log or abort on (`qt::set_error_policy`).
+- In `bench/compare/misuse`, ten common mistakes made in six bindings: goose-qt catches all
+  ten; PyQt6 and PySide6 five, Rust three at compile time, Go and C++ none.
 
-Needs qtc 1.5.0.
+### Speed
+- `bench/compare` runs the same benchmark in C++, qtc, goose-qt, PyQt6, PySide6, Go's miqt
+  and Rust's cxx-qt: goose-qt is ahead of miqt on every method call, 2–6× faster than
+  PyQt6, level with miqt on making and destroying objects, and 2.4–4.9× faster than the
+  Python and Go bindings where Qt calls back into the program. A native program starts in
+  24 ms with 39 MiB; the JIT starts a widgets program in about 0.43 s.
 
-### Changed (programs using Qt modules beyond Core, Gui and Widgets need an import)
-- The API is split by Qt module. `import qt from "...";` brings Qt Core, Gui and Widgets
-  (`api.goose`); every other module is a file of its own, imported when used:
-  `import qt.network;`, `import qt.qml;`, `import qt.charts;`, ... `import qt.all;` imports
-  every one. Names stay in the `qt` namespace, and a function shared with a widgets class
-  (`setText`, ...) is in `api.goose`. A program compiles only what it imports, so the JIT
-  starts faster: the comparison's widgets program in 430 ms with 183 MiB, against 646 ms
-  and 241 MiB. To update a program, add the imports of the modules it uses; the compiler
-  names the functions it cannot find.
-
-### Added
-- Direct signals: `qt::connect(button, "clicked", TAG, qt::CONN_DIRECT)` runs the function
-  the program exports as `goose_qt_signal` inside the emission, as a slot runs in C++;
-  `qt::use_direct_signals()` turns them on and `qt::direct_event()` is the event. The
-  function may call Qt and destroy the sender (deleted once Qt's call returns), but may not
-  run the event loop. `test/t11_direct.goose` covers it.
-
-### Faster (through qtc 1.5.0)
-- `bench/compare` has a new run. From click to handler, 157 ns with a direct signal (Go's
-  miqt: 185, PyQt6: 693). A `QObject` made and destroyed: 135 ns, level with miqt (141).
-  Calls: `value()` 20 ns, `setText` 51 ns. goose-qt is now ahead of miqt on every method
-  call. `results/goose-qt-1.6.1/` keeps the previous run.
-
-## 1.6.1 — 2026-11-12
-
-Tested with qtc 1.4.0; qtc 1.3.0 and later still work.
-
-- **Through qtc 1.4.0:** making and destroying an object costs less. `bench/compare` has a
-  new run: 178 ns, against 245 ns in the previous run, which puts goose-qt ahead of PyQt6
-  (223 ns) and behind Go's miqt (139 ns). Calls cost what they did. `results/goose-qt-1.6.0/`
-  keeps the previous run.
-- `test/t01_basics.goose` expects qtc 1.4.0.
-
-## 1.6.0 — 2026-11-12
-
-For qtc 1.3.0, which CMake now requires.
-
-- **Small values as structs** (`values.goose`, generated by `gen/generate_values.py` from
-  qtc's `qtc_inline.json`): `qt::Point`, `qt::PointF`, `qt::Size`, `qt::SizeF`, `qt::Rect`,
-  `qt::RectF`, `qt::Line`, `qt::LineF`, `qt::Margins`, `qt::MarginsF` and `qt::Color`, with
-  the Qt types' own layout and no handle to free. Constructors are `qt::rect(...)`,
-  `qt::color(...)`; methods work by UFCS (`r.width()`, `r.moveTo(10, 10)` on a `var`);
-  `qt::color_fromHsv(...)` and the other statics; `to_val()`, `qt::to_rect(v)` and their
-  siblings convert to and from `qt::Val`; 328 object methods take them
-  (`w.setGeometry(qt::rect(0, 0, 640, 480))`). `c.red()` on a `qt::Color` is 10 ns, and
-  making and reading one 17 ns, against about 140 ns through a `qt::Val`. The checks stay
-  (`qt::ERR_OUT_OF_RANGE`, and `qt::ERR_INVALID_ARG` for a `Color` changed into something
-  that is not a color). `test/t10_values.goose` tests them (28 checks, JIT and native).
-- **Through qtc 1.3.0:** making and destroying objects is cheaper, and a CoAP client
-  destroyed right after a request no longer crashes Qt's protocol thread.
-- `bench/compare`: a new run; the color row makes the color as a struct in goose-qt and C.
-  goose-qt is now 51× faster than PyQt6 on it (18 ns), and level with PyQt6 on making and
-  destroying objects. `results/goose-qt-1.5.0/` keeps the previous run.
-
-## 1.5.0 — 2026-11-12
-
-For qtc 1.2.0, which CMake now requires. Needs a Goose from 8 November 2026 or later.
-
-- **Faster calls.** The generated wrappers in `api.goose` call qtc's direct entry points
-  (`qtc_direct.h`, one C function per bound signature) instead of pushing arguments and
-  calling by name: 7,861 methods and 1,399 constructors. In `test/bench.goose`,
-  `label.setText("hello")` went from 146 to 47 ns, `slider.value_int()` from 96 to 17 ns,
-  `color.red()` from 101 to 18 ns, a property write from 288 to 107 ns and a signal round trip
-  from 344 to 155 ns. Every check stays.
-- **Cheaper objects, startup and memory (through qtc 1.2.0).** Making and destroying a
-  `QObject` went from 1.6 µs to 0.2 µs. A program loads only the Qt modules it uses: a
-  widgets program starts in 22 ms instead of 51 ms and peaks at 39 MiB instead of 65 MiB.
-- `samples/million` filters its million rows through Goose at 1.8 million calls a second,
-  up from 1.38 million.
-- `bench/compare/` adds Rust through cxx-qt (KDAB's crate, 0.10), with the same benchmark and
-  misuse probes, and the C implementation uses qtc's direct entry points. In the new run,
-  goose-qt is 2–6× faster than PyQt6 per call and ahead of Go's miqt on every call but
-  object creation; cxx-qt, with no run-time checks, is the closest to C++. goose-qt is still
-  the only one that turns all three misuses into errors. `docs/comparison.md` has the results
-  and the run against 1.4.0 next to them; `results/goose-qt-1.4.0/` keeps that run.
-
-## 1.4.0 — 2026-11-11
-
-For qtc 1.1.1, which CMake now requires. Needs a Goose from 8 November 2026 or later.
-
-- **Fixed (in qtc 1.1.1):** on Wayland, every sample and example crashed when a window closed,
-  and `notes` crashed when an open menu was dismissed by a click elsewhere. The crash was in
-  qtc's event filter, which asked Qt's Wayland plugin for the paint device of a window that
-  no longer had a platform window. qtc now has a test that runs on a headless weston.
-- **Faster (through qtc 1.1.1):** in the comparison benchmark, `label.setText("hello")`
-  went from 657 to 157 ns, `slider.value()` from 391 to 100 ns, a signal round trip from 747
-  to 374 ns, and a `QColor` made, read and freed from 1,379 to 443 ns. The `million` sample
-  filters its million rows through Goose at 1.38 million calls a second, up from 1.1 million.
-  Every check stays.
-- `bench/compare/`: the same benchmark in C++, qtc's C API, goose-qt (native and JIT),
-  PyQt6, PySide6 and Go's miqt (eight calls, three whole tasks, startup and memory), and
-  three misuses in each. `docs/comparison.md` reports the results. Per call, goose-qt is level
-  with PyQt6 and ahead of PySide6, and it is 2.3–4.4× faster than any of them on a model
-  written in the language. It is the only one that turned all three misuses into errors.
-  Making and destroying objects, startup and memory are where it is behind.
-- `samples/mandelbrot` shows its two images at half size, so the window fits on smaller
-  screens. Every number in `samples/README.md` and `docs/` was measured again with qtc 1.1.1.
-
-## 1.3.0 — 2026-11-11
-
-For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.
-
-- `docs/`: a guide in 19 pages and an index — getting started, concepts (handles, ownership,
-  errors, the GUI thread, the event loop), calling Qt, values, events, interfaces,
-  drawing, QML, subclassing, threads and futures, graphics, networking, embedding,
-  testing, build and install, performance, stability, troubleshooting and internals.
-  Its claims were checked against a running build; the README is shorter and points
-  there.
-- `samples/`: six larger programs that showcase power, performance and stability, each
-  with a `--selftest` that measures, checks its results and checks that nothing leaked:
-  `million` (a Goose model serving a million rows through a sort/filter proxy),
-  `notes` (a complete desktop app with menus, shortcuts, a live Markdown preview and
-  atomic JSON files), `loopback` (a TCP echo server, 16 clients and a 64 MB stream),
-  `scope` (four worker threads streaming into a widget painted in Goose), `mandelbrot`
-  (CPU threads against a GPU compute shader, compared pixel by pixel) and `chaos` (a
-  seeded storm of hostile calls). `samples/run.sh` runs them all with the JIT and
-  native; screenshots and measured numbers are in `samples/README.md`.
-- ctest runs the samples too (`goose_qt_samples`), and the install includes `docs/` and
-  `samples/`.
-- Documented precisely: `qt::last_error()` is the status of the most recent *failed*
-  call and stays until the next failure or `qt::clear_error()`.
-
-## 1.2.0 — 2026-11-11
-
-For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.
-
-- A CMake build and install: it uses an installed qtc (`find_package(qtc)`) or
-  builds qtc from its source in the same build (`QTC_SOURCE_DIR`), installs the
-  package under `share/goose-qt` with qtc's installed path written into
-  `qt.build` (programs need no library path), and registers the tests, the
-  examples and a check of the installed package with ctest. `uninstall` and
-  `goose_qt_api` (regenerate `api.goose`) targets. Configuring checks that the
-  Goose found is new enough.
-- CI builds and tests through it.
-
-## 1.1.1 — 2026-11-11
-
-For qtc 1.1.0. Needs a Goose from 8 November 2026 or later.
-
-- `obj.prop<T>("name")` reads a property as `i64`, `f64`, `bool`, `qt::Obj`,
-  `qt::Val` or a string, and `qt::ret<T>()` the result of a call, with the type
-  picked when the function is specialized (Goose's new `const if` and type
-  arguments in method calls). `get_int`, `get_str` and the rest stay.
-- `examples/shared/`: a Qt window written in Goose, built as a shared library
-  with `goose build --shared` and driven from a C program; `examples/run.sh`
-  builds and runs it.
-- Shader sources in `examples/rhi.goose` and `t09_graphics` are multi-line raw
-  strings instead of one line of `\n` escapes.
-- CI checks out the Goose commit this release was tested with.
-
-## 1.1.0 — 2026-11-11
-
-For qtc 1.1.0.
-
-- `extra.goose`: overridable objects through one exported handler
-  (`goose_qt_override`, called through the C trampoline in
-  `include/goose_qt.h`), runtime-defined classes, futures and promises for Goose
-  worker threads, queued calls and worker objects, and the graphics API (Qt's
-  RHI as `qt::Gpu` handles, Qt Quick's graphics API, native interop).
-- `api.goose` regenerated: 9,512 method functions, 1,481 constructors, 9,148
-  enum values in 405 scopes (QRhiWidget among the new classes).
-- Return types of generated functions no longer change when newly bound classes
-  disagree: the generator keeps the type the published `api.goose` had and reaches
-  the other classes' results through the typed variants. Without this, six
-  functions would have changed to `qt::Val` (`name`, `host`, `query`, `message`,
-  `filter`, `scope`); `QCoapOption`'s `name()` is `name_int()`.
-- Tests `t07_overrides`, `t08_futures` (native) and `t09_graphics`.
-
-## 1.0.0 — 2026-11-10
-
-The first release, for qtc 1.0.0 on Qt 6.12 LTS.
-
-- `api.goose`, generated from qtc's manifest: 9,081 method functions (UFCS on
-  `qt::Obj` and `qt::Val`), 1,399 constructors, 8,855 enum values in 388 scopes
-  (`qt::Qt.AlignLeft`).
-- `qt.goose`: init and shutdown, the event loop, signals, watches, timers,
-  posts, values, lists and maps, the generic call, drawing, test input.
-- Tests run with the JIT and natively; examples that test themselves.
+### Tested
+- 11 tests, each with the JIT and as a native build, among them a call of each of the 8,461
+  generated wrappers with a null receiver; 12 examples; the samples, including a seeded
+  storm of hostile calls (a million operations, no crash, no leak).

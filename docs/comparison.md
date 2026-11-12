@@ -25,8 +25,7 @@ All use Qt 6.12. The benchmark's source, and how to rerun it, are in
   2.4× faster than Go and 4.2× faster than PyQt6, within 2.2× of C++.
 - **Startup and memory are near C++.** A native goose-qt program starts in 24 ms, against
   17–21 ms for C++, Rust and Go and 70 ms for PyQt6, and peaks at 39 MiB, against 29–30 MiB
-  for C++ and Rust, 43 MiB for Go and 49 MiB for PyQt6. The JIT starts in 0.43 s (0.65 s
-  before goose-qt 1.7.0 split the API by Qt module).
+  for C++ and Rust, 43 MiB for Go and 49 MiB for PyQt6. The JIT starts in 0.43 s.
 - **It catches all ten misuse probes** (use after delete, double delete, a stale model index,
   a widget deleted while Qt shows it, null, an integer too large, the wrong thread, no
   application yet, a call Qt crashes on). PyQt6 and PySide6 catch five, Rust three at
@@ -63,15 +62,14 @@ not meaningful.
 Notes on the rows:
 - **Calls.** goose-qt calls qtc's direct entry points: one C function per bound signature
   (`qtcm_setText__QString`), resolved once per class and then a jump to the thunk, with
-  every check still made. Goose's typed wrappers compile to a direct call to them. Since
-  qtc 1.5.0 each entry point remembers the last class it was called on, and the "right
-  thread, initialized" check is one comparison; a getter like `value()` went from 389 to
-  324 instructions.
+  every check still made. Goose's typed wrappers compile to a direct call to them. Each
+  entry point remembers the last class it was called on, and the "right thread,
+  initialized" check is one comparison.
 - **Rust.** cxx-qt declares each Qt method in a `cxx` bridge and calls it through a C++
   shim: nothing is looked up or checked at run time, so it pays only for the shim and string
   conversion. It is the fastest binding on every call row.
 - **Signals.** C++, Python, Go and Rust run a function inside the emission; goose-qt does
-  too with `qt::CONN_DIRECT` (qtc 1.5.0), which this row uses. The handler runs the way an
+  too with `qt::CONN_DIRECT`, which this row uses. The handler runs the way an
   override handler does: it may destroy the sender, which is deleted once Qt's call
   returns. The second row is the default style, where the emission is queued and the
   program polls it.
@@ -83,12 +81,11 @@ Notes on the rows:
 - **Objects made and destroyed.** Every object gets a handle and its ownership is tracked:
   which objects hold it, whether Qt owns it, whether it is the internal part of another.
   That bookkeeping turns "use after delete" into an error instead of a crash (see below).
-  qtc 1.2.0 cut it from 1.6 µs to 0.2 µs by making objects as a subclass whose destructor
-  releases the handle (sip's technique) and by deleting at once. qtc 1.4.0 skips the
-  cleanups an object has nothing for: each handle's slot records whether the event layer
-  or the ownership tracking keeps anything for its object, and most objects have neither.
-  It also takes one lock fewer per object. That is 17% fewer instructions per object, and
-  sanitizer builds check each skipped cleanup at run time. Of what is left over C++'s 41 ns,
+  qtc makes objects as a subclass whose destructor releases the handle (sip's technique)
+  and deletes them at once. It skips the cleanups an object has nothing for: each handle's
+  slot records whether the event layer or the ownership tracking keeps anything for its
+  object, and most objects have neither; sanitizer builds check each skipped cleanup at
+  run time. Of what is left over C++'s 41 ns,
   the two trips through the registry's lock (making and releasing the handle) are about
   10 ns; the rest is the handle bookkeeping, the ownership tracking and the checks.
 
@@ -110,14 +107,14 @@ text. goose-qt answers a million of those calls in 510 ms. That is 2.4× faster 
 as a virtual function, takes 0.25 s.
 
 Startup and memory used to be the cost of loading all of qtc at once: 25 Qt modules and the
-tables of 13,600 methods. Since qtc 1.2.0, `libqtc` holds Qt Core, Gui and Widgets, and each
+tables of 13,600 methods. Now `libqtc` holds Qt Core, Gui and Widgets, and each
 other module is a library of its own, loaded when the program first uses one of its classes.
 A widgets program maps 4 Qt libraries instead of about 30.
 
 The JIT compiles goose-qt's API at start. Nearly all of that time is the Goose compiler
-checking every function of it, also those the program never calls. Since goose-qt 1.7.0 the
-API is split by Qt module, and a program compiles only the modules it imports: this
-widgets program starts in 430 ms with 183 MiB, against 646 ms and 241 MiB before. A Goose
+checking every function of it, also those the program never calls. The API is split by Qt
+module, and a program compiles only the modules it imports: this widgets program starts in
+430 ms with 183 MiB, against 646 ms and 241 MiB with every module. A Goose
 compiler that skipped the unused functions of imported packages when running a program
 (they are checked by the package's own tests) would cut it further: with that change made
 locally, the same program started in about 250 ms. Native builds do all of this ahead of
@@ -201,21 +198,19 @@ from crashing ([qtc's TESTING.md](../../qtc/docs/TESTING.md)):
 What is still not covered is listed in qtc's [LIMITS.md](../../qtc/docs/LIMITS.md): for
 example, Qt code that crashes with arguments no check can tell apart from good ones.
 
-## What changed to get here
+## How it got here
 
-The first run of this comparison, with qtc 1.1.0, had goose-qt behind PyQt6 on every call.
-qtc 1.1.1 cached what could be cached. qtc 1.2.0 added three things, without dropping a
-check ([changelog](../../qtc/CHANGELOG.md)): a C function per bound signature, called
-directly by goose-qt's wrappers; objects made as a subclass that tells qtc when it dies;
-and a library per Qt module, loaded on first use. qtc 1.3.0 added small values as structs
-and made the handle registry cheaper. qtc 1.4.0 made objects cheaper to make and destroy.
-qtc 1.5.0 made calls cheaper and added signals that run inside the emission; goose-qt 1.7.0
-split its API by Qt module.
+The first run of this comparison, early in development, had goose-qt behind PyQt6 on every
+call. Each step since kept every check: caching what could be cached; a C function per
+bound signature, called directly by goose-qt's wrappers, objects made as a subclass that
+tells qtc when it dies, and a library per Qt module, loaded on first use; small values as
+structs and a cheaper handle registry; cheaper object lifetimes; and for 1.0.0 cheaper
+calls, signals that run inside the emission, and goose-qt's API split by Qt module.
 
 The machine changed between runs, so this table gives each goose-qt number as a multiple
-of PyQt6's speed in the same run:
+of PyQt6's speed in the same run (the runs are kept in `bench/compare/results/dev-*`):
 
-| goose-qt, native, × PyQt6's speed | 1.4.0 (qtc 1.1.1) | 1.5.0 (qtc 1.2.0) | 1.6.0 (qtc 1.3.0) | 1.6.1 (qtc 1.4.0) | 1.7.0 (qtc 1.5.0) |
+| goose-qt, native, × PyQt6's speed | caching | direct calls | value structs | object lifetimes | 1.0.0 |
 |---|---:|---:|---:|---:|---:|
 | `label.setText("hello")` | 1.1× | 3.2× | 3.4× | 2.5× | 2.8× |
 | `label.text()` | 1.0× | 2.1× | 2.3× | 1.9× | 2.0× |
@@ -229,7 +224,7 @@ of PyQt6's speed in the same run:
 | startup | 1.4× | 3.0× | 2.9× | 2.6× | 3.0× |
 | peak memory (PyQt6's ÷ goose-qt's) | 0.74× | 1.25× | 1.25× | 1.24× | 1.24× |
 
-qtc 1.5.0 passes its 19 test suites in release and AddressSanitizer + UndefinedBehaviorSanitizer
+qtc 1.0.0 passes its 19 test suites in release and AddressSanitizer + UndefinedBehaviorSanitizer
 builds, the latter with the run-time cross-checks of the registry's shortcuts. The method
 fuzzer ran on it under the sanitizers (fixed order, by name, object lifetimes, two random
 orders) with no failures; one more random order timed out while other work loaded the

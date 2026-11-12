@@ -13,10 +13,10 @@
 #
 # then, in a program:  import qt from "/usr/local/share/goose-qt";
 cmake_minimum_required(VERSION 3.21)
-project(goose_qt VERSION 1.7.1 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
+project(goose_qt VERSION 1.0.0 DESCRIPTION "Qt 6 for the Goose language, through qtc" LANGUAGES C)   # C: for GNUInstallDirs, and goose builds use it anyway
 include(GNUInstallDirs)
 
-set(GOOSE_QT_QTC_MIN 1.5.0)   # extra.goose calls the direct-signal functions qtc 1.5.0 added
+set(GOOSE_QT_QTC_MIN 1.0.0)
 
 set(QTC_SOURCE_DIR "" CACHE PATH
   "qtc's source directory: build qtc as part of this build (empty: use an installed qtc, else ../qtc)")

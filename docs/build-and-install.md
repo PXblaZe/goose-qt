@@ -11,7 +11,7 @@ path.
 |---|---|
 | Goose | 8 November 2026 or later (`const if`, type arguments in method calls); commit `f4637bfb` is tested |
 | Qt | 6.12 LTS, for qtc |
-| qtc | 1.5.0 or later (the version whose manifest `api.goose` was generated from) |
+| qtc | 1.0.0 or later (the version whose manifest `api.goose` was generated from) |
 | CMake | 3.21 or later, for the CMake route |
 | a C compiler | for native builds (Goose uses it), and to build qtc |
 
@@ -77,7 +77,7 @@ there.
 Goose can fetch the package itself:
 
 ```goose
-import qt from "github.com/<owner>/goose-qt@v1.3.0";
+import qt from "github.com/<owner>/goose-qt@v1.0.0";
 ```
 
 in the program's root file. qtc still has to be installed where the loader finds it, since
