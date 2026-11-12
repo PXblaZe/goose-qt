@@ -45,10 +45,10 @@ filters every row, and every row's name is a call into Goose.
 
 | Self-test step | Result |
 |---|---|
-| model, view and first paint | 39 ms |
-| 200 pages scrolled and painted | 498 ms (401 pages/s) |
-| filter over all rows | 724 ms: **1,000,000 calls into Goose, 1.38 million a second** (JIT: 1.16 million) |
-| sort of the 299 matches by price | 4 ms |
+| model, view and first paint | 32 ms |
+| 200 pages scrolled and painted | 362–444 ms (450–550 pages/s) |
+| filter over all rows | 552 ms: **1,000,000 calls into Goose, 1.8 million a second** (JIT: 1.57 million) |
+| sort of the 299 matches by price | 3 ms |
 
 It checks the last row, that the filter found exactly the 299 rows a brute-force count expects,
 and that the sort put them in order.

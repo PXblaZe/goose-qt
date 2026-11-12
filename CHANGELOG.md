@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.5.0 — 2026-11-12
+
+For qtc 1.2.0, which CMake now requires. Needs a Goose from 8 November 2026 or later.
+
+- **Faster calls.** The generated wrappers in `api.goose` call qtc's direct entry points
+  (`qtc_direct.h`, one C function per bound signature) instead of pushing arguments and
+  calling by name: 7,861 methods and 1,399 constructors. In `test/bench.goose`,
+  `label.setText("hello")` went from 146 to 47 ns, `slider.value_int()` from 96 to 17 ns,
+  `color.red()` from 101 to 18 ns, a property write from 288 to 107 ns and a signal round trip
+  from 344 to 155 ns. Every check stays.
+- **Cheaper objects, startup and memory (through qtc 1.2.0).** Making and destroying a
+  `QObject` went from 1.6 µs to 0.2 µs. A program loads only the Qt modules it uses: a
+  widgets program starts in 22 ms instead of 51 ms and peaks at 39 MiB instead of 65 MiB.
+- `samples/million` filters its million rows through Goose at 1.8 million calls a second,
+  up from 1.38 million.
+- `bench/compare/` adds Rust through cxx-qt (KDAB's crate, 0.10), with the same benchmark and
+  misuse probes, and the C implementation uses qtc's direct entry points. In the new run,
+  goose-qt is 2–6× faster than PyQt6 per call and ahead of Go's miqt on every call but
+  object creation; cxx-qt, with no run-time checks, is the closest to C++. goose-qt is still
+  the only one that turns all three misuses into errors. `docs/comparison.md` has the results
+  and the run against 1.4.0 next to them; `results/goose-qt-1.4.0/` keeps that run.
+
 ## 1.4.0 — 2026-11-11
 
 For qtc 1.1.1, which CMake now requires. Needs a Goose from 8 November 2026 or later.

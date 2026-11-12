@@ -122,18 +122,20 @@ examples/run.sh                                              # every example's s
 | `t09_graphics` | the RHI: a pipeline checked against its shaders, a frame read back, compute, destruction order |
 | `t90_wrappers` | every one of the 8,464 generated instance-method wrappers, called on a null receiver |
 
-`test/bench.goose` measures what calls cost: about 150 ns for a generated wrapper call such
-as `label.setText("hello")`, 350 ns for a signal round trip, 60 ns for `qt::post` with its
-poll ([performance](docs/performance.md)).
+`test/bench.goose` measures what calls cost: about 50 ns for a generated wrapper call such
+as `label.setText("hello")`, 17 ns for `slider.value_int()`, 155 ns for a signal round trip,
+60 ns for `qt::post` with its poll ([performance](docs/performance.md)).
 
 ## Compared with other bindings
 
 [bench/compare](bench/compare) runs the same benchmark in C++, qtc's C, goose-qt, PyQt6,
-PySide6 and Go's miqt. Per call, goose-qt is level with PyQt6 and ahead of PySide6. Where Qt
-calls back into the program (a model of a million rows), it is 2.3–4.4× faster than
-the others. Of the misuses tried, it is the only one that reports every one as an error
-instead of crashing on some. It is slower at making and destroying objects (1.6 µs, which
-pays for ownership tracking) and at startup. The numbers and charts are in
+PySide6, Go's miqt and Rust's cxx-qt. Per call, goose-qt is 2–6× faster than PyQt6 and
+ahead of miqt; only cxx-qt, which calls Qt with no run-time checks at all, is closer to C++.
+Where Qt calls back into the program (a model of a million rows), it is 2.0–4.3× faster
+than the Python and Go bindings. It starts in 22 ms with 39 MiB (C++: 17 ms, 30 MiB). Of the
+misuses tried, it is the only one that reports every one as an error instead of crashing
+on some. Making and destroying an object (0.2 µs, which pays for ownership tracking) is
+where it is behind PyQt6 and Go. The numbers and charts are in
 [docs/comparison.md](docs/comparison.md).
 
 ## Limits

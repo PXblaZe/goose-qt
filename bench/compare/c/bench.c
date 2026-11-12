@@ -1,9 +1,11 @@
-/* The comparison benchmark, in C through qtc. Same operations and counts as every other
- * implementation (see ../README.md).
+/* The comparison benchmark, in C through qtc's direct entry points (qtc_direct.h: one C
+ * function per bound signature, as checked as qtc_call). Same operations and counts as every
+ * other implementation (see ../README.md).
  *   bench            the operations, one "RESULT <name> <value> <unit>" line each
  *   bench --startup  start Qt, show a label, paint it once, exit (the runner times it) */
 #define _POSIX_C_SOURCE 200809L
 #include "qtc.h"
+#include "qtc_direct.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -43,37 +45,34 @@ static int32_t on_override(const qtc_override_call *c, void *user) {
 int main(int argc, char **argv) {
     if (qtc_init_argv(QTC_APP_WIDGETS, argc, (const char *const *)argv) != 0) return 1;
     if (argc > 1 && strcmp(argv[1], "--startup") == 0) {
-        qtc_arg_str(QTC_S("hello"));
-        qtc_obj hello = qtc_new(QTC_S("QLabel"));
-        qtc_call(hello, QTC_S("show"));
-        qtc_call(hello, QTC_S("grab"));
+        qtc_obj hello = qtcn_QLabel__QString(QTC_S("hello"));
+        qtcm_show(hello);
+        qtcm_grab(hello);
         qtc_val_free(qtc_ret_val());
         qtc_shutdown();
         return 0;
     }
-    qtc_obj label = qtc_new(QTC_S("QLabel"));
-    qtc_obj slider = qtc_new(QTC_S("QSlider"));
-    qtc_arg_int(1 << 30);
-    qtc_call(slider, QTC_S("setMaximum"));
-    qtc_arg_str(QTC_S("b"));
-    qtc_obj button = qtc_new(QTC_S("QPushButton"));
+    qtc_obj label = qtcn_QLabel();
+    qtc_obj slider = qtcn_QSlider();
+    qtcm_setMaximum__int(slider, 1 << 30);
+    qtc_obj button = qtcn_QPushButton__QString(QTC_S("b"));
     int64_t t, sum = 0, total = 0;
 
-    for (int i = 0; i < N / 10; i++) { qtc_arg_str(QTC_S("hello")); qtc_call(label, QTC_S("setText")); }
+    for (int i = 0; i < N / 10; i++) qtcm_setText__QString(label, QTC_S("hello"));
     t = now_ns();
-    for (int i = 0; i < N; i++) { qtc_arg_str(QTC_S("hello")); qtc_call(label, QTC_S("setText")); }
+    for (int i = 0; i < N; i++) qtcm_setText__QString(label, QTC_S("hello"));
     result("set_text", ns_per(t, N), "ns");
 
     t = now_ns();
-    for (int i = 0; i < N; i++) { qtc_call(label, QTC_S("text")); total += qtc_ret_str().len; }
+    for (int i = 0; i < N; i++) { qtcm_text(label); total += qtc_ret_str().len; }
     result("get_text", ns_per(t, N), "ns");
 
     t = now_ns();
-    for (int i = 0; i < N; i++) { qtc_arg_int(i); qtc_call(slider, QTC_S("setValue")); }
+    for (int i = 0; i < N; i++) qtcm_setValue__int(slider, i);
     result("set_value", ns_per(t, N), "ns");
 
     t = now_ns();
-    for (int i = 0; i < N; i++) { qtc_call(slider, QTC_S("value")); sum += qtc_ret_int(); }
+    for (int i = 0; i < N; i++) { qtcm_value(slider); sum += qtc_ret_int(); }
     result("get_value", ns_per(t, N), "ns");
 
     t = now_ns();
@@ -85,23 +84,22 @@ int main(int argc, char **argv) {
     int clicks = 0;
     t = now_ns();
     for (int i = 0; i < N_SIGNAL; i++) {
-        qtc_call(button, QTC_S("click"));
+        qtcm_click(button);
         while (qtc_poll(&ev)) clicks++;
     }
     result("signal", ns_per(t, N_SIGNAL), "ns");
 
     t = now_ns();
     for (int i = 0; i < N; i++) {
-        qtc_arg_int(255); qtc_arg_int(0); qtc_arg_int(0);
-        qtc_val c = qtc_val_new(QTC_S("QColor"));
-        qtc_call(c, QTC_S("red"));
+        qtc_val c = qtcn_QColor__int_int_int(255, 0, 0);
+        qtcm_red(c);
         sum += qtc_ret_int();
         qtc_val_free(c);
     }
     result("value_type", ns_per(t, N), "ns");
 
     t = now_ns();
-    for (int i = 0; i < N_OBJECTS; i++) qtc_destroy(qtc_new(QTC_S("QObject")));
+    for (int i = 0; i < N_OBJECTS; i++) qtc_destroy(qtcn_QObject());
     qtc_process_events();   /* qtc_destroy deletes in the event loop: count that too */
     result("object_churn", ns_per(t, N_OBJECTS), "ns");
 
@@ -110,21 +108,17 @@ int main(int argc, char **argv) {
     qtc_override(model, QTC_S("rowCount"), T_ROWS);
     qtc_override(model, QTC_S("columnCount"), T_COLS);
     qtc_override(model, QTC_S("data"), T_DATA);
-    qtc_obj proxy = qtc_new(QTC_S("QSortFilterProxyModel"));
-    qtc_arg_obj(model);
-    qtc_call(proxy, QTC_S("setSourceModel"));
+    qtc_obj proxy = qtcn_QSortFilterProxyModel();
+    qtcm_setSourceModel__QAbstractItemModelPtr(proxy, model);
     t = now_ns();
-    qtc_arg_str(QTC_S("4242"));
-    qtc_call(proxy, QTC_S("setFilterFixedString"));
-    qtc_call(proxy, QTC_S("rowCount"));
+    qtcm_setFilterFixedString__QString(proxy, QTC_S("4242"));
+    qtcm_rowCount(proxy);
     int64_t matches = qtc_ret_int();
     result("model_filter", ms_since(t), "ms");
     result("model_matches", (double)matches, "rows");
 
-    qtc_arg_int(1024); qtc_arg_int(1024); qtc_arg_int(5);   /* QImage::Format_ARGB32 */
-    qtc_val img = qtc_val_new(QTC_S("QImage"));
-    qtc_arg_uint(0xffffffffu);
-    qtc_call(img, QTC_S("fill(uint)"));
+    qtc_val img = qtcn_QImage__int_int_QImage_Format(1024, 1024, 5);   /* QImage::Format_ARGB32 */
+    qtcm_fill__uint(img, 0xffffffffu);
     t = now_ns();
     qtc_draw_begin(img);
     qtc_draw_pen(0xff000000, 1.0, 1, 0x10, 0x40);
@@ -137,19 +131,16 @@ int main(int argc, char **argv) {
     qtc_val_free(img);
 
     t = now_ns();
-    qtc_obj win = qtc_new(QTC_S("QWidget"));
-    qtc_arg_obj(win);
-    qtc_obj grid = qtc_new(QTC_S("QGridLayout"));
+    qtc_obj win = qtcn_QWidget();
+    qtc_obj grid = qtcn_QGridLayout__QWidgetPtr(win);
     char text[32];
     for (int i = 0; i < BUTTONS; i++) {
         int n = snprintf(text, sizeof text, "b %d", i);
-        qtc_arg_str(qtc_sn(text, n));
-        qtc_obj b = qtc_new(QTC_S("QPushButton"));
-        qtc_arg_obj(b); qtc_arg_int(i / 40); qtc_arg_int(i % 40);
-        qtc_call(grid, QTC_S("addWidget"));
+        qtc_obj b = qtcn_QPushButton__QString(qtc_sn(text, n));
+        qtcm_addWidget__QWidgetPtr_int_int(grid, b, i / 40, i % 40);
     }
-    qtc_call(win, QTC_S("show"));
-    qtc_call(win, QTC_S("grab"));
+    qtcm_show(win);
+    qtcm_grab(win);
     qtc_val_free(qtc_ret_val());
     qtc_destroy(win);
     qtc_process_events();

@@ -6,43 +6,48 @@ converted back. That costs a fraction of a microsecond per call, on top of what 
 spends. For a user interface that is invisible; for hot loops it is worth knowing where the
 time goes.
 
-All numbers here are from one machine: two cores of a 2.1 GHz Xeon, 7 GB of memory, Linux,
-Qt 6.12.0, qtc 1.1.0. Yours will differ; run the benchmarks to see.
+All numbers here are from one machine: two cores of a 2.3 GHz Xeon, 7 GB of memory, Linux,
+Qt 6.12.0, qtc 1.2.0. Yours will differ; run the benchmarks to see.
 
 ## What a call costs
 
-`test/bench.goose` (nanoseconds per operation, qtc 1.1.1):
+`test/bench.goose` (nanoseconds per operation, qtc 1.2.0):
 
 | Operation | Native | JIT |
 |---|---:|---:|
-| `label.setText("hello")` (a generated wrapper) | 146 | 171 |
-| `qt::set(label, "text", …)` (the property system) | 288 | 316 |
-| `slider.setValue(i)` | 149 | 158 |
-| `slider.value_int()` | 96 | 108 |
-| `label.text()` (a string back) | 146 | 178 |
-| `qt::val(i)` and free | 70 | 84 |
-| `color.red()` (a method on a value) | 101 | 114 |
-| `button.click()` and `qt::poll` (a signal round trip) | 344 | 344 |
-| `qt::post` and `qt::poll` | 62 | 74 |
-| `qt::alive(handle)` | 14 | 20 |
-| a call on a stale handle (refused) | 210 | 210 |
+| `label.setText("hello")` (a generated wrapper) | 47 | 54 |
+| `qt::set(label, "text", …)` (the property system) | 107 | 114 |
+| `slider.setValue(i)` | 41 | 43 |
+| `slider.value_int()` | 17 | 20 |
+| `label.text()` (a string back) | 56 | 66 |
+| `qt::val(i)` and free | 45 | 65 |
+| `color.red()` (a method on a value) | 18 | 20 |
+| `button.click()` and `qt::poll` (a signal round trip) | 155 | 181 |
+| `qt::post` and `qt::poll` | 62 | 69 |
+| `qt::alive(handle)` | 5 | 7 |
+| a call on a stale handle (refused) | 137 | 156 |
 
 ```sh
 goose build test/bench.goose -o bench && ./bench
 ```
 
 A direct C++ call to `QLabel::setText` costs about 5 ns. The rest of a goose-qt call is qtc's
-work: it finds the method (cached per class and method string), checks the receiver handle
+work. A generated wrapper calls qtc's entry point for that exact signature
+(`qtcm_setText__QString`), which looks the signature up once per class and then goes
+straight to the thunk; the thunk checks the receiver handle (alive, its thread, its class)
 and each argument, converts the string, and makes the call. The JIT and native builds are
-close, because the time is spent outside Goose. qtc 1.1.0 took about 4× as long for most of
+close, because the time is spent outside Goose. qtc 1.1.0 took 3–6× as long for most of
 these. [How goose-qt compares](comparison.md) has the work that changed that, and the same
 operations in C++, PyQt6, PySide6 and Go.
 
 ## What the samples sustain
 
+The million row is from qtc 1.2.0; the others were measured with qtc 1.1.1, and are bound by
+Qt, the network stack or the arithmetic in Goose more than by calls.
+
 | Sample | Sustained |
 |---|---|
-| [million](../samples/million/million.goose) | a model in Goose answering about 1.4 million `data()` calls a second while `QSortFilterProxyModel` filters a million rows; 385 pages scrolled and painted a second |
+| [million](../samples/million/million.goose) | a model in Goose answering about 1.8 million `data()` calls a second while `QSortFilterProxyModel` filters a million rows; about 500 pages scrolled and painted a second |
 | [loopback](../samples/loopback/loopback.goose) | 780,000 TCP round trips a second between 16 clients and a server on one thread; a 64 MB stream at 298 MB/s, checksummed in Goose |
 | [scope](../samples/scope/scope.goose) | 94 frames a second of four 1,024-point polylines painted in Goose, fed by 200,000 samples a second from four threads, none dropped |
 | [mandelbrot](../samples/mandelbrot/mandelbrot.goose) | a 1024 × 768 fractal in 67 ms from four Goose threads on two cores |
@@ -62,9 +67,12 @@ operations in C++, PyQt6, PySide6 and Go.
   or hand larger results over through a future.
 - **Keep values you reuse.** Making and freeing a value costs 70 ns and up; a `QColor` or
   `QFont` used every frame can be made once.
-- **Keep objects you reuse.** Making and destroying a `QObject` costs about 1.6 µs (each gets
+- **Keep objects you reuse.** Making and destroying a `QObject` costs about 0.2 µs (each gets
   a handle and its ownership is tracked, so that a stale handle is an error, not a crash).
-  Pool short-lived objects rather than making thousands a second.
+  That is cheap, but a reused object costs nothing.
+- **Use the typed constructors and methods** (`qt::QObject()`, `label.setText(...)`) rather
+  than `qt::new_object("QObject")` and `qt::call(...)` by name: they call qtc's direct entry
+  points and skip the lookup by name.
 - **Skip argument capture** for signals whose arguments you ignore: `qt::CONN_NO_ARGS`.
 - **Use typed getters.** `slider.value_int()` is cheaper than going through the property
   system by name.

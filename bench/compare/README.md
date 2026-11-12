@@ -1,16 +1,17 @@
 # Comparison benchmark
 
-The same benchmark written against seven ways of using Qt 6.12 from a program, to put qtc's
+The same benchmark written against eight ways of using Qt 6.12 from a program, to put qtc's
 and goose-qt's costs next to the alternatives. The findings are in
 [docs/comparison.md](../../docs/comparison.md); this directory is how to reproduce them.
 
 | Directory | Implementation |
 |---|---|
 | `cpp/` | C++ calling Qt directly: the baseline |
-| `c/` | C through qtc |
+| `c/` | C through qtc's direct entry points (`qtc_direct.h`) |
 | `goose/` | Goose through goose-qt (run as a native build and with the JIT) |
 | `python/` | Python through PySide6 (Qt's own binding) or PyQt6 (Riverbank's), one script for both |
 | `go/` | Go through miqt, a binding generated from Qt's headers through cgo |
+| `rust/` | Rust through cxx-qt (KDAB), the most used Qt 6 crate: Qt's classes declared in a `cxx` bridge, the model a `#[qobject]` with `QAbstractTableModel` as its base |
 
 Each program does the same things with the same counts, and prints
 `RESULT <name> <value> <unit>` lines:
@@ -41,6 +42,10 @@ GOOSE=/path/to/goose PYTHON=venv/bin/python python3 run.py --rounds 5
 python3 report.py              # results/results.md, results/calls.png, results/workloads.png
 ```
 
+The Rust implementation needs cargo (`CARGO`); its first build fetches cxx-qt 0.10 from
+crates.io and builds it against `QT_PREFIX`'s `qmake6`, which takes a few minutes. Without
+cargo, `run.py` leaves it out.
+
 The Go implementation needs miqt in the module cache (`cd go && go mod download`). Building
 miqt's Qt 6 package compiles its whole C++ binding once, which takes a long time and a lot of
 memory: `run.py` builds with `go build -p 1 -gcflags=github.com/mappu/miqt/qt6=-c=1` and
@@ -50,12 +55,12 @@ build anything else against miqt with the same flags or it compiles again. Witho
 
 `run.py --only NAME` runs one implementation and `--merge` adds its results to the existing
 ones. `results/before-fix/` holds the run against qtc 1.1.0, before the call path was made
-faster, for comparison.
+faster, and `results/goose-qt-1.4.0/` the run against qtc 1.1.1, for comparison.
 
 ## Misuse
 
-`misuse/` runs three mistakes in C++, goose-qt, Python (both bindings) and Go, each in its own
-process, and records whether the program got an error or crashed:
+`misuse/` runs three mistakes in C++, goose-qt, Python (both bindings), Go and Rust, each in
+its own process, and records whether the program got an error or crashed:
 
 | Probe | The mistake |
 |---|---|
@@ -76,11 +81,17 @@ python3 misuse/run.py          # results/misuse.txt
 - **Signals differ by design.** C++, Python and Go connect a function that Qt calls inside
   the emission. qtc and goose-qt never call into the program from a signal: the emission is
   queued and the program polls it, so `signal` there includes the queue round trip.
-- **Deletion differs by design.** `qtc_destroy` / `qt::destroy` invalidate the handle at once
-  and delete in the event loop; the timing includes that event-loop pass.
-- **The checks are the point.** Every qtc call looks the method up by name, checks the
-  receiver handle and each argument, and converts the result; the others call Qt directly
-  (C++, Go) or through generated wrappers with type checks (Python). See
+- **Deletion.** `qtc_destroy` / `qt::destroy` invalidate the handle and delete the object at
+  once (in the event loop only when events are still queued for it); the timing includes an
+  event-loop pass at the end all the same.
+- **Rust's misuse probes need `unsafe`.** cxx-qt hands out raw pointers for objects Qt owns
+  (a child, `combo.view()`); using one after its owner deleted it, or giving it to another
+  owner, has to be written in an `unsafe` block. The `range` probe is an `as i32` cast, which
+  Rust makes the program write.
+- **The checks are the point.** Every qtc call checks the receiver handle (alive, right
+  thread, right class), each argument and the preconditions of the method, and converts the
+  result; the others call Qt directly (C++, Go, Rust) or through generated wrappers with type
+  checks (Python). See
   [docs/stability.md](../../docs/stability.md) for what those checks buy.
 - One machine, small numbers: the medians are stable to a few percent between runs (the
   spread table in `results/results.md` shows the range), but another CPU will give other

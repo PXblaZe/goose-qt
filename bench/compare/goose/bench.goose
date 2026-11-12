@@ -92,7 +92,7 @@ fn main() {
     result("value_type", ns_per(t, N), "ns");
 
     t = clock_ns();
-    for i in N_OBJECTS { qt::destroy(qt::new_object("QObject")); }
+    for i in N_OBJECTS { qt::destroy(qt::QObject()); }
     qt::process_events();   // qt::destroy deletes in the event loop: count that too
     result("object_churn", ns_per(t, N_OBJECTS), "ns");
 
