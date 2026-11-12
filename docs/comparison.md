@@ -88,8 +88,9 @@ Notes on the rows:
   cleanups an object has nothing for: each handle's slot records whether the event layer
   or the ownership tracking keeps anything for its object, and most objects have neither.
   It also takes one lock fewer per object. That is 17% fewer instructions per object, and
-  sanitizer builds check each skipped cleanup at run time. What is left over C++'s 41 ns is
-  mostly the two trips through the registry's lock (making and releasing the handle).
+  sanitizer builds check each skipped cleanup at run time. Of what is left over C++'s 41 ns,
+  the two trips through the registry's lock (making and releasing the handle) are about
+  10 ns; the rest is the handle bookkeeping, the ownership tracking and the checks.
 
 ## Whole tasks
 
