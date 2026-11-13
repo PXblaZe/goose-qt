@@ -53,7 +53,7 @@ Qt, the network stack or the arithmetic in Goose more than by calls.
 
 | Sample | Sustained |
 |---|---|
-| [million](../samples/million/million.goose) | a model in Goose answering about 1.8 million `data()` calls a second while `QSortFilterProxyModel` filters a million rows; about 500 pages scrolled and painted a second |
+| [million](../samples/million/million.goose) | a million-row model in Goose, filtered in Goose as you type: 3–26 ms a keystroke; about 450 pages scrolled and painted a second |
 | [loopback](../samples/loopback/loopback.goose) | 780,000 TCP round trips a second between 16 clients and a server on one thread; a 64 MB stream at 298 MB/s, checksummed in Goose |
 | [scope](../samples/scope/scope.goose) | 94 frames a second of four 1,024-point polylines painted in Goose, fed by 200,000 samples a second from four threads, none dropped |
 | [mandelbrot](../samples/mandelbrot/mandelbrot.goose) | a 1024 × 768 fractal in 67 ms from four Goose threads on two cores |

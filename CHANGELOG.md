@@ -38,3 +38,10 @@ The first release: Qt 6.12 LTS for the Goose language, through qtc 1.0.0.
 - 11 tests, each with the JIT and as a native build, among them a call of each of the 8,461
   generated wrappers with a null receiver; 12 examples; the samples, including a seeded
   storm of hostile calls (a million operations, no crash, no leak).
+
+### Known issue
+- In the current Goose compiler, an override or direct-signal handler that allocates
+  (`str(...)`, a growable array) can overwrite strings and arrays of the Goose code that
+  called into Qt. The bug is in Goose, and a fix has been sent to the Goose project. Until
+  then, handlers can keep to fixed-size values, as the million sample does:
+  [docs/subclassing.md](docs/subclassing.md#handlers-that-allocate).

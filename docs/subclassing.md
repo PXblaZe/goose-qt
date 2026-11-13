@@ -97,12 +97,42 @@ The handler runs inside Qt's call, so a few things are refused there:
   made by another model, begin/end calls out of order. A model whose `data()` contradicts its
   `rowCount()` gives views wrong answers, as in C++, but does not crash them.
 
+### Handlers that allocate
+
+The current Goose compiler has a bug that affects every exported function C calls back into
+while Goose code is running. That covers this handler and direct signal handlers
+(`qt::CONN_DIRECT`). If the handler allocates (`str(...)`, a growable array, `ov_arg_str`),
+it can overwrite local strings and arrays of the Goose functions that called into Qt. The
+symptom is a wrong value or a crash after the call returns, in native builds and under
+`goose run` alike. The cause is in Goose: a function keeps its data stacks' tops in C locals
+and does not write them back before calling C. The fix is a change to the Goose compiler that
+has been sent to the Goose project.
+
+Until a Goose with the fix is out, a handler that must not risk it can keep to fixed-size
+values. It can read and return numbers, return constant strings, and build text in a fixed
+buffer:
+
+```goose
+var name: u8[..24] = [];          // fixed capacity: lives in the C frame, not on a data stack
+for c in "row " { name.push(c); }
+push_digits(name, ix.row);        // your own formatting into the buffer
+qt::ov_ret(name);
+```
+
+The [million sample](../samples/million/million.goose) does this (`name_of`).
+
 ## Speed
 
-Overrides are fast enough for models of any size a view can show. The
-[million sample](../samples/million/million.goose) filters a million rows through
-`QSortFilterProxyModel`, a call into Goose per row, at 1.4 million calls a second: 2.3–4.4× what
-Go and the Python bindings manage ([comparison](comparison.md)).
+Overrides are fast enough for models of any size a view can show. A `QSortFilterProxyModel`
+filtering a million rows makes a call into Goose per row, at 1.4 million calls a second:
+2.3–4.4× what Go and the Python bindings manage ([comparison](comparison.md)).
+
+For very large models, filter in the model rather than through the proxy. A filter change in
+`QSortFilterProxyModel` asks for every row again, and it removes non-matching rows one range at
+a time, which grows with rows × ranges (14 s for one keystroke over a million rows). The
+[million sample](../samples/million/million.goose) keeps the list of matching rows in Goose
+and resets the model, so each keystroke takes milliseconds and the view asks only for the
+cells it shows.
 
 ## Classes made at run time
 

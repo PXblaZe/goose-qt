@@ -58,7 +58,7 @@ check the result. On a two-core cloud machine:
 
 | Sample | Shows |
 |---|---|
-| [million](samples/million) | a model in Goose serving a million rows; filtering calls into Goose 1.4 million times a second |
+| [million](samples/million) | a model in Goose serving a million rows, filtered as you type in a few milliseconds a keystroke |
 | [notes](samples/notes) | a complete desktop app: menus, shortcuts, live Markdown preview, atomic JSON files |
 | [loopback](samples/loopback) | an echo server and 16 clients: 780,000 TCP round trips a second on one thread |
 | [scope](samples/scope) | four worker threads streaming 200,000 samples a second into a widget painted at 94 fps |

@@ -7,7 +7,7 @@ measured, and fails if any result is wrong or anything is left behind.
 
 | Sample | Shows | JIT | Native |
 |---|---|:---:|:---:|
-| [million](million/million.goose) | a model written in Goose serving a million-row table, with filtering and sorting | ✓ | ✓ |
+| [million](million/million.goose) | a model written in Goose serving a million-row table, filtered as you type and sorted | ✓ | ✓ |
 | [notes](notes/notes.goose) | a complete desktop app: menus, shortcuts, toolbar, live Markdown preview, JSON files | ✓ | ✓ |
 | [loopback](loopback/loopback.goose) | Qt networking: an echo server, 16 clients and a 64 MB stream over TCP | ✓ | ✓ |
 | [scope](scope/scope.goose) | four worker threads streaming samples to a widget painted in Goose |  | ✓ |
@@ -40,18 +40,31 @@ benchmark; your machine will differ.
 
 A `QAbstractTableModel` subclassed in Goose (`qt::new_overridable` and `qt::override`) answers
 `rowCount`, `columnCount`, `data` and `headerData` for 1,000,000 rows × 4 columns, held in Goose
-arrays. A `QSortFilterProxyModel` sits between it and a `QTableView`; typing in the search box
-filters every row, and every row's name is a call into Goose.
+arrays, and a `QTableView` shows it. Typing in the search box filters the rows in Goose: the
+model keeps the list of rows that match, rebuilds it inside `beginResetModel` /
+`endResetModel`, and the view then asks only for the cells it shows. Each character typed
+narrows the list already shown instead of starting again.
 
-| Self-test step | Result |
-|---|---|
-| model, view and first paint | 32 ms |
-| 200 pages scrolled and painted | 362–444 ms (450–550 pages/s) |
-| filter over all rows | 552 ms: **1,000,000 calls into Goose, 1.8 million a second** (JIT: 1.57 million) |
-| sort of the 299 matches by price | 3 ms |
+| Self-test step | Native | JIT |
+|---|---|---|
+| model, view and first paint | 28 ms | 15 ms |
+| 200 pages scrolled and painted | 437 ms (457 pages/s) | 437 ms |
+| typing "4242" a key at a time, then deleting it | 3–26 ms a keystroke, 140 ms for all 8 | 4–160 ms a keystroke |
+| sort of the 299 matches by price | 2 ms | 2 ms |
 
-It checks the last row, that the filter found exactly the 299 rows a brute-force count expects,
-and that the sort put them in order.
+It checks the last row, that every keystroke left exactly the rows a brute-force count
+expects, and that the sort put them in order.
+
+Why not `QSortFilterProxyModel`? For thousands of rows it is the easy choice, but it asks the
+model for every row on each change (a million calls into Goose), and it removes the rows that
+no longer match one contiguous range at a time. Typing "4" keeps 468,559 rows spread over tens
+of thousands of ranges, and that one keystroke took 14 s. A model that owns its data can
+filter it far more cheaply itself.
+
+The override handler formats each name into a fixed `u8[..24]` buffer rather than with
+`str()`. That is quicker, and while the Goose compiler bug described in
+[docs/subclassing.md](../docs/subclassing.md#handlers-that-allocate) is open, it also keeps
+the handler off Goose's data stacks.
 
 ## notes: a whole app
 

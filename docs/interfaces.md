@@ -85,9 +85,11 @@ model.removeRow(1);
 Qt deletes them behind your back. The model calls reach the same data safely.)
 
 For data that lives in your program, write the model in Goose by subclassing
-`QAbstractTableModel` or `QAbstractListModel`, and put a `QSortFilterProxyModel` in front for
-sorting and filtering: see [Subclassing](subclassing.md) and the
-[million sample](../samples/million/million.goose), which serves a million rows this way.
+`QAbstractTableModel` or `QAbstractListModel` ([Subclassing](subclassing.md)). A
+`QSortFilterProxyModel` in front sorts and filters it with no more code. For hundreds of
+thousands of rows, filter in the model instead, as the
+[million sample](../samples/million/million.goose) does for a million rows
+([why](subclassing.md#speed)).
 `QStandardItemModel`, `QStringListModel` and `QFileSystemModel` are bound too.
 
 ## Dialogs
@@ -118,5 +120,5 @@ happen. For tests there is `qt::test_grab(w, "file.png")`; see [Testing](testing
 
 Creating, laying out and destroying widgets costs what it costs in C++ plus about half a
 microsecond per call. Where a program needs thousands of rows or items, a model beats
-thousands of widgets, in Goose as in C++: the million sample scrolls 385 pages a second
+thousands of widgets, in Goose as in C++: the million sample scrolls about 450 pages a second
 because the view asks only for the cells it shows.
