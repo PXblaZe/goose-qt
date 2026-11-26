@@ -1,5 +1,6 @@
 # Builds the Goose compiler and goose-qt with qtc (from source) on Qt 6.12 LTS, then runs the tests.
-# Not yet run on GitHub: it mirrors what was run by hand (see README.md).
+# Qt comes from conda-forge, the packages goose-qt was developed and tested against, installed
+# with micromamba. Goose is the commit goose-qt was tested with (README.md, Installing).
 name: ci
 on: [push, pull_request]
 
@@ -7,30 +8,35 @@ jobs:
   linux:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with: { path: goose-qt }
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with: { repository: aardappel/goose, path: goose, ref: f4637bfb342fb70d42bea0474eab9e62a3c99d68 }
-      - uses: jurplel/install-qt-action@v4
+      - uses: mamba-org/setup-micromamba@v2
         with:
-          version: '6.12.*'
-          modules: 'qtmultimedia qtpositioning qtserialport qtwebsockets qtwebchannel qtspatialaudio qtshadertools'
-          cache: true
+          environment-name: qt
+          create-args: >-
+            qt6-main=6.12.0 qt6-charts=6.12.0 qt6-multimedia=6.12.0 qt6-serialport=6.12.0
+            qt6-positioning=6.12.0 qt6-networkauth=6.12.0
+          condarc: |
+            channels: [conda-forge]
+          cache-environment: true
       - name: Build tools
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build libgl-dev libegl-dev libxkbcommon-dev libvulkan-dev
       - name: goose
+        # the compiler alone: goose-qt uses none of Goose's blessed packages
         run: |
-          cmake -S goose -B goose/build -DCMAKE_BUILD_TYPE=Release -DGOOSE_BUILTIN_LIBS=all
-          cmake --build goose/build --config Release
+          cmake -S goose -B goose/build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build goose/build
       - name: qtc source
         # set QTC_REPO to where qtc lives; the default assumes a sibling repository
         run: git clone --depth 1 "${QTC_REPO:-https://github.com/${{ github.repository_owner }}/qtc}" qtc
       - name: build (qtc built from source with goose-qt)
         run: |
           cmake -S goose-qt -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DQTC_SOURCE_DIR=$PWD/qtc \
-                -DGOOSE_EXECUTABLE=$PWD/goose/build/goose
+                -DGOOSE_EXECUTABLE=$PWD/goose/build/goose -DCMAKE_PREFIX_PATH=$MAMBA_ROOT_PREFIX/envs/qt
           cmake --build build
       - name: tests, examples and the installed package
         run: ctest --test-dir build --output-on-failure
