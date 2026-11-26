@@ -74,7 +74,7 @@ on.free();
   be noticed.
 - **File descriptors.** Calls that take a socket descriptor (`setSocketDescriptor`) are
   refused for a descriptor that is not open, but qtc cannot tell whether an open one is
-  yours to give; see [qtc's limits](../../qtc/docs/LIMITS.md).
+  yours to give; see [qtc's limits](https://github.com/PXblaZe/qtc/blob/main/docs/LIMITS.md).
 - **The GPL-3.0-only add-ons** (MQTT, CoAP, HTTP Server, Network Authorization) are only in a
   libqtc built with `QTC_GPL_MODULES=ON`; see [Build and install](build-and-install.md#licensing).
 

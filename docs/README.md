@@ -1,6 +1,6 @@
 # goose-qt documentation
 
-goose-qt is Qt 6 for the Goose language. It binds [qtc](../../qtc), a C library over Qt 6.12
+goose-qt is Qt 6 for the Goose language. It binds [qtc](https://github.com/PXblaZe/qtc), a C library over Qt 6.12
 LTS that refuses misuse instead of crashing, and generates a Goose function for every method
 qtc binds: widgets, Qt Quick and QML, painting, item models, networking, multimedia, Qt's GPU
 layer, and the rest. These pages explain how to use it; the [samples](../samples) show what it
@@ -42,9 +42,9 @@ does at scale, with measured numbers.
 | [Internals](internals.md) | how `api.goose` is generated, typed variants, the override trampoline |
 
 The C library underneath has its own documents, which these link to where they matter:
-[API](../../qtc/docs/API.md), [design](../../qtc/docs/DESIGN.md),
-[limits](../../qtc/docs/LIMITS.md), [testing](../../qtc/docs/TESTING.md),
-[coverage](../../qtc/docs/COVERAGE.md) and [licensing](../../qtc/docs/LICENSING.md).
+[API](https://github.com/PXblaZe/qtc/blob/main/docs/API.md), [design](https://github.com/PXblaZe/qtc/blob/main/docs/DESIGN.md),
+[limits](https://github.com/PXblaZe/qtc/blob/main/docs/LIMITS.md), [testing](https://github.com/PXblaZe/qtc/blob/main/docs/TESTING.md),
+[coverage](https://github.com/PXblaZe/qtc/blob/main/docs/COVERAGE.md) and [licensing](https://github.com/PXblaZe/qtc/blob/main/docs/LICENSING.md).
 
 ## The source, at a glance
 

@@ -24,7 +24,7 @@ Set a UTF-8 locale: `LC_ALL=C.UTF-8`.
 The receiver's class has no bound method of that name and argument shape. Check the class
 with `print(qt::describe(o))`; the method may be on another class, protected (reach it with
 `qt::call` on an overridable object), or not bound (qtc's
-[coverage](../../qtc/docs/COVERAGE.md) says why). With a default libqtc, the GPL-3.0-only
+[coverage](https://github.com/PXblaZe/qtc/blob/main/docs/COVERAGE.md) says why). With a default libqtc, the GPL-3.0-only
 modules' classes are absent: `qt::class_exists("QChartView")` is false.
 
 **`QTC_ERR_AMBIGUOUS`**

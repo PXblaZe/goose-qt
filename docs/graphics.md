@@ -123,7 +123,7 @@ before Qt sees it:
   with it in order, and a resource destroyed mid-frame goes once the frame is submitted.
 
 What a shader computes is not checked: a shader that indexes a storage buffer out of bounds
-is undefined behaviour on the GPU, as in C++. See [qtc's limits](../../qtc/docs/LIMITS.md#graphics).
+is undefined behaviour on the GPU, as in C++. See [qtc's limits](https://github.com/PXblaZe/qtc/blob/main/docs/LIMITS.md#graphics).
 
 ## Interop
 

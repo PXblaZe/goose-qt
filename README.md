@@ -1,10 +1,10 @@
 # goose-qt — Qt 6 for Goose
 
-goose-qt binds [qtc](../qtc), the C library for Qt 6.12 LTS, to the Goose language: widgets,
+goose-qt binds [qtc](https://github.com/PXblaZe/qtc), the C library for Qt 6.12 LTS, to the Goose language: widgets,
 Qt Quick and QML, painting, item models, networking, multimedia, Qt's GPU layer and the rest
 of what qtc binds — about 11,000 functions generated from qtc's manifest — with qtc's
 guarantee: misusing an object returns an error instead of crashing the program, within the
-limits qtc's [LIMITS.md](../qtc/docs/LIMITS.md) spells out.
+limits qtc's [LIMITS.md](https://github.com/PXblaZe/qtc/blob/main/docs/LIMITS.md) spells out.
 
 ```goose
 import qt from "path/to/goose-qt";
@@ -84,7 +84,10 @@ samples/run.sh            # every sample's self-test, with the JIT and native
 ## Installing
 
 You need a Goose from 8 November 2026 or later (commit `f4637bfb` was tested) and qtc, built
-against Qt 6.12 LTS. The CMake project uses an installed qtc or builds it in the same step,
+against Qt 6.12 LTS. Overriding Qt's virtual methods and direct signal handlers are the
+exception: Goose from 24 November 2026 refuses the callbacks they rely on, so on a current
+Goose they stop at the first call ([which Goose runs them](docs/subclassing.md#which-goose-runs-them)).
+Everything else, queued signals included, works on it. The CMake project uses an installed qtc or builds it in the same step,
 and installs the package so programs find qtc without a library path:
 
 ```sh
@@ -147,7 +150,7 @@ The numbers and charts are in [docs/comparison.md](docs/comparison.md#safety-and
 
 ## Limits
 
-Everything in [qtc's LIMITS.md](../qtc/docs/LIMITS.md) applies. goose-qt adds: the JIT runs
+Everything in [qtc's LIMITS.md](https://github.com/PXblaZe/qtc/blob/main/docs/LIMITS.md) applies. goose-qt adds: the JIT runs
 no threads; override handlers run for calls on the GUI thread only (other threads get Qt's
 own implementation); qtc's thread-pool tasks, which take C function pointers, are not bound.
 [docs/stability.md](docs/stability.md) has the details.

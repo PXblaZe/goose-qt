@@ -92,5 +92,5 @@ cc host.c -I. -L. -lcounter -Wl,-rpath,'$ORIGIN' -o host
   package's `qt.build`, or the library path. See [Build and install](build-and-install.md).
 - A C++ host that also uses qtc directly can pass objects across with qtc's
   `qtc_wrap_pointer` and `qtc_unsafe_pointer` (see qtc's
-  [API](../../qtc/docs/API.md#interop-with-c)); what C++ does with a raw pointer is outside
+  [API](https://github.com/PXblaZe/qtc/blob/main/docs/API.md#interop-with-c)); what C++ does with a raw pointer is outside
   qtc's checks.

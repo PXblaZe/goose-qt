@@ -203,7 +203,7 @@ from Goose.
 
 ## What is not bound
 
-qtc binds what it can make safe; [qtc's coverage](../../qtc/docs/COVERAGE.md) lists by module
+qtc binds what it can make safe; [qtc's coverage](https://github.com/PXblaZe/qtc/blob/main/docs/COVERAGE.md) lists by module
 what is in and why the rest is out (raw pointers to non-QObject data, functions taking
 callbacks, APIs that hand over ownership in ways that cannot be checked). With a default,
 LGPL-only libqtc, the GPL-3.0-only modules' functions are in their module files but fail with

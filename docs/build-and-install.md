@@ -109,5 +109,5 @@ qtc build binds only Qt modules available under the LGPL-3.0, which closed-sourc
 may use; a build with `-DQTC_GPL_MODULES=ON` adds the GPL-3.0-only modules (Charts, Network
 Authorization, HTTP Server, MQTT, CoAP). Their functions are in their module files either way; with
 a default libqtc they fail with `qt::ERR_NOT_FOUND`. `qt::stats()` lists the GPL-3.0-only
-modules a libqtc links. qtc's [licensing notes](../../qtc/docs/LICENSING.md) have the
+modules a libqtc links. qtc's [licensing notes](https://github.com/PXblaZe/qtc/blob/main/docs/LICENSING.md) have the
 details.

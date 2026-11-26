@@ -97,20 +97,24 @@ The handler runs inside Qt's call, so a few things are refused there:
   made by another model, begin/end calls out of order. A model whose `data()` contradicts its
   `rowCount()` gives views wrong answers, as in C++, but does not crash them.
 
-### Handlers that allocate
+### Which Goose runs them
 
-The current Goose compiler has a bug that affects every exported function C calls back into
-while Goose code is running. That covers this handler and direct signal handlers
-(`qt::CONN_DIRECT`). If the handler allocates (`str(...)`, a growable array, `ov_arg_str`),
-it can overwrite local strings and arrays of the Goose functions that called into Qt. The
-symptom is a wrong value or a crash after the call returns, in native builds and under
-`goose run` alike. The cause is in Goose: a function keeps its data stacks' tops in C locals
-and does not write them back before calling C. The fix is a change to the Goose compiler that
-has been sent to the Goose project.
+An override handler, and a direct signal handler (`qt::CONN_DIRECT`), is an exported function
+that C calls while Goose code is running: Qt calls it from inside your own call to Qt. Goose
+does not support that:
 
-Until a Goose with the fix is out, a handler that must not risk it can keep to fixed-size
-values. It can read and return numbers, return constant strings, and build text in a fixed
-buffer:
+- **Goose from 24 November 2026** (commit
+  [e5dae68](https://github.com/aardappel/goose/commit/e5dae6809648af63ecc9d81851d67c4daba8c32b))
+  refuses it. The program stops at the first callback with `export fn on_override was called
+  by C that Goose code called, before it returned`. The overrides test, the direct signals
+  test and the million and scope samples stop this way.
+- **Goose before it** runs the callback, but a handler that allocates (`str(...)`, a growable
+  array, `ov_arg_str`) can overwrite local strings and arrays of the Goose code that called
+  into Qt, in native builds and under `goose run` alike
+  ([aardappel/goose#322](https://github.com/aardappel/goose/issues/322)). A handler that keeps
+  to fixed-size values is not affected: it can read and return numbers, return constant
+  strings, and build text in a fixed buffer, as the
+  [million sample](../samples/million/million.goose) does (`name_of`):
 
 ```goose
 var name: u8[..24] = [];          // fixed capacity: lives in the C frame, not on a data stack
@@ -119,7 +123,9 @@ push_digits(name, ix.row);        // your own formatting into the buffer
 qt::ov_ret(name);
 ```
 
-The [million sample](../samples/million/million.goose) does this (`name_of`).
+[aardappel/goose#423](https://github.com/aardappel/goose/issues/423) proposes letting an
+`extern` declare the exports C may call back during it, which would make these callbacks
+safe and checked by the compiler. goose-qt will declare them if Goose adopts it.
 
 ## Speed
 

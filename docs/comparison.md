@@ -176,7 +176,7 @@ earlier runs and crashed in this one.
 ### How the stability is tested
 
 The probes show what happens to one mistake. qtc's tests are what keep the whole surface
-from crashing ([qtc's TESTING.md](../../qtc/docs/TESTING.md)):
+from crashing ([qtc's TESTING.md](https://github.com/PXblaZe/qtc/blob/main/docs/TESTING.md)):
 
 - **A method fuzzer** calls every bound method of every class with generated arguments
   (wrong types, nulls, extremes, objects in odd states, objects destroyed in between):
@@ -195,7 +195,7 @@ from crashing ([qtc's TESTING.md](../../qtc/docs/TESTING.md)):
   forged handles, double frees, queue floods): a million operations each with seeds 1, 2 and
   3 end with nothing crashed and nothing leaked. See [Stability](stability.md).
 
-What is still not covered is listed in qtc's [LIMITS.md](../../qtc/docs/LIMITS.md): for
+What is still not covered is listed in qtc's [LIMITS.md](https://github.com/PXblaZe/qtc/blob/main/docs/LIMITS.md): for
 example, Qt code that crashes with arguments no check can tell apart from good ones.
 
 ## How it got here

@@ -112,9 +112,9 @@ fn main() {
 deleted once Qt's call returns, but it may not run the event loop (`qt::wait` fails).
 Emissions inside it nest, up to 64 deep. Queued events stay the default: they need no
 exported function and their handler may do anything. A direct signal takes about a quarter
-fewer instructions than a queued one. Until the Goose compiler fix is out, a direct handler
-that allocates can overwrite its callers' locals ([Handlers that
-allocate](subclassing.md#handlers-that-allocate)). Queued handlers are not affected.
+fewer instructions than a queued one. Direct handlers need a Goose that lets C call back
+into it, as overrides do ([which Goose runs them](subclassing.md#which-goose-runs-them));
+queued handlers work on every Goose.
 
 `qt::connect_to(sender, "valueChanged", receiver, "setValue")` forwards a signal straight to
 another object's method inside the emission, without an event: no Goose code runs, and the

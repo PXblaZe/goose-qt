@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Documentation
+- Links to qtc's documentation point at https://github.com/PXblaZe/qtc; they assumed the two
+  repositories side by side on disk, which left them broken on GitHub.
+- Overrides and direct signal handlers on a current Goose: Goose from 24 November 2026
+  refuses the callbacks they rely on, and stops the program at the first one. The README
+  and [docs/subclassing.md](docs/subclassing.md#which-goose-runs-them) say which Goose runs
+  them and link the proposal that would make them safe
+  ([aardappel/goose#423](https://github.com/aardappel/goose/issues/423)).
+
 ## 1.0.0 — 2026-11-12
 
 The first release: Qt 6.12 LTS for the Goose language, through qtc 1.0.0.
@@ -44,4 +55,4 @@ The first release: Qt 6.12 LTS for the Goose language, through qtc 1.0.0.
   (`str(...)`, a growable array) can overwrite strings and arrays of the Goose code that
   called into Qt. The bug is in Goose, and a fix has been sent to the Goose project. Until
   then, handlers can keep to fixed-size values, as the million sample does:
-  [docs/subclassing.md](docs/subclassing.md#handlers-that-allocate).
+  [docs/subclassing.md](docs/subclassing.md#which-goose-runs-them).

@@ -27,7 +27,7 @@ The program carries on.
 
 ## How it is tested
 
-At the C level (qtc's [testing notes](../../qtc/docs/TESTING.md) have the details and every
+At the C level (qtc's [testing notes](https://github.com/PXblaZe/qtc/blob/main/docs/TESTING.md) have the details and every
 bug the fuzzers found):
 
 - a **method fuzzer** calls every bound method (13,617 items) with edge-case arguments, in a
@@ -57,7 +57,7 @@ How this compares with the other bindings, on ten common mistakes made in each o
 
 ## Where it stops
 
-[qtc's LIMITS.md](../../qtc/docs/LIMITS.md) is the full list. In short:
+[qtc's LIMITS.md](https://github.com/PXblaZe/qtc/blob/main/docs/LIMITS.md) is the full list. In short:
 
 - **Qt bugs no check covers yet.** The fuzzers keep finding Qt crashes, each fixed with a new
   precondition; rare combinations (Qt Charts states, rich-text tables, unusual models) are

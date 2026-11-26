@@ -62,8 +62,8 @@ of thousands of ranges, and that one keystroke took 14 s. A model that owns its 
 filter it far more cheaply itself.
 
 The override handler formats each name into a fixed `u8[..24]` buffer rather than with
-`str()`. That is quicker, and while the Goose compiler bug described in
-[docs/subclassing.md](../docs/subclassing.md#handlers-that-allocate) is open, it also keeps
+`str()`. That is quicker, and on a Goose that runs callbacks
+([docs/subclassing.md](../docs/subclassing.md#which-goose-runs-them)) it also keeps
 the handler off Goose's data stacks.
 
 ## notes: a whole app
