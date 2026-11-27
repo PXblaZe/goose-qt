@@ -11,8 +11,9 @@ import qt from "../..";
 
 let CHANNELS = 4;
 let SHOWN = 1024;               // samples shown per channel
-let BLOCK = 512;                // samples a worker makes between pauses
-let PAUSE_MS = 10;              // so about 51,200 samples a second per channel
+let RATE = 51200.0;             // samples a second per channel
+let BLOCK = 512;                // samples a worker makes at a time
+let PAUSE_MS = 10;              // between the times a worker catches up with the clock
 let W = 800.0;
 let H = 480.0;
 let COLORS: u32[] = [0xff40e0a0, 0xffffc040, 0xff60a0ff, 0xffff6080];
@@ -53,19 +54,28 @@ thread_fn generate(channel: i64, stop: u64) {
     var n: i64 = 0;
     var seed: u64 = 12345 + channel as u64;
     var samples: f64[>..] = [];
+    let start = clock_ns();
     while !qt::canceled(token) {
-        samples.clear();
-        for i in BLOCK {
-            seed = seed * 6364136223846793005 + 1442695040888963407;
-            let noise = ((seed >> 33) as i64 % 2000) / 1000.0 - 1.0;
-            samples.push(wave(channel, (n + i) / 51200.0, noise));
+        // as many blocks as the clock says are due, as a sampling device would deliver them: a
+        // sleep can last well over PAUSE_MS (macOS on a busy machine), which must not slow the
+        // signal down. At most 20 blocks at once; the rest come at the next wake.
+        let due = ((clock_ns() - start) / 1e9 * RATE) as! i64;
+        var made = 0;
+        while n + BLOCK <= due && made < 20 {
+            samples.clear();
+            for i in BLOCK {
+                seed = seed * 6364136223846793005 + 1442695040888963407;
+                let noise = ((seed >> 33) as i64 % 2000) / 1000.0 - 1.0;
+                samples.push(wave(channel, (n + i) / RATE, noise));
+            }
+            var at = 0;
+            while at < BLOCK {
+                qt::post(T_SAMPLES + channel as u64, pack(samples, at), pack(samples, at + 4));
+                at += 8;
+            }
+            n += BLOCK;
+            made++;
         }
-        var at = 0;
-        while at < BLOCK {
-            qt::post(T_SAMPLES + channel as u64, pack(samples, at), pack(samples, at + 4));
-            at += 8;
-        }
-        n += BLOCK;
         sleep_ms(PAUSE_MS);
     }
 }

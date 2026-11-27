@@ -8,6 +8,8 @@
   on Windows (through `PATH`) and run on macOS (which has no `timeout` command or bash 5);
   ctest runs them with Git's bash on Windows. CI builds and tests on macOS and Windows as
   well as Linux, allowed to fail there for now. The `shared/` example runs on Linux only.
+- The scope sample's workers keep to 51,200 samples a second by the clock rather than by
+  sleeping between blocks, which ran them at a fifth of that rate on macOS.
 
 ### Documentation
 - Links to qtc's documentation point at https://github.com/PXblaZe/qtc; they assumed the two

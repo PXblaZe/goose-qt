@@ -46,7 +46,7 @@ jobs:
                 -DGOOSE_EXECUTABLE=$PWD/goose/build/goose -DCMAKE_PREFIX_PATH=$MAMBA_ROOT_PREFIX/envs/qt
           cmake --build build
       - name: tests, examples and the installed package
-        run: ctest --test-dir build --output-on-failure
+        run: ctest --test-dir build --output-on-failure --no-tests=error
       - name: install
         run: cmake --install build --prefix $PWD/prefix
 
@@ -107,6 +107,6 @@ jobs:
                 -DGOOSE_EXECUTABLE="$GOOSE_EXE" -DCMAKE_PREFIX_PATH="$QT_PREFIX"
           cmake --build build --config Release
       - name: tests, examples and the installed package
-        run: ctest --test-dir build -C Release --output-on-failure
+        run: ctest --test-dir build -C Release --output-on-failure --no-tests=error
       - name: install
         run: cmake --install build --config Release --prefix "$ROOT/prefix"
