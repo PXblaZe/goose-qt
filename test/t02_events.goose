@@ -160,10 +160,19 @@ fn main() {
         if got_timer { break; }
     }
     check(got_timer, "single-shot timer");
+    // A 5 ms timer, not polled: its timeouts gather in one queued event. A busy machine (macOS
+    // on CI) can be slow to deliver the first, so wait for it, then for more to join it.
     let t2 = qt::timer(5, 21);
-    qt::test_wait(60);
+    for i in 100 {
+        if qt::pending() > 0 { break; }
+        qt::test_wait(20);
+    }
+    qt::test_wait(100);
     drain(evs);
     check(evs.len == 1 && evs[0].tag == 21 && evs[0].i0 >= 2, "periodic timeouts coalesced");
+    if evs.len > 0 && !(evs.len == 1 && evs[0].i0 >= 2) {
+        print("    ", evs.len, " events, the first with tag ", evs[0].tag, " and ", evs[0].i0, " timeouts");
+    }
     qt::destroy(t2);
     qt::test_wait(30);
     drain(evs);
