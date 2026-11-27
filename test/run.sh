@@ -19,9 +19,17 @@ fi
 if [ -n "${QTC_LIB:-}" ]; then
     export LD_LIBRARY_PATH="$QTC_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     export DYLD_LIBRARY_PATH="$QTC_LIB${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
+    case "$(uname -s)" in   # Windows finds DLLs on PATH
+        MINGW* | MSYS* | CYGWIN*) export PATH="$(cygpath -u "$QTC_LIB"):$PATH" ;;
+    esac
 fi
 export QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software QT_LOGGING_RULES="*=false"
 export LC_ALL="${LC_ALL:-C.UTF-8}"
+# seconds, with a fraction: bash 5's clock, else Perl's (macOS has bash 3.2 and a date with no %N)
+now() {
+    if [ -n "${EPOCHREALTIME:-}" ]; then echo "${EPOCHREALTIME/,/.}"
+    else perl -MTime::HiRes=time -e 'printf "%.3f\n", time'; fi
+}
 
 tests=()
 if [ $# -gt 0 ]; then
@@ -40,10 +48,10 @@ run() {   # name mode command...
     local name=$1 mode=$2
     shift 2
     local out="$work/$name.$mode.out"
-    local t0=$(date +%s.%N)
+    local t0=$(now)
     if "$@" > "$out" 2>&1; then
         pass=$((pass + 1))
-        printf '%-16s %-6s ok    %6.1fs  %s\n' "$name" "$mode" "$(echo "$(date +%s.%N) - $t0" | bc)" "$(tail -n 1 "$out")"
+        printf '%-16s %-6s ok    %6.1fs  %s\n' "$name" "$mode" "$(awk -v a="$t0" -v b="$(now)" 'BEGIN { print b - a }')" "$(tail -n 1 "$out")"
     else
         fail=$((fail + 1))
         failed+=("$name ($mode)")

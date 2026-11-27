@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Platforms
+- macOS and Windows. `include/goose_qt.h` declares the override and signal handlers in a
+  way MSVC links (it has no weak symbols); the test, example and sample scripts find qtc
+  on Windows (through `PATH`) and run on macOS (which has no `timeout` command or bash 5);
+  ctest runs them with Git's bash on Windows. CI builds and tests on macOS and Windows as
+  well as Linux, allowed to fail there for now. The `shared/` example runs on Linux only.
+
 ### Documentation
 - Links to qtc's documentation point at https://github.com/PXblaZe/qtc; they assumed the two
   repositories side by side on disk, which left them broken on GitHub.

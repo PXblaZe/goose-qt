@@ -219,6 +219,10 @@ endif()
 
 if(GOOSE_QT_TESTS AND GOOSE_EXECUTABLE)
   enable_testing()
+  # on Windows, Git's bash: System32's bash.exe starts WSL, which cannot run these scripts
+  if(WIN32)
+    find_program(_bash NAMES bash PATHS "$ENV{ProgramFiles}/Git/bin" "$ENV{ProgramW6432}/Git/bin" NO_DEFAULT_PATH)
+  endif()
   find_program(_bash NAMES bash)
   if(_bash)
     set(_env "GOOSE=${GOOSE_EXECUTABLE}" "QTC_LIB=$<TARGET_FILE_DIR:${_qtc}>")

@@ -20,6 +20,18 @@ fi
 if [ -n "${QTC_LIB:-}" ]; then
     export LD_LIBRARY_PATH="$QTC_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     export DYLD_LIBRARY_PATH="$QTC_LIB${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
+    case "$(uname -s)" in   # Windows finds DLLs on PATH
+        MINGW* | MSYS* | CYGWIN*) export PATH="$(cygpath -u "$QTC_LIB"):$PATH" ;;
+    esac
+fi
+# macOS has no timeout command: Perl's alarm does the same. macOS clears DYLD_LIBRARY_PATH for
+# its own programs, /usr/bin/perl among them, so the path goes to Perl as an argument
+if ! command -v timeout > /dev/null 2>&1; then
+    timeout() {
+        local secs=$1; shift
+        perl -e 'my ($s, $d) = splice @ARGV, 0, 2; $ENV{DYLD_LIBRARY_PATH} = $d if $d ne "";
+                 alarm $s; exec @ARGV or exit 127' "$secs" "${DYLD_LIBRARY_PATH:-}" "$@"
+    }
 fi
 # Qt's own warnings off: chaos makes thousands on purpose (Qt refusing hostile values), and the
 # offscreen platform and the GPU probe add a few harmless ones. Errors still show.

@@ -4,6 +4,12 @@
 name: ci
 on: [push, pull_request]
 
+env:
+  QT_PACKAGES: >-
+    qt6-main=6.12.0 qt6-charts=6.12.0 qt6-multimedia=6.12.0 qt6-serialport=6.12.0
+    qt6-positioning=6.12.0 qt6-networkauth=6.12.0
+  GOOSE_REF: f4637bfb342fb70d42bea0474eab9e62a3c99d68
+
 jobs:
   linux:
     runs-on: ubuntu-24.04
@@ -11,13 +17,14 @@ jobs:
       - uses: actions/checkout@v5
         with: { path: goose-qt }
       - uses: actions/checkout@v5
-        with: { repository: aardappel/goose, path: goose, ref: f4637bfb342fb70d42bea0474eab9e62a3c99d68 }
+        with:
+          repository: aardappel/goose
+          path: goose
+          ref: ${{ env.GOOSE_REF }}
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-name: qt
-          create-args: >-
-            qt6-main=6.12.0 qt6-charts=6.12.0 qt6-multimedia=6.12.0 qt6-serialport=6.12.0
-            qt6-positioning=6.12.0 qt6-networkauth=6.12.0
+          create-args: ${{ env.QT_PACKAGES }}
           condarc: |
             channels: [conda-forge]
           cache-environment: true
@@ -42,3 +49,64 @@ jobs:
         run: ctest --test-dir build --output-on-failure
       - name: install
         run: cmake --install build --prefix $PWD/prefix
+
+  other-platforms:
+    # the same build and tests as on Linux; allowed to fail until they pass here as they do there
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-2022]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+        with: { path: goose-qt }
+      - uses: actions/checkout@v5
+        with:
+          repository: aardappel/goose
+          path: goose
+          ref: ${{ env.GOOSE_REF }}
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-name: qt
+          create-args: ${{ env.QT_PACKAGES }}
+          condarc: |
+            channels: [conda-forge]
+          cache-environment: true
+      - name: paths
+        # conda-forge puts Qt under Library on Windows, with its DLLs in Library\bin, which Qt's
+        # tools and every program using Qt need on PATH: the environment is not activated. CMake
+        # takes C:/... paths, not Git bash's /c/...
+        run: |
+          prefix="$MAMBA_ROOT_PREFIX/envs/qt"
+          root="$PWD"
+          goose=goose/build/goose
+          if [ "$RUNNER_OS" = Windows ]; then
+            prefix="$prefix/Library"
+            cygpath -w "$prefix/bin" >> "$GITHUB_PATH"
+            root="$(cygpath -m "$PWD")"
+            goose=goose/build/Release/goose.exe
+          fi
+          echo "QT_PREFIX=$prefix" >> "$GITHUB_ENV"
+          echo "ROOT=$root" >> "$GITHUB_ENV"
+          echo "GOOSE_EXE=$root/$goose" >> "$GITHUB_ENV"
+      - name: goose
+        # MSVC on Windows (the Visual Studio generator, which needs --config); Apple clang on macOS
+        run: |
+          cmake -S goose -B goose/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build goose/build --config Release
+          "$GOOSE_EXE" --version
+      - name: qtc source
+        run: git clone --depth 1 "${QTC_REPO:-https://github.com/${{ github.repository_owner }}/qtc}" qtc
+      - name: build (qtc built from source with goose-qt)
+        run: |
+          cmake -S goose-qt -B build -DCMAKE_BUILD_TYPE=Release -DQTC_SOURCE_DIR="$ROOT/qtc" \
+                -DGOOSE_EXECUTABLE="$GOOSE_EXE" -DCMAKE_PREFIX_PATH="$QT_PREFIX"
+          cmake --build build --config Release
+      - name: tests, examples and the installed package
+        run: ctest --test-dir build -C Release --output-on-failure
+      - name: install
+        run: cmake --install build --config Release --prefix "$ROOT/prefix"

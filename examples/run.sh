@@ -18,6 +18,18 @@ fi
 if [ -n "${QTC_LIB:-}" ]; then
     export LD_LIBRARY_PATH="$QTC_LIB${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     export DYLD_LIBRARY_PATH="$QTC_LIB${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
+    case "$(uname -s)" in   # Windows finds DLLs on PATH
+        MINGW* | MSYS* | CYGWIN*) export PATH="$(cygpath -u "$QTC_LIB"):$PATH" ;;
+    esac
+fi
+# macOS has no timeout command: Perl's alarm does the same. macOS clears DYLD_LIBRARY_PATH for
+# its own programs, /usr/bin/perl among them, so the path goes to Perl as an argument
+if ! command -v timeout > /dev/null 2>&1; then
+    timeout() {
+        local secs=$1; shift
+        perl -e 'my ($s, $d) = splice @ARGV, 0, 2; $ENV{DYLD_LIBRARY_PATH} = $d if $d ne "";
+                 alarm $s; exec @ARGV or exit 127' "$secs" "${DYLD_LIBRARY_PATH:-}" "$@"
+    }
 fi
 export QT_QPA_PLATFORM=offscreen QT_QUICK_BACKEND=software QT_LOGGING_RULES="*=false"
 export LC_ALL="${LC_ALL:-C.UTF-8}"
@@ -52,8 +64,9 @@ for f in "$here"/*.goose; do
         sed 's/^/    /' "$work/$name.build.out" | tail -n 25
     fi
 done
-# shared/: a Goose library built with --shared, called from a C program (needs a C compiler)
-if command -v "${CC:-cc}" > /dev/null 2>&1; then
+# shared/: a Goose library built with --shared, called from a C program (needs a C compiler).
+# Linux only: the library's name and the host's rpath ($ORIGIN) are an ELF system's
+if [ "$(uname -s)" = Linux ] && command -v "${CC:-cc}" > /dev/null 2>&1; then
     mkdir -p "$work/shared"
     if (cd "$work/shared" && "$GOOSE" build --shared --header "$work/shared/counter.h" -o "$work/shared/libcounter.so" "$here/shared/counter.goose" &&
         "${CC:-cc}" "$here/shared/host.c" -I. -L. -lcounter -Wl,-rpath,'$ORIGIN' -o host) > "$work/shared.build.out" 2>&1; then

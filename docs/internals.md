@@ -87,7 +87,9 @@ too. `qt::use_overrides()` tells libqtc where the trampoline is. Calls that arri
 threads get `QTC_OV_BASE` from the trampoline (the class's own implementation), since
 exported Goose functions run on the main thread only.
 
-The weak symbol needs GCC, Clang or TinyCC; this was tested on Linux.
+MSVC has no weak symbols: there the header defines a stand-in for each handler and tells the
+linker to use it when the program exports none (`/alternatename`), and checks for the
+stand-in where GCC, Clang and TinyCC check for a null weak symbol.
 
 ## Strings
 
